@@ -15,13 +15,14 @@
   in {
     devShells = eachSystem (pkgs: {
       default = pkgs.mkShell {
-        buildInputs = [
-          pkgs.nodejs_23
-          pkgs.bun
-          pkgs.zsh
+        buildInputs = with pkgs; [
+          nodejs_23
+          bun
+          zsh
 
-          pkgs.nodePackages.typescript
-          pkgs.nodePackages.typescript-language-server
+          nodePackages.typescript
+          nodePackages.typescript-language-server
+          openssl
         ];
       };
     });
