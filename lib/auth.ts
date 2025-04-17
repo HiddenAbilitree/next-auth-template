@@ -5,6 +5,10 @@ import { Pool } from 'pg';
 // and https://kysely.dev/docs/getting-started?package-manager=bun //
 export const auth = betterAuth({
   database: new Pool({
-    // connection options
+    host: process.env.PGHOST as string,
+    database: process.env.PGDATABASE as string,
+    user: process.env.PGUSER as string,
+    password: process.env.PGPASSWORD as string,
+    ssl: true,
   }),
 });
