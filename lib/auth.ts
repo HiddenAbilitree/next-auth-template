@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { Pool } from 'pg';
 import { sendMail } from '@/lib/mail';
-import { VerifyEmail } from '@/components/mail/Verify';
+import { VerifyEmail } from '@/components/email/Verify';
 // refer to https://www.better-auth.com/docs/basic-usage           //
 // and https://kysely.dev/docs/getting-started?package-manager=bun //
 export const auth = betterAuth({
@@ -13,9 +13,9 @@ export const auth = betterAuth({
     ssl: true,
   }),
   emailVerification: {
-    sendVerificationEmail: async ({ user, url }) => {
+    sendVerificationEmail: async ({ user, url, token }) => {
       sendMail({
-        mailHtml: VerifyEmail({ url: url }),
+        mailHtml: VerifyEmail({ url: url, token: token }),
         from: process.env.Email as string,
         to: user.email,
         subject: 'Verify Email',
