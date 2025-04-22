@@ -6,8 +6,8 @@ export default async function Page() {
   });
   return (
     <div className='flex h-screen w-screen items-center justify-center'>
-      <p
-        className='max-w-[1300px] '
+      <div
+        className='max-w-[1300px]'
         dangerouslySetInnerHTML={{ __html: content }}
       />
     </div>

@@ -1,7 +1,6 @@
 import {
   Section,
   Heading,
-  Text,
   Row,
   Column,
   Img,
@@ -11,10 +10,13 @@ export function Header() {
   return (
     <Section>
       <Row>
-        <Column className='flex items-center gap-4 p-4'>
-          <Img alt='React Email logo' className='size-12' src='/favicon.ico' />
-          <Heading as='h1' className='text-xl font-semibold'>
-            Name
+        <Column className='flex items-center gap-3 p-4'>
+          {/* CHANGEME */}
+          <Link href='#'>
+            <Img alt='CHANGEME' className='size-12' src='/favicon.ico' />
+          </Link>
+          <Heading as='h1' className='text-2xl font-semibold'>
+            {/* CHANGEME */}
           </Heading>
         </Column>
       </Row>
