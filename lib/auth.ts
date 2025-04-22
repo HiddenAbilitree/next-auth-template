@@ -1,7 +1,8 @@
 import { betterAuth } from 'better-auth';
 import { Pool } from 'pg';
-import { sendMail } from '@/lib/mail';
-import { VerifyEmail } from '@/components/email/Verify';
+import { sendEmail } from '@/lib/mail';
+import { VerifyEmail } from '@/components/email/VerifyEmail';
+import { VerifyDeletion } from '@/components/email/VerifyDeletion';
 // refer to https://www.better-auth.com/docs/basic-usage           //
 // and https://kysely.dev/docs/getting-started?package-manager=bun //
 export const auth = betterAuth({
@@ -15,7 +16,7 @@ export const auth = betterAuth({
 
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {
-      sendMail({
+      sendEmail({
         mailHtml: VerifyEmail({ url: url, token: token }),
         from: 'CHANGEME',
         to: user.email,
@@ -28,9 +29,25 @@ export const auth = betterAuth({
   },
 
   socialProviders: {
+    // https://www.better-auth.com/docs/authentication/google
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
+
+  user: {
+    deleteUser: {
+      enabled: true,
+      sendDeleteAccountVerification: async (
+        {
+          user, // The user object
+          url, // The auto-generated URL for deletion
+        }
+      ) => {
+        // Your email sending logic here
+        sendEmail({ mailHtml: VerifyDeletion({ url: url }), from: "CHANGEME", to: user.email, subject: "Verify Deletion", });
+      },
     },
   },
 });

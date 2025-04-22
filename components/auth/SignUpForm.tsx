@@ -16,9 +16,9 @@ import { authClient } from '@/lib/auth-client';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useForm } from 'react-hook-form';
 import { signUp } from '@/lib/schemas/auth';
-import { Separator } from '../ui/separator';
+import { Separator } from '@/components/ui/separator';
 
-export function SignUpCard() {
+export function SignUpForm() {
   const form = useForm<typeof signUp.infer>({
     resolver: arktypeResolver(signUp),
     defaultValues: {

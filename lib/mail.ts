@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export async function sendMail({
+export async function sendEmail({
   mailHtml,
   from,
   to,

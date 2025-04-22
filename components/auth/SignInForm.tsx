@@ -16,9 +16,9 @@ import { authClient } from '@/lib/auth-client';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useForm } from 'react-hook-form';
 import { signIn } from '@/lib/schemas/auth';
-import { Separator } from '../ui/separator';
+import { Separator } from '@/components/ui/separator';
 
-export function SignInCard() {
+export function SignInForm() {
   const form = useForm<typeof signIn.infer>({
     resolver: arktypeResolver(signIn),
     defaultValues: {
@@ -74,7 +74,14 @@ export function SignInCard() {
           )}
         />
         <Button type='submit'>Sign In</Button>
-        <Button type='submit' variant='white'>
+        <Button
+          onSubmit={async () => {
+            await authClient.signIn.social({
+              provider: 'google',
+            });
+          }}
+          variant='white'
+        >
           Sign In with Google{' '}
           <svg
             xmlns='http://www.w3.org/2000/svg'

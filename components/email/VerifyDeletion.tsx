@@ -8,13 +8,16 @@ import {
   Tailwind,
 } from '@react-email/components';
 
-import { Header } from './Header';
+import { Header } from '@/components/email/Header';
 
-export function VerifyEmail({ url, token }: { url: string; token: string }) {
+export function VerifyDeletion({ url, token }: { url: string; token: string }) {
   return (
     <Html lang='en'>
       <Head>
-        <title>Verify your email</title>
+        <title>Verify account deletion</title>
+        {/* Something something font is broken see here https://github.com/resend/react-email/issues/501
+         * This is scuffed workaround
+         * */}
         <style>
           {`
             @import url('https://cdn.staticdelivr.com/gfonts/css2?family=Geist');
@@ -28,14 +31,13 @@ export function VerifyEmail({ url, token }: { url: string; token: string }) {
           <Header />
           <Section className='my-4 text-center'>
             <Button
-              className='box-border rounded-md bg-black px-4 py-3 text-center font-semibold text-white'
+              className='box-border rounded-md bg-red-500 px-4 py-3 text-center font-semibold text-white'
               href={url}
             >
-              Verify Email
+              Delete my account
             </Button>
-            <Text>Or enter this token: {token}</Text>
             <Text className='text-sm font-light text-black/40'>
-              If you did not request this, you can safely ignore this email.
+              If you did not request this, please change your password immediately.
             </Text>
           </Section>
         </Container>
