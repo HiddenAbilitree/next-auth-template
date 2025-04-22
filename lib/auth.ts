@@ -12,17 +12,25 @@ export const auth = betterAuth({
     password: process.env.PG_PASSWORD as string,
     ssl: true,
   }),
+
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {
       sendMail({
         mailHtml: VerifyEmail({ url: url, token: token }),
-        from: process.env.Email as string,
+        from: 'CHANGEME',
         to: user.email,
-        subject: 'Verify Email',
+        subject: 'Verify Your Email',
       });
     },
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     expiresIn: 360,
+  },
+
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
   },
 });

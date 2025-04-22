@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Html,
   Head,
@@ -9,7 +8,7 @@ import {
   Tailwind,
 } from '@react-email/components';
 
-import { Header, Footer } from './components';
+import { Header } from './Header';
 
 export function VerifyEmail({ url, token }: { url: string; token: string }) {
   return (
