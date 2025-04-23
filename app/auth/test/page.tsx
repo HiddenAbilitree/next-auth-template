@@ -1,5 +1,5 @@
 import { render } from '@react-email/components';
-import { VerifyEmail } from '@/components/email/Verify';
+import { VerifyEmail } from '@/components/email/VerifyEmail';
 export default async function Page() {
   const content = await render(VerifyEmail({ url: 'Test', token: 'test' }), {
     pretty: true,

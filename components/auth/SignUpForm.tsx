@@ -18,7 +18,7 @@ import { useForm } from 'react-hook-form';
 import { signUp } from '@/lib/schemas/auth';
 import { Separator } from '@/components/ui/separator';
 
-export function SignUpForm() {
+export const SignUpForm = () => {
   const form = useForm<typeof signUp.infer>({
     resolver: arktypeResolver(signUp),
     defaultValues: {
@@ -28,7 +28,7 @@ export function SignUpForm() {
     },
   });
 
-  async function onSubmit(values: typeof signUp.infer) {
+  const onSubmit = async (values: typeof signUp.infer) => {
     // TODO remove name field whenever this issue is resolved :(
     // https://github.com/better-auth/better-auth/issues/424
     const { error } = await authClient.signUp.email({
@@ -39,7 +39,7 @@ export function SignUpForm() {
     if (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <Form {...form}>
@@ -101,4 +101,4 @@ export function SignUpForm() {
       </form>
     </Form>
   );
-}
+};

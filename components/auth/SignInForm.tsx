@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 import { signIn } from '@/lib/schemas/auth';
 import { Separator } from '@/components/ui/separator';
 
-export function SignInForm() {
+export const SignInForm = () => {
   const form = useForm<typeof signIn.infer>({
     resolver: arktypeResolver(signIn),
     defaultValues: {
@@ -28,14 +28,14 @@ export function SignInForm() {
     },
   });
 
-  async function onSubmit(values: typeof signIn.infer) {
+  const onSubmit = async (values: typeof signIn.infer) => {
     const { error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
     });
 
     console.error(error);
-  }
+  };
 
   // https://www.better-auth.com/docs/plugins/passkey#preload-the-passkeys
   useEffect(() => {
@@ -138,4 +138,4 @@ export function SignInForm() {
       </form>
     </Form>
   );
-}
+};

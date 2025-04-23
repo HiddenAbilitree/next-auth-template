@@ -16,12 +16,13 @@ const signUp = type({
   password: Password,
   confirmPassword: 'string',
 }).narrow((data, ctx) => {
-  return data.password !== data.confirmPassword
-    ? ctx.reject({
-        message: 'Must be identical to password.',
-        path: ['confirmPassword'],
-      })
-    : true;
+  return (
+    data.password === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to password.',
+      path: ['confirmPassword'],
+    })
+  );
 });
 
 const signIn = type({

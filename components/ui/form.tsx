@@ -73,7 +73,7 @@ const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue,
 );
 
-function FormItem({ className, ...props }: ComponentProps<'div'>) {
+const FormItem = ({ className, ...props }: ComponentProps<'div'>) => {
   const id = useId();
 
   return (
@@ -85,12 +85,12 @@ function FormItem({ className, ...props }: ComponentProps<'div'>) {
       />
     </FormItemContext.Provider>
   );
-}
+};
 
-function FormLabel({
+const FormLabel = ({
   className,
   ...props
-}: ComponentProps<typeof LabelPrimitive.Root>) {
+}: ComponentProps<typeof LabelPrimitive.Root>) => {
   const { error, formItemId } = useFormField();
 
   return (
@@ -102,9 +102,9 @@ function FormLabel({
       {...props}
     />
   );
-}
+};
 
-function FormControl({ ...props }: ComponentProps<typeof Slot>) {
+const FormControl = ({ ...props }: ComponentProps<typeof Slot>) => {
   const { error, formItemId, formDescriptionId, formMessageId } =
     useFormField();
 
@@ -113,17 +113,15 @@ function FormControl({ ...props }: ComponentProps<typeof Slot>) {
       data-slot='form-control'
       id={formItemId}
       aria-describedby={
-        !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
+        error ? `${formDescriptionId} ${formMessageId}` : `${formDescriptionId}`
       }
       aria-invalid={!!error}
       {...props}
     />
   );
-}
+};
 
-function FormDescription({ className, ...props }: ComponentProps<'p'>) {
+const FormDescription = ({ className, ...props }: ComponentProps<'p'>) => {
   const { formDescriptionId } = useFormField();
 
   return (
@@ -134,14 +132,14 @@ function FormDescription({ className, ...props }: ComponentProps<'p'>) {
       {...props}
     />
   );
-}
+};
 
-function FormMessage({ className, ...props }: ComponentProps<'p'>) {
+const FormMessage = ({ className, ...props }: ComponentProps<'p'>) => {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? '') : props.children;
 
   if (!body) {
-    return null;
+    return;
   }
 
   return (
@@ -154,7 +152,7 @@ function FormMessage({ className, ...props }: ComponentProps<'p'>) {
       {body}
     </p>
   );
-}
+};
 
 export {
   useFormField,

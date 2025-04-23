@@ -12,7 +12,7 @@ const transporter = createTransport({
   },
 });
 
-export async function sendEmail({
+export const sendEmail = async ({
   mailHtml,
   from,
   to,
@@ -22,7 +22,7 @@ export async function sendEmail({
   from: string;
   to: string;
   subject: string;
-}) {
+}) => {
   const emailHtml = await render(mailHtml);
 
   await transporter.sendMail({
@@ -31,4 +31,4 @@ export async function sendEmail({
     subject: subject,
     html: emailHtml,
   });
-}
+};
