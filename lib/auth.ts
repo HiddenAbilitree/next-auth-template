@@ -19,11 +19,15 @@ export const auth = betterAuth({
 
   plugins: [passkey()],
 
+  emailAndPassword: {
+    enabled: true,
+  },
+
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {
       sendEmail({
         mailHtml: VerifyEmail({ url: url, token: token }),
-        from: 'CHANGEME',
+        from: process.env.EMAIL_SENDER as string,
         to: user.email,
         subject: 'Verify Your Email',
       });
@@ -51,7 +55,7 @@ export const auth = betterAuth({
         // Your email sending logic here
         sendEmail({
           mailHtml: VerifyDeletion({ url: url }),
-          from: 'CHANGEME',
+          from: process.env.EMAIL_SENDER as string,
           to: user.email,
           subject: 'Verify Deletion',
         });

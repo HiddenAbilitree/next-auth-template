@@ -96,7 +96,8 @@ export const SignInForm = () => {
         />
         <Button type='submit'>Sign In</Button>
         <Button
-          onSubmit={async () => {
+          type='button'
+          onClick={async () => {
             await authClient.signIn.social({
               provider: 'google',
             });

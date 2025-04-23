@@ -1,15 +1,36 @@
 'use server';
+
+/* CHANGEME */
+
 import { createTransport } from 'nodemailer';
 import { render } from '@react-email/components';
 
-const transporter = createTransport({
-  host: process.env.SMTP_HOST as string,
-  port: Number(process.env.SMTP_PORT),
-  secure: true,
-  auth: {
-    user: process.env.SMTP_USERNAME as string,
-    pass: process.env.SMTP_PASSWORD as string,
+// For SES
+import * as aws from '@aws-sdk/client-ses';
+
+// SMTP
+// const transporterSMTP = createTransport({
+//   host: process.env.SMTP_HOST as string,
+//   port: Number(process.env.SMTP_PORT),
+//   secure: true,
+//   auth: {
+//     user: process.env.SMTP_USERNAME as string,
+//     pass: process.env.SMTP_PASSWORD as string,
+//   },
+// });
+
+// SES
+const ses = new aws.SES({
+  apiVersion: '2010-12-01',
+  region: process.env.AWS_REGION as string,
+  credentials: {
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
   },
+});
+
+const transporterSES = createTransport({
+  SES: { ses, aws },
 });
 
 export const sendEmail = async ({
@@ -25,7 +46,7 @@ export const sendEmail = async ({
 }) => {
   const emailHtml = await render(mailHtml);
 
-  await transporter.sendMail({
+  await transporterSES.sendMail({
     from: from,
     to: to,
     subject: subject,
