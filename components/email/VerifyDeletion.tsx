@@ -10,7 +10,7 @@ import {
 
 import { Header } from '@/components/email/Header';
 
-export function VerifyDeletion({ url, token }: { url: string; token: string }) {
+export function VerifyDeletion({ url }: { url: string }) {
   return (
     <Html lang='en'>
       <Head>
@@ -37,7 +37,8 @@ export function VerifyDeletion({ url, token }: { url: string; token: string }) {
               Delete my account
             </Button>
             <Text className='text-sm font-light text-black/40'>
-              If you did not request this, please change your password immediately.
+              If you did not request this, please change your password
+              immediately.
             </Text>
           </Section>
         </Container>

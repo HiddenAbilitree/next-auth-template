@@ -10,6 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useEffect } from 'react';
 
 import { authClient } from '@/lib/auth-client';
 
@@ -32,10 +33,21 @@ export function SignInForm() {
       email: values.email,
       password: values.password,
     });
-    if (error) {
-      console.error(error);
-    }
+
+    console.error(error);
   }
+
+  // https://www.better-auth.com/docs/plugins/passkey#preload-the-passkeys
+  useEffect(() => {
+    if (
+      !PublicKeyCredential.isConditionalMediationAvailable ||
+      !PublicKeyCredential.isConditionalMediationAvailable()
+    ) {
+      return;
+    }
+
+    void authClient.signIn.passkey({ autoFill: true });
+  }, []);
 
   return (
     <Form {...form}>
@@ -54,7 +66,11 @@ export function SignInForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='acme@example.com' {...field} />
+                <Input
+                  placeholder='acme@example.com'
+                  autoComplete='username webauthn'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +83,12 @@ export function SignInForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
+                <Input
+                  placeholder='••••••••'
+                  type='password'
+                  autoComplete='current-password webauthn'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

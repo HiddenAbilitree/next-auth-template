@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: '*',
-      disallow: '/',
+      allow: '/',
     },
-    sitemap: 'https://acme.com/sitemap.xml',
+    // sitemap: 'https://acme.com/sitemap.xml',
   };
 }

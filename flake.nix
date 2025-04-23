@@ -19,6 +19,7 @@
           nodejs_23
           bun
           zsh
+          eslint
 
           nodePackages.typescript
           nodePackages.typescript-language-server

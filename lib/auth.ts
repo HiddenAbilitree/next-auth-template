@@ -1,8 +1,11 @@
 import { betterAuth } from 'better-auth';
+import { passkey } from 'better-auth/plugins/passkey';
 import { Pool } from 'pg';
-import { sendEmail } from '@/lib/mail';
+
+import { sendEmail } from '@/lib/email';
 import { VerifyEmail } from '@/components/email/VerifyEmail';
 import { VerifyDeletion } from '@/components/email/VerifyDeletion';
+
 // refer to https://www.better-auth.com/docs/basic-usage           //
 // and https://kysely.dev/docs/getting-started?package-manager=bun //
 export const auth = betterAuth({
@@ -13,6 +16,8 @@ export const auth = betterAuth({
     password: process.env.PG_PASSWORD as string,
     ssl: true,
   }),
+
+  plugins: [passkey()],
 
   emailVerification: {
     sendVerificationEmail: async ({ user, url, token }) => {
@@ -39,14 +44,17 @@ export const auth = betterAuth({
   user: {
     deleteUser: {
       enabled: true,
-      sendDeleteAccountVerification: async (
-        {
-          user, // The user object
-          url, // The auto-generated URL for deletion
-        }
-      ) => {
+      sendDeleteAccountVerification: async ({
+        user, // The user object
+        url, // The auto-generated URL for deletion
+      }) => {
         // Your email sending logic here
-        sendEmail({ mailHtml: VerifyDeletion({ url: url }), from: "CHANGEME", to: user.email, subject: "Verify Deletion", });
+        sendEmail({
+          mailHtml: VerifyDeletion({ url: url }),
+          from: 'CHANGEME',
+          to: user.email,
+          subject: 'Verify Deletion',
+        });
       },
     },
   },

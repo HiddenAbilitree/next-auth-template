@@ -7,11 +7,9 @@ export async function middleware(request: NextRequest) {
     headers: await headers(),
   });
 
-  if (!session) {
-    return NextResponse.redirect(new URL('/auth/signin', request.url));
-  }
-
-  return NextResponse.next();
+  return session
+    ? NextResponse.next()
+    : NextResponse.redirect(new URL('/auth/signin', request.url));
 }
 
 export const config = {

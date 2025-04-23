@@ -1,9 +1,8 @@
 'use server';
-// import { createTransport } from 'nodemailer';
-import nodemailer from 'nodemailer';
+import { createTransport } from 'nodemailer';
 import { render } from '@react-email/components';
 
-const transporter = nodemailer.createTransport({
+const transporter = createTransport({
   host: process.env.SMTP_HOST as string,
   port: Number(process.env.SMTP_PORT),
   secure: true,

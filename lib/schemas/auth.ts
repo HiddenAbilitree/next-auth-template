@@ -1,4 +1,4 @@
-import './config';
+import '@/lib/schemas/config';
 import { type } from 'arktype';
 
 const Password = type.string
@@ -16,13 +16,12 @@ const signUp = type({
   password: Password,
   confirmPassword: 'string',
 }).narrow((data, ctx) => {
-  if (data.password !== data.confirmPassword) {
-    return ctx.reject({
-      message: 'Must be identical to password.',
-      path: ['confirmPassword'],
-    });
-  }
-  return true;
+  return data.password !== data.confirmPassword
+    ? ctx.reject({
+        message: 'Must be identical to password.',
+        path: ['confirmPassword'],
+      })
+    : true;
 });
 
 const signIn = type({
