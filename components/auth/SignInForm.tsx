@@ -10,31 +10,56 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { toast } from 'sonner';
 import { useEffect } from 'react';
 
 import { authClient } from '@/lib/auth-client';
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useForm } from 'react-hook-form';
-import { signIn } from '@/lib/schemas/auth';
+import { SignInFormSchema } from '@/lib/schemas/auth';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/navigation';
 
 export const SignInForm = () => {
-  const form = useForm<typeof signIn.infer>({
-    resolver: arktypeResolver(signIn),
+  const router = useRouter();
+
+  const form = useForm<typeof SignInFormSchema.infer>({
+    resolver: arktypeResolver(SignInFormSchema),
     defaultValues: {
       email: '',
       password: '',
     },
   });
 
-  const onSubmit = async (values: typeof signIn.infer) => {
-    const { error } = await authClient.signIn.email({
-      email: values.email,
-      password: values.password,
-    });
+  const onSubmit = async (values: typeof SignInFormSchema.infer) => {
+    const toastId = toast.loading('Signing in...');
+    const { error } = await authClient.signIn.email(
+      {
+        email: values.email,
+        password: values.password,
+      },
+      {
+        onSuccess: async (context) => {
+          if (context.data.twoFactorRedirect) {
+            toast.dismiss(toastId);
+            router.push('/auth/2fa');
+          }
+        },
+      },
+    );
 
-    console.error(error);
+    if (error) {
+      toast.error('Sign In Failed', {
+        id: toastId,
+        description: error.message,
+      });
+    } else {
+      toast.success('Sign In Successful', {
+        id: toastId,
+      });
+      router.push('/');
+    }
   };
 
   // https://www.better-auth.com/docs/plugins/passkey#preload-the-passkeys
@@ -46,8 +71,16 @@ export const SignInForm = () => {
       return;
     }
 
-    void authClient.signIn.passkey({ autoFill: true });
-  }, []);
+    void authClient.signIn.passkey(
+      { autoFill: true },
+      {
+        onSuccess: () => {
+          toast.success('Sign In Successful!');
+          router.push('/');
+        },
+      },
+    );
+  }, [router]);
 
   return (
     <Form {...form}>
@@ -81,7 +114,15 @@ export const SignInForm = () => {
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel className='flex w-full justify-between tracking-tighter'>
+                <p>Password</p>
+                <Link
+                  href='/auth/reset-password'
+                  className='underline hover:font-semibold hover:-tracking-[0.056em]'
+                >
+                  Forgot password?
+                </Link>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder='••••••••'
@@ -131,7 +172,10 @@ export const SignInForm = () => {
         </Button>
         <span>
           Don{"'"}t have an account? Make one{' '}
-          <Link href='/auth/signup' className='underline hover:font-medium'>
+          <Link
+            href='/auth/signup'
+            className='underline hover:font-medium hover:-tracking-[0.0565em]'
+          >
             here
           </Link>
           .

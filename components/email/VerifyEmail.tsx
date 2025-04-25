@@ -1,46 +1,22 @@
-import {
-  Html,
-  Head,
-  Container,
-  Button,
-  Text,
-  Section,
-  Tailwind,
-} from '@react-email/components';
+import { Button, Text } from '@react-email/components';
+import { EmailLayout } from '@/components/email/EmailLayout';
 
-import { Header } from '@/components/email/Header';
-
-export const VerifyEmail = ({ url, token }: { url: string; token: string }) => (
-  <Html lang='en'>
-    <Head>
-      <title>Verify your email</title>
-      {/* Something something font is broken see here https://github.com/resend/react-email/issues/501
-       * This is scuffed workaround
-       * */}
-      <style>
-        {`
-            @import url('https://cdn.staticdelivr.com/gfonts/css2?family=Geist');
-            *{
-            font-family: 'Geist', sans;
-            }`}
-      </style>
-    </Head>
-    <Tailwind>
-      <Container className='w-96 rounded-md bg-zinc-100 outline'>
-        <Header />
-        <Section className='my-4 text-center'>
-          <Button
-            className='box-border rounded-md bg-black px-4 py-3 text-center font-semibold text-white'
-            href={url}
-          >
-            Verify Email
-          </Button>
-          <Text>Or enter this token: {token}</Text>
-          <Text className='text-sm font-light text-black/40'>
-            If you did not request this, you can safely ignore this email.
-          </Text>
-        </Section>
-      </Container>
-    </Tailwind>
-  </Html>
+export const VerifyEmail = ({ url }: { url: string }) => (
+  <EmailLayout
+    title='Verify Your Email'
+    preview='To finalize your account creation, please verify your email'
+  >
+    <Button
+      className='box-border rounded-md bg-black px-4 py-3 text-center font-semibold text-white'
+      href={url}
+    >
+      Verify Email
+    </Button>
+    <Text className='text-sm text-black'>
+      Please verify your email within 24 hours to activate your account.
+    </Text>
+    <Text className='text-xs font-light text-black/40'>
+      If you did not request this, you can safely ignore this email.
+    </Text>
+  </EmailLayout>
 );

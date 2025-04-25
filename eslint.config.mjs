@@ -5,7 +5,7 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 import preferArrowFunctions from 'eslint-plugin-prefer-arrow-functions';
-// import functional from 'eslint-plugin-functional';
+import functional from 'eslint-plugin-functional';
 import parser from '@typescript-eslint/parser';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 
@@ -20,9 +20,9 @@ const eslintConfig = [
   eslintConfigPrettier,
   eslintPluginPrettierRecommended,
   eslintPluginUnicorn.configs.recommended,
-  // functional.configs.externalTypeScriptRecommended,
-  // functional.configs.strict,
-  // functional.configs.stylistic,
+  functional.configs.externalTypeScriptRecommended,
+  functional.configs.strict,
+  functional.configs.stylistic,
   {
     languageOptions: {
       parser,

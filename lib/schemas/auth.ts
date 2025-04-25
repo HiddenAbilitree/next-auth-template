@@ -11,7 +11,7 @@ const Password = type.string
 
 // ripped straight from https://arktype.io/docs/expressions#narrow
 // configure errors https://arktype.io/docs/configuration#errors
-const signUp = type({
+const SignUpFormSchema = type({
   email: 'string.email',
   password: Password,
   confirmPassword: 'string',
@@ -25,9 +25,13 @@ const signUp = type({
   );
 });
 
-const signIn = type({
+const SignInFormSchema = type({
   email: 'string.email',
   password: 'string',
 });
 
-export { signUp, signIn };
+const TwoFactorFormSchema = type({
+  otp: 'string.numeric==6',
+});
+
+export { SignUpFormSchema, SignInFormSchema, TwoFactorFormSchema };
