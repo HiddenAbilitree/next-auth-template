@@ -11,7 +11,7 @@ const Password = type.string
 
 // ripped straight from https://arktype.io/docs/expressions#narrow
 // configure errors https://arktype.io/docs/configuration#errors
-const SignUpFormSchema = type({
+export const SignUpFormSchema = type({
   email: 'string.email',
   password: Password,
   confirmPassword: 'string',
@@ -25,13 +25,26 @@ const SignUpFormSchema = type({
   );
 });
 
-const SignInFormSchema = type({
+export const SignInFormSchema = type({
   email: 'string.email',
   password: 'string',
 });
 
-const TwoFactorFormSchema = type({
+export const TwoFactorFormSchema = type({
   otp: 'string.numeric==6',
 });
 
-export { SignUpFormSchema, SignInFormSchema, TwoFactorFormSchema };
+export const ForgotPasswordFormSchema = type({ email: 'string.email' });
+
+export const ResetPasswordFormSchema = type({
+  password: Password,
+  confirmPassword: 'string',
+}).narrow((data, ctx) => {
+  return (
+    data.password === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to password.',
+      path: ['confirmPassword'],
+    })
+  );
+});

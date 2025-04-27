@@ -71,7 +71,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='acme@example.com' {...field} />
+                <Input placeholder='example@acme.com' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

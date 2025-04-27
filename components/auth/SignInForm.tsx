@@ -85,6 +85,7 @@ export const SignInForm = () => {
   return (
     <Form {...form}>
       <form
+        tabIndex={0}
         onSubmit={form.handleSubmit(onSubmit)}
         className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
       >
@@ -114,10 +115,10 @@ export const SignInForm = () => {
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='flex w-full justify-between tracking-tighter'>
+              <FormLabel className='flex w-full justify-between'>
                 <p>Password</p>
                 <Link
-                  href='/auth/reset-password'
+                  href='/auth/forgot-password'
                   className='underline hover:font-semibold hover:-tracking-[0.056em]'
                 >
                   Forgot password?

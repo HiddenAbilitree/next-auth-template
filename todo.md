@@ -1,6 +1,6 @@
 # auth
 2fa (totp, maybe otp)
-change password
+~change password~
 change email
 list passkeys
 

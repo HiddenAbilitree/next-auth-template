@@ -20,9 +20,12 @@ const eslintConfig = [
   eslintConfigPrettier,
   eslintPluginPrettierRecommended,
   eslintPluginUnicorn.configs.recommended,
-  functional.configs.externalTypeScriptRecommended,
-  functional.configs.strict,
-  functional.configs.stylistic,
+  // functional.configs.off,
+  // eslint.configs.recommended,
+  // tseslint.configs.recommended,
+  // functional.configs.externalTypeScriptRecommended,
+  // functional.configs.strict,
+  // functional.configs.stylistic,
   {
     languageOptions: {
       parser,
@@ -36,7 +39,7 @@ const eslintConfig = [
     },
     rules: {
       // 'functional/functional-parameters': ["off", { "enforceParameterCount": { "ignoreLambdaExpression": true } }],
-      // "functional/prefer-immutable-types": ["off"],
+      // "functional/prefer-immutable-types": ["error"],
       // "functional/no-expression-statements": ["off", { "ignoreVoid": true }],
       // "functional/no-return-void": ["error", { "ignoreInferredTypes": true }],
       // "functional/no-throw-statements": ["off"],

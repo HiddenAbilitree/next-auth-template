@@ -81,4 +81,6 @@ export const auth = betterAuth({
   }),
 
   appName: 'Nextjs Auth Template',
+
+  rateLimit: { enabled: true },
 });
