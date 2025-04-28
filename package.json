@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-ses": "^3.796.0",
-    "@aws-sdk/credential-provider-node": "^3.796.0",
+    "@aws-sdk/client-ses": "^3.797.0",
+    "@aws-sdk/credential-provider-node": "^3.797.0",
     "@better-fetch/fetch": "^1.1.18",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-dropdown-menu": "^2.1.12",
@@ -29,10 +29,10 @@
     "kysely": "^0.28.2",
     "lucide-react": "^0.503.0",
     "motion": "^12.9.2",
-    "next": "^15.4.0-canary.9",
+    "next": "^15.4.0-canary.12",
     "next-themes": "^0.4.6",
     "nodemailer": "^6.10.1",
-    "pg": "^8.15.5",
+    "pg": "^8.15.6",
     "postcss": "^8.5.3",
     "qrcode.react": "^4.2.0",
     "react": "^19.1.0",
@@ -46,7 +46,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@iconify-json/logos": "^1.2.4",
-    "@types/node": "^22.15.2",
+    "@types/node": "^22.15.3",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.11.14",
     "@types/react": "^19.1.2",
