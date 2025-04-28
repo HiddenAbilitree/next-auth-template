@@ -16,12 +16,7 @@
     devShells = eachSystem (pkgs: {
       default = pkgs.mkShell {
         buildInputs = with pkgs; [
-          nodejs_23
           bun
-          zsh
-
-          nodePackages.typescript
-          nodePackages.typescript-language-server
           openssl
         ];
       };
