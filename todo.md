@@ -4,6 +4,8 @@
 change email
 list passkeys
 
+sign in priority (passkey if enabled -> password + 2fa -> magic link? -> etc.)
+
 lock certain actions behind password
 
 

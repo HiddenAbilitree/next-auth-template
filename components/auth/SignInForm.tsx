@@ -101,7 +101,7 @@ export const SignInForm = () => {
               <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='acme@example.com'
+                  placeholder='example@acme.com'
                   autoComplete='username webauthn'
                   {...field}
                 />
