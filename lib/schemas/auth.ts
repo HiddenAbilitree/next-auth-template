@@ -9,6 +9,10 @@ const Password = type.string
       `Must be at least 8 characters long. (Currently ${ctx.actual || 0})`,
   });
 
+const OTP = type.string
+  .atLeastLength(6)
+  .configure({ message: 'Must be 6 characters long.' });
+
 // ripped straight from https://arktype.io/docs/expressions#narrow
 // configure errors https://arktype.io/docs/configuration#errors
 export const SignUpFormSchema = type({
@@ -31,7 +35,7 @@ export const SignInFormSchema = type({
 });
 
 export const TwoFactorFormSchema = type({
-  otp: 'string>=6',
+  otp: OTP,
 });
 
 export const ForgotPasswordFormSchema = type({ email: 'string.email' });

@@ -2,14 +2,29 @@ import { betterAuth } from 'better-auth';
 import { passkey } from 'better-auth/plugins/passkey';
 import { twoFactor } from 'better-auth/plugins';
 import { Pool } from 'pg';
-
+import { Kysely, PostgresDialect } from 'kysely';
 import { sendEmail } from '@/lib/email';
+import { Database } from '@/lib/schemas/database';
 import {
   VerifyEmail,
   VerifyDeletion,
   VerifyEmailChange,
   VerifyPasswordChange,
 } from '@/components/email';
+
+const pool = new Pool({
+  host: process.env.PG_HOST as string,
+  database: process.env.PG_DATABASE as string,
+  user: process.env.PG_USER as string,
+  password: process.env.PG_PASSWORD as string,
+  ssl: true,
+});
+
+const dialect = new PostgresDialect({ pool });
+
+export const db = new Kysely<Database>({
+  dialect,
+});
 
 // refer to https://www.better-auth.com/docs/basic-usage           //
 // and https://kysely.dev/docs/getting-started?package-manager=bun //
@@ -44,6 +59,16 @@ export const auth = betterAuth({
   user: {
     deleteUser: {
       enabled: true,
+      beforeDelete: async (user) => {
+        await db
+          .deleteFrom('passkey')
+          .where('passkey.userId', '=', user.id)
+          .execute();
+        await db
+          .deleteFrom('twoFactor')
+          .where('twoFactor.userId', '=', user.id)
+          .execute();
+      },
       sendDeleteAccountVerification: async ({ user, url }) =>
         sendEmail({
           mailHtml: VerifyDeletion({ url: url }),
@@ -72,13 +97,7 @@ export const auth = betterAuth({
     },
   },
 
-  database: new Pool({
-    host: process.env.PG_HOST as string,
-    database: process.env.PG_DATABASE as string,
-    user: process.env.PG_USER as string,
-    password: process.env.PG_PASSWORD as string,
-    ssl: true,
-  }),
+  database: pool,
 
   appName: 'Nextjs Auth Template',
 

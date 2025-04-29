@@ -21,8 +21,28 @@ import {
 import { TwoFactorFormSchema } from '@/lib/schemas/auth';
 import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { cn } from '@/lib/utils';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { ComponentProps } from 'react';
 
-export const TwoFactorForm = () => {
+const formVariants = cva('flex w-100 flex-col gap-5', {
+  variants: {
+    variant: {
+      default: '',
+      card: 'rounded-md border bg-card p-4 shadow-sm',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+export const TwoFactorForm = ({
+  className,
+  variant,
+}: ComponentProps<'form'> & VariantProps<typeof formVariants>) => {
   const router = useRouter();
   const form = useForm<typeof TwoFactorFormSchema.infer>({
     resolver: arktypeResolver(TwoFactorFormSchema),
@@ -38,6 +58,9 @@ export const TwoFactorForm = () => {
         onSuccess: () => {
           router.push('/');
         },
+        onError: (context) => {
+          toast.error(context.error.message);
+        },
       },
     ));
   };
@@ -46,7 +69,7 @@ export const TwoFactorForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
+        className={cn(formVariants({ variant, className }))}
       >
         <FormField
           control={form.control}
@@ -55,7 +78,12 @@ export const TwoFactorForm = () => {
             <FormItem>
               <FormLabel>One-Time Password</FormLabel>
               <FormControl>
-                <InputOTP maxLength={6} {...field}>
+                <InputOTP
+                  maxLength={6}
+                  {...field}
+                  pattern={REGEXP_ONLY_DIGITS}
+                  autoComplete='totp'
+                >
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />

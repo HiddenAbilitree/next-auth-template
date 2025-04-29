@@ -28,6 +28,7 @@
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",
     "kysely": "^0.28.2",
+    "kysely-codegen": "^0.18.3",
     "lucide-react": "^0.503.0",
     "motion": "^12.9.2",
     "next": "^15.4.0-canary.14",

@@ -22,8 +22,9 @@ import {
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { QRCodeSVG } from 'qrcode.react';
-import { BaseSyntheticEvent, useState } from 'react';
+import { useState } from 'react';
 import { TwoFactorForm } from '@/components/auth/TwoFactorForm';
+import { useRouter } from 'next/navigation';
 
 export const EnableTwoFactor = () => {
   const [openPasswordForm, setOpenPasswordForm] = useState(false);
@@ -49,18 +50,11 @@ export const EnableTwoFactor = () => {
           />
         </DialogContent>
       </Dialog>
-      <Dialog open={openTOTP} onOpenChange={setOpenTOTP}>
-        <DialogContent autoFocus className='sm:max-w-[425px]'>
-          <DialogHeader>
-            <DialogTitle>Enable 2FA</DialogTitle>
-            <DialogDescription>
-              Enter your password to enable 2FA
-            </DialogDescription>
-            <VerifyTOTP totpURI={totpURI ?? ''} />
-            <TwoFactorForm />
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      {openTOTP && (
+        <>
+          <VerifyTOTP totpURI={totpURI ?? ''} /> <TwoFactorForm />
+        </>
+      )}
     </>
   );
 };
@@ -74,20 +68,16 @@ export const PasswordForm = ({
   setOpenTOTP(val: boolean): void;
   setTOTPURI(val: string): void;
 }) => {
-  const onSubmit = async (
-    values: typeof PasswordFormSchema.infer,
-    event?: BaseSyntheticEvent,
-  ) => {
+  const onSubmit = async (values: typeof PasswordFormSchema.infer) => {
     await authClient.twoFactor.enable(
       {
         password: values.password,
       },
       {
-        onSuccess: async (context) => {
+        onSuccess: (context) => {
           setTOTPURI(context.data.totpURI);
           setOpenPasswordForm(false);
           setOpenTOTP(true);
-          event?.preventDefault();
         },
         onError: () => void toast.error('Incorrect Password'),
       },
@@ -127,5 +117,9 @@ export const PasswordForm = ({
 };
 
 export const VerifyTOTP = ({ totpURI }: { totpURI: string }) => {
-  return <QRCodeSVG value={totpURI} size={256} />;
+  return (
+    <div className='bg-white p-2'>
+      <QRCodeSVG value={totpURI} size={256} />
+    </div>
+  );
 };
