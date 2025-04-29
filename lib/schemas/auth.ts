@@ -48,3 +48,7 @@ export const ResetPasswordFormSchema = type({
     })
   );
 });
+
+export const PasswordFormSchema = type({
+  password: 'string',
+});
