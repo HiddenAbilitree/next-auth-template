@@ -1,4 +1,5 @@
 import { DeleteAccount } from '@/components/auth/DeleteAccount';
+import { AddPasskey } from '@/components/auth/Passkey';
 import { SignOut } from '@/components/auth/SignOut';
 import { Button } from '@/components/ui/button';
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       <Button>Button</Button>
       <SignOut />
       <DeleteAccount />
+      <AddPasskey />
     </section>
   );
 }

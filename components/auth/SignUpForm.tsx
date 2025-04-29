@@ -10,17 +10,20 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { toast } from 'sonner';
 
 import { authClient } from '@/lib/auth-client';
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useForm } from 'react-hook-form';
-import { signUp } from '@/lib/schemas/auth';
+import { SignUpFormSchema } from '@/lib/schemas/auth';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/navigation';
 
 export const SignUpForm = () => {
-  const form = useForm<typeof signUp.infer>({
-    resolver: arktypeResolver(signUp),
+  const router = useRouter();
+  const form = useForm<typeof SignUpFormSchema.infer>({
+    resolver: arktypeResolver(SignUpFormSchema),
     defaultValues: {
       email: '',
       password: '',
@@ -28,16 +31,26 @@ export const SignUpForm = () => {
     },
   });
 
-  const onSubmit = async (values: typeof signUp.infer) => {
-    // TODO remove name field whenever this issue is resolved :(
-    // https://github.com/better-auth/better-auth/issues/424
+  const onSubmit = async (values: typeof SignUpFormSchema.infer) => {
+    const toastId = toast.loading('Signing up...');
+
     const { error } = await authClient.signUp.email({
       email: values.email,
       password: values.password,
       name: '',
     });
+
     if (error) {
-      console.error(error);
+      toast.error('Sign Up Failed', {
+        id: toastId,
+        description:
+          error.message === 'User already exists'
+            ? 'Email is already in use.'
+            : error.message,
+      });
+    } else {
+      toast.dismiss(toastId);
+      router.push('/auth/signup/complete');
     }
   };
 
@@ -58,7 +71,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='acme@example.com' {...field} />
+                <Input placeholder='example@acme.com' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
