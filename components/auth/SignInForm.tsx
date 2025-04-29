@@ -34,7 +34,10 @@ export const SignInForm = () => {
 
   const onSubmit = async (values: typeof SignInFormSchema.infer) => {
     const toastId = toast.loading('Signing in...');
-    const { error } = await authClient.signIn.email(
+
+    // cant use toast.promise because authClient returns
+    // something different to what is expected by sonner
+    await authClient.signIn.email(
       {
         email: values.email,
         password: values.password,
@@ -44,22 +47,20 @@ export const SignInForm = () => {
           if (context.data.twoFactorRedirect) {
             toast.dismiss(toastId);
             router.push('/auth/2fa');
+          } else {
+            toast.success('Sign In Successful', {
+              id: toastId,
+            });
+            router.push('/');
           }
         },
+        onError: (context) =>
+          void toast.error('Sign In Failed', {
+            id: toastId,
+            description: context.error.message,
+          }),
       },
     );
-
-    if (error) {
-      toast.error('Sign In Failed', {
-        id: toastId,
-        description: error.message,
-      });
-    } else {
-      toast.success('Sign In Successful', {
-        id: toastId,
-      });
-      router.push('/');
-    }
   };
 
   // https://www.better-auth.com/docs/plugins/passkey#preload-the-passkeys

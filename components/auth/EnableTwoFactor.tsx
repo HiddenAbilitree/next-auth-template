@@ -16,41 +16,82 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { QRCodeSVG } from 'qrcode.react';
+import { BaseSyntheticEvent, useState } from 'react';
+import { TwoFactorForm } from '@/components/auth/TwoFactorForm';
 
 export const EnableTwoFactor = () => {
+  const [openPasswordForm, setOpenPasswordForm] = useState(false);
+  const [openTOTP, setOpenTOTP] = useState(false);
+  const [totpURI, setTOTPURI] = useState<string | undefined>();
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant='outline'>Enable 2FA</Button>
-      </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </DialogDescription>
-        </DialogHeader>
-        <PasswordForm />
-        <DialogFooter>
-          <Button type='submit'>Save changes</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog open={openPasswordForm} onOpenChange={setOpenPasswordForm}>
+        <Button variant='outline' onClick={() => setOpenPasswordForm(true)}>
+          Enable 2FA
+        </Button>
+        <DialogContent className='sm:max-w-[425px]'>
+          <DialogHeader>
+            <DialogTitle>Enable 2FA</DialogTitle>
+            <DialogDescription>
+              Enter your password to enable 2FA
+            </DialogDescription>
+          </DialogHeader>
+          <PasswordForm
+            setOpenPasswordForm={setOpenPasswordForm}
+            setOpenTOTP={setOpenTOTP}
+            setTOTPURI={setTOTPURI}
+          />
+        </DialogContent>
+      </Dialog>
+      <Dialog open={openTOTP} onOpenChange={setOpenTOTP}>
+        <DialogContent autoFocus className='sm:max-w-[425px]'>
+          <DialogHeader>
+            <DialogTitle>Enable 2FA</DialogTitle>
+            <DialogDescription>
+              Enter your password to enable 2FA
+            </DialogDescription>
+            <VerifyTOTP totpURI={totpURI ?? ''} />
+            <TwoFactorForm />
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 
-export const PasswordForm = () => {
-  const onSubmit = async (values: typeof PasswordFormSchema.infer) => {
-    // const toastId = toast.loading('Sending email...');
-    const { error } = await authClient.twoFactor.enable({
-      password: values.password,
-    });
+export const PasswordForm = ({
+  setOpenPasswordForm,
+  setOpenTOTP,
+  setTOTPURI,
+}: {
+  setOpenPasswordForm(val: boolean): void; //react is so trash holy
+  setOpenTOTP(val: boolean): void;
+  setTOTPURI(val: string): void;
+}) => {
+  const onSubmit = async (
+    values: typeof PasswordFormSchema.infer,
+    event?: BaseSyntheticEvent,
+  ) => {
+    await authClient.twoFactor.enable(
+      {
+        password: values.password,
+      },
+      {
+        onSuccess: async (context) => {
+          setTOTPURI(context.data.totpURI);
+          setOpenPasswordForm(false);
+          setOpenTOTP(true);
+          event?.preventDefault();
+        },
+        onError: () => void toast.error('Incorrect Password'),
+      },
+    );
   };
 
   const form = useForm<typeof PasswordFormSchema.infer>({
@@ -83,4 +124,8 @@ export const PasswordForm = () => {
       </form>
     </Form>
   );
+};
+
+export const VerifyTOTP = ({ totpURI }: { totpURI: string }) => {
+  return <QRCodeSVG value={totpURI} size={256} />;
 };
