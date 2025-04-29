@@ -34,24 +34,27 @@ export const SignUpForm = () => {
   const onSubmit = async (values: typeof SignUpFormSchema.infer) => {
     const toastId = toast.loading('Signing up...');
 
-    const { error } = await authClient.signUp.email({
-      email: values.email,
-      password: values.password,
-      name: '',
-    });
-
-    if (error) {
-      toast.error('Sign Up Failed', {
-        id: toastId,
-        description:
-          error.message === 'User already exists'
-            ? 'Email is already in use.'
-            : error.message,
-      });
-    } else {
-      toast.dismiss(toastId);
-      router.push('/auth/signup/complete');
-    }
+    await authClient.signUp.email(
+      {
+        email: values.email,
+        password: values.password,
+        name: '',
+      },
+      {
+        onSuccess: () => {
+          toast.dismiss(toastId);
+          router.push('/auth/signup/complete');
+        },
+        onError: (context) =>
+          void toast.error('Sign Up Failed', {
+            id: toastId,
+            description:
+              context.error.message === 'User already exists'
+                ? 'Email is already in use.'
+                : context.error.message,
+          }),
+      },
+    );
   };
 
   return (

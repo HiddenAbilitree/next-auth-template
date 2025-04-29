@@ -1,4 +1,5 @@
 import { DeleteAccount } from '@/components/auth/DeleteAccount';
+import { EnableTwoFactor } from '@/components/auth/EnableTwoFactor';
 import { AddPasskey } from '@/components/auth/Passkey';
 import { SignOut } from '@/components/auth/SignOut';
 import { Button } from '@/components/ui/button';
@@ -10,6 +11,7 @@ export default function Home() {
       <SignOut />
       <DeleteAccount />
       <AddPasskey />
+      <EnableTwoFactor />
     </section>
   );
 }

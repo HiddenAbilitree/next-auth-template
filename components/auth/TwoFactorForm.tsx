@@ -20,8 +20,10 @@ import {
 } from '@/components/ui/input-otp';
 import { TwoFactorFormSchema } from '@/lib/schemas/auth';
 import { authClient } from '@/lib/auth-client';
+import { useRouter } from 'next/navigation';
 
 export const TwoFactorForm = () => {
+  const router = useRouter();
   const form = useForm<typeof TwoFactorFormSchema.infer>({
     resolver: arktypeResolver(TwoFactorFormSchema),
     defaultValues: {
@@ -30,12 +32,22 @@ export const TwoFactorForm = () => {
   });
 
   const onSubmit = async (data: typeof TwoFactorFormSchema.infer) => {
-    void (await authClient.twoFactor.verifyTotp({ code: data.otp }));
+    void (await authClient.twoFactor.verifyTotp(
+      { code: data.otp },
+      {
+        onSuccess: () => {
+          router.push('/');
+        },
+      },
+    ));
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-2/3 space-y-6'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
+      >
         <FormField
           control={form.control}
           name='otp'
@@ -55,7 +67,8 @@ export const TwoFactorForm = () => {
                 </InputOTP>
               </FormControl>
               <FormDescription>
-                Please enter the one-time password sent to your phone.
+                Please enter the one-time password found in your authenticator
+                service.
               </FormDescription>
               <FormMessage />
             </FormItem>

@@ -31,7 +31,7 @@ export const SignInFormSchema = type({
 });
 
 export const TwoFactorFormSchema = type({
-  otp: 'string.numeric==6',
+  otp: 'string>=6',
 });
 
 export const ForgotPasswordFormSchema = type({ email: 'string.email' });
@@ -47,4 +47,8 @@ export const ResetPasswordFormSchema = type({
       path: ['confirmPassword'],
     })
   );
+});
+
+export const PasswordFormSchema = type({
+  password: 'string',
 });
