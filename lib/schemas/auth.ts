@@ -53,6 +53,20 @@ export const ResetPasswordFormSchema = type({
   );
 });
 
+export const ChangePasswordFormSchema = type({
+  currentPassword: 'string',
+  newPassword: Password,
+  confirmPassword: 'string',
+}).narrow((data, ctx) => {
+  return (
+    data.newPassword === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to the new password.',
+      path: ['confirmPassword'],
+    })
+  );
+});
+
 export const PasswordFormSchema = type({
   password: 'string',
 });

@@ -26,6 +26,35 @@ export const db = new Kysely<Database>({
   dialect,
 });
 
+// const addIndexes = async () => {
+//   await db.schema.createIndex('emails').on('user').column('email').execute();
+//   await db.schema
+//     .createIndex('accountIds')
+//     .on('account')
+//     .column('userId')
+//     .execute();
+//   await db.schema
+//     .createIndex('sessions')
+//     .on('session')
+//     .columns(['userId', 'token'])
+//     .execute();
+//   await db.schema
+//     .createIndex('identifiers')
+//     .on('verification')
+//     .column('identifier')
+//     .execute();
+//   await db.schema
+//     .createIndex('passkeyUserIds')
+//     .on('passkey')
+//     .column('userId')
+//     .execute();
+//   await db.schema
+//     .createIndex('secrets')
+//     .on('twoFactor')
+//     .column('secret')
+//     .execute();
+// };
+
 // refer to https://www.better-auth.com/docs/basic-usage           //
 // and https://kysely.dev/docs/getting-started?package-manager=bun //
 export const auth = betterAuth({
@@ -77,6 +106,7 @@ export const auth = betterAuth({
           subject: 'Verify Account Deletion',
         }),
     },
+
     changeEmail: {
       enabled: true,
       sendChangeEmailVerification: async ({ user, newEmail, url }) =>

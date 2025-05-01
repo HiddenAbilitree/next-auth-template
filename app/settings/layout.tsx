@@ -1,0 +1,44 @@
+import { Separator } from '@/components/ui/separator';
+import { ShieldUser } from 'lucide-react';
+import Link from 'next/link';
+
+const generalLinks = [
+  {
+    name: 'Account and Security',
+    href: '/settings/account',
+    icon: ShieldUser,
+  },
+];
+
+export default function SettingsLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <div className='container flex h-screen flex-col items-center'>
+      <header className='flex w-full items-center justify-start p-4'>
+        hii this is ur settings page
+      </header>
+      <div className='flex w-full'>
+        <nav className='flex w-50 flex-col gap-2 p-4 text-sm'>
+          {generalLinks.map((link, i) => (
+            <Link
+              className='inline-flex items-center gap-1'
+              key={i}
+              href={link.href}
+            >
+              <link.icon size={20} />
+              {link.name}
+            </Link>
+          ))}
+
+          <Separator />
+        </nav>
+        <main className='flex h-[300vh] flex-1 flex-col items-start justify-start p-4'>
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}

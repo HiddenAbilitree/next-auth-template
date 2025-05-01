@@ -3,6 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@utility container {
+  margin-inline: auto;
+}
+
 @utility optimize-legibility {
   text-rendering: optimizeLegibility;
 }

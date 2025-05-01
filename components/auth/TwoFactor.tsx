@@ -24,7 +24,29 @@ import { toast } from 'sonner';
 import { QRCodeSVG } from 'qrcode.react';
 import { useState } from 'react';
 import { TwoFactorForm } from '@/components/auth/TwoFactorForm';
-import { useRouter } from 'next/navigation';
+import { Smartphone } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+
+export const TwoFactor = ({
+  twoFactorEnabled,
+}: {
+  twoFactorEnabled: boolean;
+}) => {
+  return (
+    <span className='inline-flex items-center gap-2'>
+      <Smartphone />
+      Authenticator
+      {twoFactorEnabled && (
+        <Badge
+          className='border-green-[#3FB950] text-green-[#3FB950]'
+          variant='outline'
+        >
+          Enabled
+        </Badge>
+      )}
+    </span>
+  );
+};
 
 export const EnableTwoFactor = () => {
   const [openPasswordForm, setOpenPasswordForm] = useState(false);

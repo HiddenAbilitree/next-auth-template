@@ -83,6 +83,7 @@ export const TwoFactorForm = ({
                   {...field}
                   pattern={REGEXP_ONLY_DIGITS}
                   autoComplete='totp'
+                  onComplete={form.handleSubmit(onSubmit)}
                 >
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
