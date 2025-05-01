@@ -6,7 +6,7 @@ export default function Home() {
     <section className='flex h-screen flex-col items-center justify-center gap-4'>
       <span className='text-9xl'>Hi there</span>
       <Button asChild>
-        <Link href='/settings/auth'>Auth Settings</Link>
+        <Link href='/settings/account'>Auth Settings</Link>
       </Button>
       <SignOut />
     </section>

@@ -1,36 +1,35 @@
-import '@/lib/schemas/config';
 import { type } from 'arktype';
 
-const Password = type.string
-  .atLeastLength(8)
-  .atMostLength(128)
-  .configure({
-    message: (ctx) =>
-      `Must be at least 8 characters long. (Currently ${ctx.actual || 0})`,
+const ConfirmPassword = (data, ctx) =>
+  data.password === data.confirmPassword ||
+  ctx.reject({
+    message: 'Must be identical to password.',
+    path: ['confirmPassword'],
   });
 
-const OTP = type.string
-  .atLeastLength(6)
-  .configure({ message: 'Must be 6 characters long.' });
+const Email = type('string.email').configure({
+  message: 'Must be a valid email address.',
+});
+
+const NewPassword = type('8<=string<=1024').configure({
+  message: (ctx) =>
+    `Must be at least 8 characters long. (Currently ${ctx.actual || 0})`,
+});
+
+const OTP = type('string>=6').configure({
+  message: 'Must be 6 characters long.',
+});
 
 // ripped straight from https://arktype.io/docs/expressions#narrow
 // configure errors https://arktype.io/docs/configuration#errors
 export const SignUpFormSchema = type({
-  email: 'string.email',
-  password: Password,
+  email: Email,
+  password: NewPassword,
   confirmPassword: 'string',
-}).narrow((data, ctx) => {
-  return (
-    data.password === data.confirmPassword ||
-    ctx.reject({
-      message: 'Must be identical to password.',
-      path: ['confirmPassword'],
-    })
-  );
-});
+}).narrow(ConfirmPassword);
 
 export const SignInFormSchema = type({
-  email: 'string.email',
+  email: Email,
   password: 'string',
 });
 
@@ -38,24 +37,16 @@ export const TwoFactorFormSchema = type({
   otp: OTP,
 });
 
-export const ForgotPasswordFormSchema = type({ email: 'string.email' });
+export const ForgotPasswordFormSchema = type({ email: Email });
 
 export const ResetPasswordFormSchema = type({
-  password: Password,
+  password: NewPassword,
   confirmPassword: 'string',
-}).narrow((data, ctx) => {
-  return (
-    data.password === data.confirmPassword ||
-    ctx.reject({
-      message: 'Must be identical to password.',
-      path: ['confirmPassword'],
-    })
-  );
-});
+}).narrow(ConfirmPassword);
 
 export const ChangePasswordFormSchema = type({
   currentPassword: 'string',
-  newPassword: Password,
+  newPassword: NewPassword,
   confirmPassword: 'string',
 }).narrow((data, ctx) => {
   return (
