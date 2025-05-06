@@ -4,6 +4,7 @@ import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -16,6 +17,7 @@ import {
 import {
   InputOTP,
   InputOTPGroup,
+  InputOTPSeparator,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { TwoFactorFormSchema } from '@/lib/schemas/auth';
@@ -26,8 +28,9 @@ import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { cn } from '@/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ComponentProps } from 'react';
+import { Separator } from '@/components/ui/separator';
 
-const formVariants = cva('flex w-100 flex-col gap-5', {
+const formVariants = cva('flex w-100 flex-col gap-4', {
   variants: {
     variant: {
       default: '',
@@ -48,6 +51,7 @@ export const TwoFactorForm = ({
     resolver: arktypeResolver(TwoFactorFormSchema),
     defaultValues: {
       otp: '',
+      trust: false,
     },
   });
 
@@ -71,12 +75,21 @@ export const TwoFactorForm = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn(formVariants({ variant, className }))}
       >
+        <div className='flex w-full flex-col gap-1'>
+          <h1 className='w-full text-xl font-semibold'>
+            Two Factor Authentication
+          </h1>
+          <p className='text-sm text-foreground/70'>
+            Please enter the one-time password found in your authenticator
+            service.
+          </p>
+        </div>
+        <Separator />
         <FormField
           control={form.control}
           name='otp'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>One-Time Password</FormLabel>
               <FormControl>
                 <InputOTP
                   maxLength={6}
@@ -95,10 +108,28 @@ export const TwoFactorForm = ({
                   </InputOTPGroup>
                 </InputOTP>
               </FormControl>
-              <FormDescription>
-                Please enter the one-time password found in your authenticator
-                service.
-              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='trust'
+          render={({ field }) => (
+            <FormItem className='flex items-center'>
+              <FormControl>
+                <Checkbox
+                  id='trust'
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <label
+                htmlFor='trust'
+                className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Trust this device for 30 days.
+              </label>
               <FormMessage />
             </FormItem>
           )}

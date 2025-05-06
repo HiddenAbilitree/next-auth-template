@@ -6,7 +6,7 @@ import { createTransport } from 'nodemailer';
 import { render } from '@react-email/components';
 
 // For SES
-import * as aws from '@aws-sdk/client-ses';
+import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
 
 // SMTP
 // const transporterSMTP = createTransport({
@@ -20,7 +20,7 @@ import * as aws from '@aws-sdk/client-ses';
 // });
 
 // SES
-const ses = new aws.SES({
+const ses = new SESv2Client({
   apiVersion: '2010-12-01',
   region: process.env.AWS_REGION as string,
   credentials: {
@@ -30,7 +30,7 @@ const ses = new aws.SES({
 });
 
 const transporterSES = createTransport({
-  SES: { ses, aws },
+  SES: { ses, SendEmailCommand },
 });
 
 export const sendEmail = async ({
