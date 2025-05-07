@@ -35,6 +35,7 @@ export const SignInFormSchema = type({
 
 export const TwoFactorFormSchema = type({
   otp: OTP,
+  trust: 'boolean',
 });
 
 export const ForgotPasswordFormSchema = type({ email: Email });
