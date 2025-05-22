@@ -43,22 +43,24 @@ const eslintConfig = [
       // "functional/no-expression-statements": ["off", { "ignoreVoid": true }],
       // "functional/no-return-void": ["error", { "ignoreInferredTypes": true }],
       // "functional/no-throw-statements": ["off"],
-      "prefer-arrow-functions/prefer-arrow-functions": [
-        "error", { returnStyle: "unchanged", }],
+      'prefer-arrow-functions/prefer-arrow-functions': [
+        'error',
+        { returnStyle: 'unchanged' },
+      ],
       'no-relative-import-paths/no-relative-import-paths': [
         'error',
         { prefix: '@' },
       ],
-      "unicorn/prevent-abbreviations": ["off"],
-      "unicorn/filename-case": [
-        "error",
+      'unicorn/prevent-abbreviations': ['off'],
+      'unicorn/filename-case': [
+        'error',
         {
-          "cases": {
-            "pascalCase": true,
-            "kebabCase": true
-          }
-        }
-      ]
+          cases: {
+            pascalCase: true,
+            kebabCase: true,
+          },
+        },
+      ],
     },
   },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),

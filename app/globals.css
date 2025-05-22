@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -122,7 +122,7 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50 tracking-tighter antialiased optimize-legibility;
+    @apply border-border tracking-tighter antialiased outline-ring/50 optimize-legibility;
   }
 
   body {

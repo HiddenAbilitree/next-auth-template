@@ -1,12 +1,5 @@
 import { type } from 'arktype';
 
-const ConfirmPassword = (data, ctx) =>
-  data.password === data.confirmPassword ||
-  ctx.reject({
-    message: 'Must be identical to password.',
-    path: ['confirmPassword'],
-  });
-
 const Email = type('string.email').configure({
   message: 'Must be a valid email address.',
 });
@@ -26,7 +19,14 @@ export const SignUpFormSchema = type({
   email: Email,
   password: NewPassword,
   confirmPassword: 'string',
-}).narrow(ConfirmPassword);
+}).narrow(
+  (data, ctx) =>
+    data.password === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to password.',
+      path: ['confirmPassword'],
+    }),
+);
 
 export const SignInFormSchema = type({
   email: Email,
@@ -44,7 +44,14 @@ export const MagicLinkFormSchema = type({ email: Email });
 export const ResetPasswordFormSchema = type({
   password: NewPassword,
   confirmPassword: 'string',
-}).narrow(ConfirmPassword);
+}).narrow(
+  (data, ctx) =>
+    data.password === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to password.',
+      path: ['confirmPassword'],
+    }),
+);
 
 export const ChangePasswordFormSchema = type({
   currentPassword: 'string',

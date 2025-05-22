@@ -1,4 +1,5 @@
 # todo
+
 render passkey on client after adding (easy)
 name passkeys
 change email
@@ -12,10 +13,12 @@ mobile otp (requires sms api)
 localization
 
 ## maybe
+
 username
-phone number 
+phone number
 
 ### completed
+
 2fa (totp, maybe otp)
 change password
 list passkeys

@@ -13,28 +13,37 @@ import { Button } from '@/components/ui/button';
 import { ChangePasswordForm } from '@/components/auth/ChangePasswordForm';
 
 import { db } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
-export default async function AuthSettings() {
+const getPasskeys = async () => {
+  'use server';
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  const getPasskeys = async () => {
-    'use server';
+  if (!session) redirect('/auth/signin');
 
-    const currentSession = await auth.api.getSession({
-      headers: await headers(),
-    });
+  return await db
+    .selectFrom('passkey')
+    .select(['createdAt', 'name'])
+    .where('passkey.userId', '=', session.user.id)
+    .execute();
+};
 
-    return currentSession
-      ? await db
-          .selectFrom('passkey')
-          .select(['createdAt', 'name'])
-          .where('passkey.userId', '=', currentSession.user.id)
-          .execute()
-      : [];
-  };
+const get2faEnabled = async () => {
+  'use server';
 
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) redirect('/auth/signin');
+
+  return session.user.twoFactorEnabled;
+};
+
+export default async function AuthSettings() {
   const passkeys = await getPasskeys();
   return (
     <div className='container flex flex-col items-center justify-center gap-4'>
@@ -68,9 +77,7 @@ export default async function AuthSettings() {
           Two Factor Methods
         </h1>
         <div className='flex justify-between p-1'>
-          <TwoFactor
-            twoFactorEnabled={session?.user.twoFactorEnabled || false}
-          />
+          <TwoFactor twoFactorEnabled={await get2faEnabled()} />
           <EnableTwoFactor />
         </div>
       </div>

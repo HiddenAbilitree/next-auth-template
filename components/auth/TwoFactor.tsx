@@ -30,7 +30,7 @@ import { Badge } from '@/components/ui/badge';
 export const TwoFactor = ({
   twoFactorEnabled,
 }: {
-  twoFactorEnabled: boolean;
+  twoFactorEnabled: boolean | null | undefined;
 }) => {
   return (
     <span className='inline-flex items-center gap-2'>

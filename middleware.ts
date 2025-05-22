@@ -7,6 +7,15 @@ export const middleware = async (request: NextRequest) => {
     headers: await headers(),
   });
 
+  if (!session) {
+    const res = await auth.api.signInSocial({
+      body: {
+        provider: 'discord',
+      },
+    });
+    return NextResponse.redirect(res.url as string);
+  }
+
   return session
     ? NextResponse.next()
     : NextResponse.redirect(new URL('/auth/signin', request.url));
@@ -15,6 +24,6 @@ export const middleware = async (request: NextRequest) => {
 export const config = {
   runtime: 'nodejs',
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|auth).*)',
+    '/((?!api/auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|auth).*)',
   ],
 };
