@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { passkey } from 'better-auth/plugins/passkey';
-import { captcha, magicLink, openAPI, twoFactor } from 'better-auth/plugins';
+import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely';
 import { sendEmail } from '@/lib/email';
@@ -62,13 +62,13 @@ export const auth = betterAuth({
   plugins: [
     passkey(),
     twoFactor(),
-    captcha({
-      provider: process.env.CAPTCHA_PROVIDER as
-        | 'cloudflare-turnstile'
-        | 'google-recaptcha'
-        | 'hcaptcha',
-      secretKey: process.env.CAPTCHA_SECRET_KEY as string,
-    }),
+    // captcha({
+    //   provider: process.env.CAPTCHA_PROVIDER as
+    //     | 'cloudflare-turnstile'
+    //     | 'google-recaptcha'
+    //     | 'hcaptcha',
+    //   secretKey: process.env.CAPTCHA_SECRET_KEY as string,
+    // }),
     openAPI(),
     magicLink({
       sendMagicLink: async ({ email, url }) =>

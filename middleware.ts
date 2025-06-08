@@ -7,14 +7,17 @@ export const middleware = async (request: NextRequest) => {
     headers: await headers(),
   });
 
-  if (!session) {
-    const res = await auth.api.signInSocial({
-      body: {
-        provider: 'discord',
-      },
-    });
-    return NextResponse.redirect(res.url as string);
-  }
+  /**
+   * Redirect to OAuth provider instead of sign in page.
+   */
+  // if (!session) {
+  //   const res = await auth.api.signInSocial({
+  //     body: {
+  //       provider: 'discord',
+  //     },
+  //   });
+  //   return NextResponse.redirect(res.url as string);
+  // }
 
   return session
     ? NextResponse.next()
