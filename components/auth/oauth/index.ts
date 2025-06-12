@@ -1,2 +1,2 @@
-export { GoogleOAuth } from './Google';
-export { DiscordOAuth } from './Discord';
+export { GoogleOAuth } from './google';
+export { DiscordOAuth } from './discord';

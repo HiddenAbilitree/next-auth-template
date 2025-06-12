@@ -32,9 +32,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "postcss.config.mjs",
-    "eslint.config.ts"
+    "**/*.mjs",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

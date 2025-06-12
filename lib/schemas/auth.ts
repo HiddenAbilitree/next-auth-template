@@ -57,15 +57,14 @@ export const ChangePasswordFormSchema = type({
   currentPassword: 'string',
   newPassword: NewPassword,
   confirmPassword: 'string',
-}).narrow((data, ctx) => {
-  return (
+}).narrow(
+  (data, ctx) =>
     data.newPassword === data.confirmPassword ||
     ctx.reject({
       message: 'Must be identical to the new password.',
       path: ['confirmPassword'],
-    })
-  );
-});
+    }),
+);
 
 export const PasswordFormSchema = type({
   password: 'string',

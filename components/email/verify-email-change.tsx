@@ -1,5 +1,5 @@
 import { Button, Text } from '@react-email/components';
-import { EmailLayout } from '@/components/email/EmailLayout';
+import { EmailLayout } from '@/components/email/email-layout';
 
 export const VerifyEmailChange = ({
   url,

@@ -19,8 +19,8 @@ export const middleware = async (request: NextRequest) => {
   //   return NextResponse.redirect(res.url as string);
   // }
 
-  return session
-    ? NextResponse.next()
+  return session ?
+    NextResponse.next()
     : NextResponse.redirect(new URL('/auth/signin', request.url));
 };
 

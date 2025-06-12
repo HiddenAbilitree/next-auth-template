@@ -1,5 +1,5 @@
-export { VerifyDeletion } from '@/components/email/VerifyDeletion';
-export { VerifyEmailChange } from '@/components/email/VerifyEmailChange';
-export { VerifyPasswordChange } from '@/components/email/VerifyPasswordChange';
-export { VerifyEmail } from '@/components/email/VerifyEmail';
-export { MagicLinkEmail } from '@/components/email/MagicLinkEmail';
+export { VerifyDeletion } from '@/components/email/verify-deletion';
+export { VerifyEmailChange } from '@/components/email/verify-email-change';
+export { VerifyPasswordChange } from '@/components/email/verify-password-change';
+export { VerifyEmail } from '@/components/email/verify-email';
+export { MagicLinkEmail } from '@/components/email/magic-link-email';

@@ -1,6 +1,6 @@
-import { DeleteAccount } from '@/components/auth/DeleteAccount';
-import { EnableTwoFactor, TwoFactor } from '@/components/auth/TwoFactor';
-import { AddPasskey } from '@/components/auth/AddPasskey';
+import { DeleteAccount } from '@/components/auth/delete-account';
+import { EnableTwoFactor, TwoFactor } from '@/components/auth/two-factor';
+import { AddPasskey } from '@/components/auth/add-passkey';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import {
@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { ChangePasswordForm } from '@/components/auth/ChangePasswordForm';
+import { ChangePasswordForm } from '@/components/auth/change-password-form';
 
 import { db } from '@/lib/auth';
 import { redirect } from 'next/navigation';
@@ -95,11 +95,9 @@ const PasskeyItem = ({
   passkey,
 }: {
   passkey: { name: string | null; createdAt: Date | null };
-}) => {
-  return (
-    <div className='w-full p-1'>
-      {passkey.name}
-      Created At: {passkey.createdAt!.toLocaleString()}
-    </div>
-  );
-};
+}) => (
+  <div className='w-full p-1'>
+    {passkey.name}
+    Created At: {passkey.createdAt!.toLocaleString()}
+  </div>
+);
