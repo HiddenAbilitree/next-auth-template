@@ -49,9 +49,9 @@ export const SignUpForm = () => {
           void toast.error('Sign Up Failed', {
             id: toastId,
             description:
-              context.error.message === 'User already exists'
-                ? 'Email is already in use.'
-                : context.error.message,
+              context.error.message === 'User already exists' ?
+                'Email is already in use.'
+              : context.error.message,
           }),
       },
     );
@@ -61,7 +61,7 @@ export const SignUpForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
+        className='w-100 bg-card flex flex-col gap-5 rounded-md border p-4 shadow-sm'
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Get Started</h1>

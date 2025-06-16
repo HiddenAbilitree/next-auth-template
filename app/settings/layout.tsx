@@ -21,7 +21,7 @@ export default function SettingsLayout({
         hii this is ur settings page
       </header>
       <div className='flex w-full'>
-        <nav className='flex w-50 flex-col gap-2 p-4 text-sm'>
+        <nav className='w-50 flex flex-col gap-2 p-4 text-sm'>
           {generalLinks.map((link, i) => (
             <Link
               className='inline-flex items-center gap-1'

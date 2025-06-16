@@ -51,7 +51,7 @@ export const ForgotPasswordForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
+        className='w-100 bg-card flex flex-col gap-5 rounded-md border p-4 shadow-sm'
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Reset Password</h1>

@@ -89,7 +89,7 @@ export const SignInForm = () => {
       <form
         tabIndex={0}
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex w-100 flex-col gap-4 rounded-md border bg-card p-4 shadow-sm'
+        className='w-100 bg-card flex flex-col gap-4 rounded-md border p-4 shadow-sm'
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Welcome Back</h1>
@@ -147,7 +147,7 @@ export const SignInForm = () => {
         <DiscordOAuth />
         <Link
           href='/auth/magic-link'
-          className="inline-flex h-9 shrink-0 items-center justify-center gap-2 rounded-md border bg-white px-4 py-2 text-sm font-medium whitespace-nowrap text-black shadow-xs transition-all outline-none hover:cursor-pointer hover:bg-secondary/80 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 has-[>svg]:px-3 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:hover:bg-primary/90 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+          className="shadow-xs hover:bg-secondary/80 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:hover:bg-primary/90 dark:aria-invalid:ring-destructive/40 inline-flex h-9 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md border bg-white px-4 py-2 text-sm font-medium text-black outline-none transition-all hover:cursor-pointer focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 has-[>svg]:px-3 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
         >
           Sign in with Magic Link
           <svg

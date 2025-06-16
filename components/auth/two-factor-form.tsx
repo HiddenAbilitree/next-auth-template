@@ -27,11 +27,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { ComponentProps } from 'react';
 import { Separator } from '@/components/ui/separator';
 
-const formVariants = cva('flex w-100 flex-col gap-4', {
+const formVariants = cva('w-100 flex flex-col gap-4', {
   variants: {
     variant: {
       default: '',
-      card: 'rounded-md border bg-card p-4 shadow-sm',
+      card: 'bg-card rounded-md border p-4 shadow-sm',
     },
   },
   defaultVariants: {
@@ -76,7 +76,7 @@ export const TwoFactorForm = ({
           <h1 className='w-full text-xl font-semibold'>
             Two Factor Authentication
           </h1>
-          <p className='text-sm text-foreground/70'>
+          <p className='text-foreground/70 text-sm'>
             Please enter the one-time password found in your authenticator
             service.
           </p>
@@ -123,7 +123,7 @@ export const TwoFactorForm = ({
               </FormControl>
               <label
                 htmlFor='trust'
-                className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
               >
                 Trust this device for 30 days.
               </label>

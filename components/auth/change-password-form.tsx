@@ -58,7 +58,7 @@ export const ChangePasswordForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex w-100 flex-col gap-5 rounded-md p-4'
+        className='w-100 flex flex-col gap-5 rounded-md p-4'
       >
         <FormField
           control={form.control}
