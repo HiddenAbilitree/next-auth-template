@@ -48,7 +48,7 @@
     "@eslint/eslintrc": "^3.3.1",
     "@hiddenability/opinionated-defaults": "^0.0.6",
     "@iconify-json/logos": "^1.2.4",
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.0.3",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.15.4",
     "@types/react": "^19.1.6",
