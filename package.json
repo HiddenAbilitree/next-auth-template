@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-sesv2": "^3.826.0",
+    "@aws-sdk/client-sesv2": "^3.828.0",
     "@aws-sdk/credential-provider-node": "^3.826.0",
     "@better-fetch/fetch": "^1.1.18",
     "@hookform/resolvers": "^5.1.1",
