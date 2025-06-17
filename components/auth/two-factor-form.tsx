@@ -1,8 +1,5 @@
 'use client';
 
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { useForm } from 'react-hook-form';
-
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -17,15 +14,17 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from '@/components/ui/input-otp';
-import { TwoFactorFormSchema } from '@/lib/schemas/auth';
-import { authClient } from '@/lib/auth-client';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
-import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { cn } from '@/lib/utils';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { ComponentProps } from 'react';
 import { Separator } from '@/components/ui/separator';
+import { authClient } from '@/lib/auth-client';
+import { TwoFactorFormSchema } from '@/lib/schemas/auth';
+import { cn } from '@/lib/utils';
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type VariantProps, cva } from 'class-variance-authority';
+import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { useRouter } from 'next/navigation';
+import { ComponentProps } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 const formVariants = cva('w-100 flex flex-col gap-4', {
   variants: {

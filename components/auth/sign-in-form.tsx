@@ -1,7 +1,7 @@
 'use client';
+
+import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
 import {
   Form,
   FormControl,
@@ -10,17 +10,16 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { toast } from 'sonner';
-import { useEffect } from 'react';
-
-import { authClient } from '@/lib/auth-client';
-
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { useForm } from 'react-hook-form';
-import { SignInFormSchema } from '@/lib/schemas/auth';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { authClient } from '@/lib/auth-client';
+import { SignInFormSchema } from '@/lib/schemas/auth';
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export const SignInForm = () => {
   const router = useRouter();

@@ -1,5 +1,5 @@
-import { Button, Text } from '@react-email/components';
 import { EmailLayout } from '@/components/email/email-layout';
+import { Button, Text } from '@react-email/components';
 
 export const VerifyDeletion = ({ url }: Readonly<{ url: string }>) => (
   <EmailLayout

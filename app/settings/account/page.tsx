@@ -1,8 +1,7 @@
+import { AddPasskey } from '@/components/auth/add-passkey';
+import { ChangePasswordForm } from '@/components/auth/change-password-form';
 import { DeleteAccount } from '@/components/auth/delete-account';
 import { EnableTwoFactor, TwoFactor } from '@/components/auth/two-factor';
-import { AddPasskey } from '@/components/auth/add-passkey';
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
 import {
   Accordion,
   AccordionContent,
@@ -10,9 +9,9 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { ChangePasswordForm } from '@/components/auth/change-password-form';
-
+import { auth } from '@/lib/auth';
 import { db } from '@/lib/auth';
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 const getPasskeys = async () => {

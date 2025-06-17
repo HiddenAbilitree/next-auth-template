@@ -1,16 +1,17 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
-import { authClient } from '@/lib/auth-client';
-import { toast } from 'sonner';
 import {
   Dialog,
-  DialogTrigger,
+  DialogClose,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogClose,
+  DialogTrigger,
 } from '@/components/ui/dialog';
+import { authClient } from '@/lib/auth-client';
+import { toast } from 'sonner';
 
 export const DeleteAccount = () => (
   <Dialog>

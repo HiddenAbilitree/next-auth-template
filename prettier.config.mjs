@@ -1,5 +1,11 @@
-import { prettierConfigNext } from '@hiddenability/opinionated-defaults/prettier';
+import {
+  merge,
+  prettierConfigBase,
+  prettierConfigTailwind,
+} from '@hiddenability/opinionated-defaults/prettier';
 
-const config = { ...prettierConfigNext };
+const config = merge(prettierConfigTailwind, prettierConfigBase, {
+  tailwindStylesheet: './src/globals.css',
+});
 
 export default config;

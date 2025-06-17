@@ -1,17 +1,17 @@
-import { betterAuth } from 'better-auth';
-import { passkey } from 'better-auth/plugins/passkey';
-import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
-import { Pool } from 'pg';
-import { Kysely, PostgresDialect } from 'kysely';
-import { sendEmail } from '@/lib/email';
-import { Database } from '@/lib/schemas/database';
 import {
-  VerifyEmail,
+  MagicLinkEmail,
   VerifyDeletion,
+  VerifyEmail,
   VerifyEmailChange,
   VerifyPasswordChange,
-  MagicLinkEmail,
 } from '@/components/email';
+import { sendEmail } from '@/lib/email';
+import { Database } from '@/lib/schemas/database';
+import { betterAuth } from 'better-auth';
+import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
+import { passkey } from 'better-auth/plugins/passkey';
+import { Kysely, PostgresDialect } from 'kysely';
+import { Pool } from 'pg';
 
 const pool = new Pool({
   host: process.env.PG_HOST as string,

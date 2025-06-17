@@ -1,8 +1,15 @@
 'use client';
-import { authClient } from '@/lib/auth-client';
+
+import { TwoFactorForm } from '@/components/auth/two-factor-form';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { PasswordFormSchema } from '@/lib/schemas/auth';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -12,20 +19,14 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
+import { authClient } from '@/lib/auth-client';
+import { PasswordFormSchema } from '@/lib/schemas/auth';
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { Smartphone } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import { useState } from 'react';
-import { TwoFactorForm } from '@/components/auth/two-factor-form';
-import { Smartphone } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export const TwoFactor = ({
   twoFactorEnabled,

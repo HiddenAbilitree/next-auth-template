@@ -1,12 +1,10 @@
 'use server';
 
 /* CHANGEME */
-
-import { createTransport } from 'nodemailer';
-import { render } from '@react-email/components';
-
 // For SES
 import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
+import { render } from '@react-email/components';
+import { createTransport } from 'nodemailer';
 
 // SMTP
 // const transporter = createTransport({

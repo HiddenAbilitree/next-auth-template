@@ -1,11 +1,12 @@
 import {
-  Section,
-  Heading,
-  Row,
   Column,
+  Heading,
   Img,
   Link,
+  Row,
+  Section,
 } from '@react-email/components';
+
 export const Header = () => (
   <Section>
     <Row>

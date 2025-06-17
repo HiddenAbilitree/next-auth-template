@@ -1,7 +1,6 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
 import {
   Form,
   FormControl,
@@ -10,15 +9,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { toast } from 'sonner';
-
-import { authClient } from '@/lib/auth-client';
-
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { useForm } from 'react-hook-form';
-import { SignUpFormSchema } from '@/lib/schemas/auth';
+import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { authClient } from '@/lib/auth-client';
+import { SignUpFormSchema } from '@/lib/schemas/auth';
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export const SignUpForm = () => {
   const router = useRouter();

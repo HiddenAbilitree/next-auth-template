@@ -1,12 +1,12 @@
+import { Header } from '@/components/email/ui/header';
 import {
-  Html,
-  Head,
   Container,
+  Head,
+  Html,
+  Preview,
   Section,
   Tailwind,
-  Preview,
 } from '@react-email/components';
-import { Header } from '@/components/email/ui/header';
 
 export const EmailLayout = ({
   children,

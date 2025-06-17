@@ -1,21 +1,21 @@
 'use client';
+
+import { Button } from '@/components/ui/button';
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
-
-import { ChangePasswordFormSchema } from '@/lib/schemas/auth';
 import { authClient } from '@/lib/auth-client';
+import { ChangePasswordFormSchema } from '@/lib/schemas/auth';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 export const ChangePasswordForm = () => {
   const router = useRouter();
