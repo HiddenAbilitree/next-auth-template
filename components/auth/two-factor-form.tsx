@@ -1,5 +1,6 @@
 'use client';
 
+import { TwoFactorFormSchema } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -16,8 +17,7 @@ import {
 } from '@/components/ui/input-otp';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
-import { TwoFactorFormSchema } from '@/lib/schemas/auth';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { type VariantProps, cva } from 'class-variance-authority';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';

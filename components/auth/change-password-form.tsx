@@ -1,5 +1,6 @@
 'use client';
 
+import { ChangePasswordFormSchema } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -11,7 +12,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { ChangePasswordFormSchema } from '@/lib/schemas/auth';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';

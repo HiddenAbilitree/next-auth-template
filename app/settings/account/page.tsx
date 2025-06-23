@@ -1,3 +1,4 @@
+import { get2faEnabled, getPasskeys } from '@/actions';
 import { AddPasskey } from '@/components/auth/add-passkey';
 import { ChangePasswordForm } from '@/components/auth/change-password-form';
 import { DeleteAccount } from '@/components/auth/delete-account';
@@ -9,38 +10,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
-import { auth } from '@/lib/auth';
-import { db } from '@/lib/auth';
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
-
-const getPasskeys = async () => {
-  'use server';
-
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) redirect('/auth/signin');
-
-  return await db
-    .selectFrom('passkey')
-    .select(['createdAt', 'name'])
-    .where('passkey.userId', '=', session.user.id)
-    .execute();
-};
-
-const get2faEnabled = async () => {
-  'use server';
-
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) redirect('/auth/signin');
-
-  return session.user.twoFactorEnabled;
-};
 
 export default async function AuthSettings() {
   const passkeys = await getPasskeys();
@@ -67,8 +36,8 @@ export default async function AuthSettings() {
           Passkeys
           <AddPasskey />
         </h1>
-        {passkeys.map((passkey, i) => (
-          <PasskeyItem key={i} passkey={passkey} />
+        {passkeys.map((passkey) => (
+          <PasskeyItem key={passkey.id} passkey={passkey} />
         ))}
       </div>
       <div className='flex w-full flex-col gap-1'>
@@ -93,7 +62,7 @@ export default async function AuthSettings() {
 const PasskeyItem = ({
   passkey,
 }: {
-  passkey: { name: string | null; createdAt: Date | null };
+  passkey: { name: string; createdAt: Date; id: string };
 }) => (
   <div className='w-full p-1'>
     {passkey.name}

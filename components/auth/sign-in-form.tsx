@@ -1,6 +1,7 @@
 'use client';
 
 import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
+import { SignInFormSchema } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -13,7 +14,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
-import { SignInFormSchema } from '@/lib/schemas/auth';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

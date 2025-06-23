@@ -1,7 +1,7 @@
 import { EmailLayout } from '@/components/email/email-layout';
 import { Button, Text } from '@react-email/components';
 
-export const MagicLinkEmail = ({ url }: { url: string }) => (
+export const MagicLink = ({ url }: { url: string }) => (
   <EmailLayout
     title='Sign In'
     preview='If you did not request this, you can safely ignore this message.'

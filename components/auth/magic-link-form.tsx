@@ -1,5 +1,6 @@
 'use client';
 
+import { MagicLinkFormSchema } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -12,7 +13,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
-import { MagicLinkFormSchema } from '@/lib/schemas/auth';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';

@@ -1,63 +1,19 @@
 import {
-  MagicLinkEmail,
+  MagicLink,
   VerifyDeletion,
   VerifyEmail,
   VerifyEmailChange,
   VerifyPasswordChange,
 } from '@/components/email';
+import { db, passkey as passkeyTable, twoFactor as twoFactorTable } from '@/db';
 import { sendEmail } from '@/lib/email';
-import { Database } from '@/lib/schemas/database';
 import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
 import { passkey } from 'better-auth/plugins/passkey';
-import { Kysely, PostgresDialect } from 'kysely';
-import { Pool } from 'pg';
-
-const pool = new Pool({
-  host: process.env.PG_HOST as string,
-  database: process.env.PG_DATABASE as string,
-  user: process.env.PG_USER as string,
-  password: process.env.PG_PASSWORD as string,
-  ssl: true,
-});
-
-const dialect = new PostgresDialect({ pool });
-
-export const db = new Kysely<Database>({
-  dialect,
-});
-
-// const addIndexes = async () => {
-//   await db.schema.createIndex('emails').on('user').column('email').execute();
-//   await db.schema
-//     .createIndex('accountIds')
-//     .on('account')
-//     .column('userId')
-//     .execute();
-//   await db.schema
-//     .createIndex('sessions')
-//     .on('session')
-//     .columns(['userId', 'token'])
-//     .execute();
-//   await db.schema
-//     .createIndex('identifiers')
-//     .on('verification')
-//     .column('identifier')
-//     .execute();
-//   await db.schema
-//     .createIndex('passkeyUserIds')
-//     .on('passkey')
-//     .column('userId')
-//     .execute();
-//   await db.schema
-//     .createIndex('secrets')
-//     .on('twoFactor')
-//     .column('secret')
-//     .execute();
-// };
+import { eq } from 'drizzle-orm';
 
 // refer to https://www.better-auth.com/docs/basic-usage           //
-// and https://kysely.dev/docs/getting-started?package-manager=bun //
 export const auth = betterAuth({
   plugins: [
     passkey(),
@@ -73,7 +29,7 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url }) =>
         sendEmail({
-          mailHtml: MagicLinkEmail({ url }),
+          mailHtml: MagicLink({ url }),
           from: process.env.EMAIL_SENDER as string,
           to: email,
           subject: 'Sign In',
@@ -111,14 +67,14 @@ export const auth = betterAuth({
     deleteUser: {
       enabled: true,
       beforeDelete: async (user) => {
-        await db
-          .deleteFrom('passkey')
-          .where('passkey.userId', '=', user.id)
-          .execute();
-        await db
-          .deleteFrom('twoFactor')
-          .where('twoFactor.userId', '=', user.id)
-          .execute();
+        await db.transaction(async (transaction) => {
+          await transaction
+            .delete(passkeyTable)
+            .where(eq(passkeyTable.userId, user.id));
+          await transaction
+            .delete(twoFactorTable)
+            .where(eq(twoFactorTable.userId, user.id));
+        });
       },
       sendDeleteAccountVerification: async ({ user, url }) =>
         sendEmail({
@@ -154,7 +110,7 @@ export const auth = betterAuth({
     },
   },
 
-  database: pool,
+  database: drizzleAdapter(db, { provider: 'pg' }),
 
   appName: 'Nextjs Auth Template',
 

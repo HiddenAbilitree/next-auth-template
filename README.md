@@ -4,14 +4,15 @@ A Next.js template with authentication.
 ### Supported Authentication Methods:
 - Email+Password
 - Passkeys
-- OAuth
+- Discord/Google OAuth
 - Magic Link
 
 ### Features
 - Email/Password Change
 - Account Deletion
 - TOTP 2fa
+- Captchas
 
-Emails can be sent with SMTP or SES API
+Emails can be sent using an SMTP provider or AWS' SES API
 
-.env.example contains all required env variables for full functionality.
+.env.example contains all relevant env variables.

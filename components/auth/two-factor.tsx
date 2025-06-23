@@ -1,6 +1,7 @@
 'use client';
 
 import { TwoFactorForm } from '@/components/auth/two-factor-form';
+import { PasswordFormSchema } from '@/components/auth/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -20,7 +21,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { PasswordFormSchema } from '@/lib/schemas/auth';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { Smartphone } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
