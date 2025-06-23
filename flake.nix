@@ -18,6 +18,7 @@
         buildInputs = with pkgs; [
           bun
           openssl
+          python3
         ];
       };
     });

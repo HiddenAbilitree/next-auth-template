@@ -8,6 +8,7 @@ delete passkeys
 allow changing password using other forms of authentication (passkey, email (already possible using "forgot password"), etc.)
 lock certain actions behind password (maybe "hard"?)
 sign in priority (passkey if enabled -> password + 2fa -> magic link? -> etc.)
+email first then use priority sign in ^
 mobile otp (requires sms api)
 localization
 

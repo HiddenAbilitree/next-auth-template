@@ -5,7 +5,7 @@ import {
   VerifyEmailChange,
   VerifyPasswordChange,
 } from '@/components/email';
-import { db, passkey as passkeyTable, twoFactor as twoFactorTable } from '@/db';
+import { db, schema } from '@/db';
 import { sendEmail } from '@/lib/email';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
@@ -69,11 +69,11 @@ export const auth = betterAuth({
       beforeDelete: async (user) => {
         await db.transaction(async (transaction) => {
           await transaction
-            .delete(passkeyTable)
-            .where(eq(passkeyTable.userId, user.id));
+            .delete(schema.passkey)
+            .where(eq(schema.passkey.userId, user.id));
           await transaction
-            .delete(twoFactorTable)
-            .where(eq(twoFactorTable.userId, user.id));
+            .delete(schema.twoFactor)
+            .where(eq(schema.twoFactor.userId, user.id));
         });
       },
       sendDeleteAccountVerification: async ({ user, url }) =>
@@ -110,7 +110,7 @@ export const auth = betterAuth({
     },
   },
 
-  database: drizzleAdapter(db, { provider: 'pg' }),
+  database: drizzleAdapter(db, { provider: 'pg', schema }),
 
   appName: 'Nextjs Auth Template',
 

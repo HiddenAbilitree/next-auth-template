@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "bun run fix && next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --no-cache"
+    "lint": "next lint --no-cache",
+    "fix": "bun run lint --fix",
+    "push": "drizzle-kit push"
   },
   "dependencies": {
     "@aws-sdk/client-sesv2": "^3.830.0",
     "@aws-sdk/credential-provider-node": "^3.830.0",
-    "@better-fetch/fetch": "^1.1.18",
     "@hookform/resolvers": "^5.1.1",
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-accordion": "^1.2.11",
@@ -45,7 +46,6 @@
   },
   "devDependencies": {
     "@hiddenability/opinionated-defaults": "^0.0.17",
-    "@iconify-json/logos": "^1.2.4",
     "@types/node": "^24.0.3",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.15.4",
