@@ -1,5 +1,6 @@
 'use client';
 
+import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -49,9 +50,7 @@ export const DeleteAccount = () => (
                       id: toastId,
                     });
                   },
-                  onError: (context) => {
-                    toast.error(context.error.message, { id: toastId });
-                  },
+                  onError: (context) => handleError(context, toastId),
                 },
               );
             }}

@@ -2,6 +2,7 @@
 
 import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
 import { SignInFormSchema } from '@/components/auth/types';
+import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -54,11 +55,7 @@ export const SignInForm = () => {
             router.push('/');
           }
         },
-        onError: (context) =>
-          void toast.error('Sign In Failed', {
-            id: toastId,
-            description: context.error.message,
-          }),
+        onError: (context) => handleError(context, toastId, 'Sign In Failed'),
       },
     );
   };
@@ -76,7 +73,7 @@ export const SignInForm = () => {
       { autoFill: true },
       {
         onSuccess: () => {
-          toast.success('Sign In Successful!');
+          toast.success('Welcome back!');
           router.push('/');
         },
       },

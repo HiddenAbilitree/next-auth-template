@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangePasswordFormSchema } from '@/components/auth/types';
+import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -25,23 +26,22 @@ export const ChangePasswordForm = () => {
     newPassword,
   }: typeof ChangePasswordFormSchema.infer) => {
     const toastId = toast.loading('Resetting password...');
-    const { error } = await authClient.changePassword({
-      newPassword,
-      currentPassword,
-    });
-
-    if (error) {
-      toast.error('Error', {
-        id: toastId,
-        description: error.message,
-      });
-    } else {
-      toast.success('Password Reset Successful', {
-        id: toastId,
-        description: 'You can now sign in with your new password!',
-      });
-      router.push('/auth/signin');
-    }
+    await authClient.changePassword(
+      {
+        newPassword,
+        currentPassword,
+      },
+      {
+        onError: (context) => handleError(context, toastId),
+        onSuccess: () => {
+          toast.success('Password Reset Successful', {
+            id: toastId,
+            description: 'You can now sign in with your new password!',
+          });
+          router.push('/auth/signin');
+        },
+      },
+    );
   };
 
   const form = useForm<typeof ChangePasswordFormSchema.infer>({

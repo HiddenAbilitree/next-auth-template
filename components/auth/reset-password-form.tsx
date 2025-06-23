@@ -1,6 +1,7 @@
 'use client';
 
 import { ResetPasswordFormSchema } from '@/components/auth/types';
+import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -38,10 +39,7 @@ export const ResetPasswordForm = () => {
           router.push('/auth/signin');
         },
         onError: (context) => {
-          toast.error('Error', {
-            id: toastId,
-            description: context.error.message,
-          });
+          handleError(context, toastId);
         },
       },
     );

@@ -1,6 +1,7 @@
 'use client';
 
 import { MagicLinkFormSchema } from '@/components/auth/types';
+import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -32,12 +33,7 @@ export const MagicLinkForm = () => {
             description: 'Please check your email to sign in.',
           });
         },
-        onError: (context) => {
-          toast.error('Error', {
-            id: toastId,
-            description: context.error.message,
-          });
-        },
+        onError: (context) => handleError(context, toastId),
       },
     );
   };
