@@ -62,10 +62,16 @@ export default async function AuthSettings() {
 const PasskeyItem = ({
   passkey,
 }: {
-  passkey: { name: string; createdAt: Date; id: string };
+  passkey: {
+    name: string | null;
+    createdAt: Date | null;
+    id: string;
+  };
 }) => (
   <div className='w-full p-1'>
     {passkey.name}
-    Created At: {passkey.createdAt!.toLocaleString()}
+    {passkey.createdAt ?
+      `Created at: ${passkey.createdAt.toLocaleString()}`
+    : `Error`}
   </div>
 );

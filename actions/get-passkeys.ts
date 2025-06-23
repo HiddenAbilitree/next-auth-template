@@ -1,4 +1,4 @@
-import { db, passkey } from '@/db';
+import { db, schema } from '@/db';
 import { auth } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
@@ -12,6 +12,8 @@ export const getPasskeys = async () => {
   });
 
   if (!session) redirect('/auth/signin');
+
+  const passkey = schema.passkey;
 
   return await db
     .select({
