@@ -1,6 +1,6 @@
 'use client';
 
-import { MagicLinkFormSchema } from '@/components/auth/types';
+import { EmailForm as EmailFormSchema } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export const MagicLinkForm = () => {
-  const onSubmit = async (values: typeof MagicLinkFormSchema.infer) => {
+  const onSubmit = async (values: typeof EmailFormSchema.infer) => {
     const toastId = toast.loading('Sending email...');
 
     await authClient.signIn.magicLink(
@@ -38,8 +38,8 @@ export const MagicLinkForm = () => {
     );
   };
 
-  const form = useForm<typeof MagicLinkFormSchema.infer>({
-    resolver: arktypeResolver(MagicLinkFormSchema),
+  const form = useForm<typeof EmailFormSchema.infer>({
+    resolver: arktypeResolver(EmailFormSchema),
   });
 
   return (

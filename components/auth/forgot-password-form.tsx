@@ -1,6 +1,6 @@
 'use client';
 
-import { ForgotPasswordFormSchema } from '@/components/auth/types';
+import { EmailForm as EmailFormSchema } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,7 +19,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 export const ForgotPasswordForm = () => {
-  const onSubmit = async (values: typeof ForgotPasswordFormSchema.infer) => {
+  const onSubmit = async (values: typeof EmailFormSchema.infer) => {
     const toastId = toast.loading('Sending email...');
 
     await authClient.forgetPassword(
@@ -39,8 +39,8 @@ export const ForgotPasswordForm = () => {
     );
   };
 
-  const form = useForm<typeof ForgotPasswordFormSchema.infer>({
-    resolver: arktypeResolver(ForgotPasswordFormSchema),
+  const form = useForm<typeof EmailFormSchema.infer>({
+    resolver: arktypeResolver(EmailFormSchema),
   });
 
   return (

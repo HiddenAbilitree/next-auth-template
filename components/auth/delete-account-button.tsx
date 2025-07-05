@@ -40,7 +40,7 @@ export const DeleteAccount = () => (
               );
               void authClient.deleteUser(
                 {
-                  callbackURL: '/auth/signup',
+                  callbackURL: '/auth/sign-up',
                 },
                 {
                   onSuccess: async () => {

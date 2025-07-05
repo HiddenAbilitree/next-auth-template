@@ -1,7 +1,7 @@
 'use client';
 
 import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
-import { SignInFormSchema } from '@/components/auth/types';
+import { Email } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,11 +16,17 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+
+const SignInFormSchema = type({
+  email: Email,
+  password: 'string',
+});
 
 export const SignInForm = () => {
   const router = useRouter();
@@ -118,7 +124,7 @@ export const SignInForm = () => {
                 <p>Password</p>
                 <Link
                   href='/auth/forgot-password'
-                  className='underline hover:font-semibold hover:-tracking-[0.056em]'
+                  className='underline hover:font-semibold'
                 >
                   Forgot password?
                 </Link>
@@ -126,7 +132,7 @@ export const SignInForm = () => {
               <FormControl>
                 <Input
                   tabIndex={10}
-                  placeholder='••••••••'
+                  placeholder={`\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022`}
                   type='password'
                   autoComplete='current-password webauthn'
                   {...field}
@@ -162,7 +168,7 @@ export const SignInForm = () => {
         <span>
           Don{"'"}t have an account? Make one{' '}
           <Link
-            href='/auth/signup'
+            href='/auth/sign-up'
             className='underline hover:font-medium hover:-tracking-[0.0565em]'
           >
             here

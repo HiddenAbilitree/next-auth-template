@@ -1,6 +1,6 @@
 'use client';
 
-import { SignUpFormSchema } from '@/components/auth/types';
+import { Email, NewPassword } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -14,10 +14,26 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+
+// ripped straight from https://arktype.io/docs/expressions#narrow
+// configure errors https://arktype.io/docs/configuration#errors
+const SignUpFormSchema = type({
+  email: Email,
+  password: NewPassword,
+  confirmPassword: 'string',
+}).narrow(
+  (data, ctx) =>
+    data.password === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to password.',
+      path: ['confirmPassword'],
+    }),
+);
 
 export const SignUpForm = () => {
   const router = useRouter();
@@ -42,7 +58,7 @@ export const SignUpForm = () => {
       {
         onSuccess: () => {
           toast.dismiss(toastId);
-          router.push('/auth/signup/complete');
+          router.push('/auth/sign-up/complete');
         },
         onError: (context) =>
           void toast.error('Sign Up Failed', {
@@ -99,7 +115,13 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
+                <Input
+                  placeholder={
+                    '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'
+                  }
+                  type='password'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,7 +130,7 @@ export const SignUpForm = () => {
         <Button type='submit'>Sign Up</Button>
         <span>
           Already have an account? Sign in{' '}
-          <Link href='/auth/signin' className='underline hover:font-medium'>
+          <Link href='/auth/sign-in' className='underline hover:font-medium'>
             here
           </Link>
           .

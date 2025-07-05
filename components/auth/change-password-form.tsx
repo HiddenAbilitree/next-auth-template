@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangePasswordFormSchema } from '@/components/auth/types';
+import { NewPassword } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,9 +14,23 @@ import {
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+
+export const ChangePasswordFormSchema = type({
+  currentPassword: 'string',
+  newPassword: NewPassword,
+  confirmPassword: 'string',
+}).narrow(
+  (data, ctx) =>
+    data.newPassword === data.confirmPassword ||
+    ctx.reject({
+      message: 'Must be identical to the new password.',
+      path: ['confirmPassword'],
+    }),
+);
 
 export const ChangePasswordForm = () => {
   const router = useRouter();
@@ -38,7 +52,7 @@ export const ChangePasswordForm = () => {
             id: toastId,
             description: 'You can now sign in with your new password!',
           });
-          router.push('/auth/signin');
+          router.push('/auth/sign-in');
         },
       },
     );
