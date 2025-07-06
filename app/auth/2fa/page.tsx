@@ -1,4 +1,4 @@
-import { TwoFactorForm } from '@/components/auth/two-factor-form';
+import { TwoFactorForm } from '@/components/auth/forms/two-factor';
 
 export default function VerifyTwoFactor() {
   return (

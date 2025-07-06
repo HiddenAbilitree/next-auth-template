@@ -1,4 +1,4 @@
-import { SignInForm } from '@/components/auth/sign-in-form';
+import { SignInForm } from '@/components/auth/forms/sign-in';
 
 const SignIn = () => (
   <div className='flex h-screen w-screen items-center justify-center'>

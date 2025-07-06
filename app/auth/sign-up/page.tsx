@@ -1,4 +1,4 @@
-import { SignUpForm } from '@/components/auth/sign-up-form';
+import { SignUpForm } from '@/components/auth/forms/sign-up';
 
 export default function SignUp(): Readonly<React.JSX.Element> {
   return (

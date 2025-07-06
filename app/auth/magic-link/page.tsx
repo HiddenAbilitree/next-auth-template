@@ -1,4 +1,4 @@
-import { MagicLinkForm } from '@/components/auth/magic-link-form';
+import { MagicLinkForm } from '@/components/auth/forms/magic-link';
 
 export default function MagicLink() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { TwoFactorForm } from '@/components/auth/two-factor-form';
+import { TwoFactorForm } from '@/components/auth/forms/two-factor';
 import { PasswordFormSchema } from '@/components/auth/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
