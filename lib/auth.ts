@@ -6,6 +6,7 @@ import {
   VerifyPasswordChange,
 } from '@/components/email';
 import { db, schema } from '@/db';
+// import { client as redis } from '@/db';
 import { sendEmail } from '@/lib/email';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
@@ -111,6 +112,19 @@ export const auth = betterAuth({
   },
 
   database: drizzleAdapter(db, { provider: 'pg', schema }),
+
+  // secondaryStorage: {
+  //   get: async (key) => {
+  //     const value = await redis.get(key);
+  //     return value;
+  //   },
+  //   set: async (key, value, ttl) => {
+  //     await redis.set(key, value, (ttl && { EX: ttl }) || undefined);
+  //   },
+  //   delete: async (key) => {
+  //     await redis.del(key);
+  //   },
+  // },
 
   appName: 'Nextjs Auth Template',
 
