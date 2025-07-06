@@ -1,6 +1,7 @@
 import { Separator } from '@/components/ui/separator';
 import { ShieldUser } from 'lucide-react';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 const generalLinks = [
   {
@@ -10,11 +11,7 @@ const generalLinks = [
   },
 ];
 
-export default function SettingsLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function SettingsLayout({ children }: { children: ReactNode }) {
   return (
     <div className='container flex h-screen flex-col items-center'>
       <header className='flex w-full items-center justify-start p-4'>

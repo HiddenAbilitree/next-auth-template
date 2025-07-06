@@ -34,6 +34,7 @@ export const DeleteAccount = () => (
         <DialogClose asChild>
           <Button
             variant='destructive'
+            disabled
             onClick={() => {
               const toastId = toast.loading(
                 'Sending Account Deletion Email...',

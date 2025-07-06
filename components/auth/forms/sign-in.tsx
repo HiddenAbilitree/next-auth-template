@@ -91,7 +91,7 @@ export const SignInForm = () => {
       <form
         tabIndex={0}
         onSubmit={form.handleSubmit(onSubmit)}
-        className='w-100 bg-card flex flex-col gap-4 rounded-md border p-4 shadow-sm'
+        className='w-100 bg-card flex flex-col gap-3.5 rounded-md border p-4 shadow-sm'
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Welcome Back</h1>

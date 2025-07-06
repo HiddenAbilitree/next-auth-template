@@ -5,6 +5,7 @@
 import { SESv2Client, SendEmailCommand } from '@aws-sdk/client-sesv2';
 import { render } from '@react-email/components';
 import { createTransport } from 'nodemailer';
+import { JSX } from 'react';
 
 // SMTP
 // const transporter = createTransport({
@@ -37,7 +38,7 @@ export const sendEmail = async ({
   to,
   subject,
 }: {
-  mailHtml: React.JSX.Element;
+  mailHtml: JSX.Element;
   from: string;
   to: string;
   subject: string;

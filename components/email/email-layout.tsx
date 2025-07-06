@@ -7,12 +7,17 @@ import {
   Section,
   Tailwind,
 } from '@react-email/components';
+import { ReactNode } from 'react';
 
 export const EmailLayout = ({
   children,
   preview,
   title,
-}: Readonly<{ children: React.ReactNode; preview: string; title: string }>) => (
+}: {
+  children: ReactNode;
+  preview: string;
+  title: string;
+}) => (
   <Html>
     <Head>
       <title>{title}</title>

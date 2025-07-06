@@ -4,7 +4,10 @@ import { Button, Text } from '@react-email/components';
 export const VerifyEmailChange = ({
   url,
   newEmail,
-}: Readonly<{ url: string; newEmail: string }>) => (
+}: {
+  url: string;
+  newEmail: string;
+}) => (
   <EmailLayout
     title='Verify Email Change'
     preview='If you did not request this, please change your password immediately.'
