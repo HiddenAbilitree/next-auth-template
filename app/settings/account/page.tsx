@@ -1,11 +1,11 @@
 import { get2faEnabled, getPasskeys } from '@/actions';
 import { AddPasskey } from '@/components/auth/buttons/add-passkey';
-import { ChangePasswordForm } from '@/components/auth/forms/change-password';
 import { DeleteAccount } from '@/components/auth/buttons/delete-account';
 import {
   EnableTwoFactor,
   TwoFactor,
 } from '@/components/auth/buttons/enable-two-factor';
+import { ChangePasswordForm } from '@/components/auth/forms/change-password';
 import {
   Accordion,
   AccordionContent,

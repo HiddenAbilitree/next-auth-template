@@ -33,7 +33,7 @@ export const TwoFactor = ({
 }: {
   twoFactorEnabled: boolean | null | undefined;
 }) => (
-  <span className='inline-flex items-center gap-2'>
+  <div className='flex items-center gap-2'>
     <Smartphone />
     Authenticator
     {twoFactorEnabled && (
@@ -44,7 +44,7 @@ export const TwoFactor = ({
         Enabled
       </Badge>
     )}
-  </span>
+  </div>
 );
 
 export const EnableTwoFactor = () => {
@@ -52,31 +52,43 @@ export const EnableTwoFactor = () => {
   const [openTOTP, setOpenTOTP] = useState(false);
   const [totpURI, setTOTPURI] = useState<string | undefined>();
   return (
-    <>
-      <Dialog open={openPasswordForm} onOpenChange={setOpenPasswordForm}>
-        <Button variant='outline' onClick={() => setOpenPasswordForm(true)}>
-          Enable 2FA
-        </Button>
-        <DialogContent className='sm:max-w-[425px]'>
-          <DialogHeader>
-            <DialogTitle>Enable 2FA</DialogTitle>
-            <DialogDescription>
-              Enter your password to enable 2FA
-            </DialogDescription>
-          </DialogHeader>
-          <PasswordForm
-            setOpenPasswordForm={setOpenPasswordForm}
-            setOpenTOTP={setOpenTOTP}
-            setTOTPURI={setTOTPURI}
-          />
-        </DialogContent>
-      </Dialog>
+    <div className='relative'>
       {openTOTP && (
-        <>
-          <VerifyTOTP totpURI={totpURI ?? ''} /> <TwoFactorForm />
-        </>
+        <button
+          className='absolute right-2 top-2 size-11 rounded-full border hover:cursor-pointer'
+          onClick={() => {
+            setOpenTOTP(false);
+          }}
+        >
+          X
+        </button>
       )}
-    </>
+      {!openTOTP && (
+        <Dialog open={openPasswordForm} onOpenChange={setOpenPasswordForm}>
+          <Button variant='outline' onClick={() => setOpenPasswordForm(true)}>
+            Enable 2FA
+          </Button>
+          <DialogContent className='sm:max-w-[425px]'>
+            <DialogHeader>
+              <DialogTitle>Enable 2FA</DialogTitle>
+              <DialogDescription>
+                Enter your password to enable 2FA
+              </DialogDescription>
+            </DialogHeader>
+            <PasswordForm
+              setOpenPasswordForm={setOpenPasswordForm}
+              setOpenTOTP={setOpenTOTP}
+              setTOTPURI={setTOTPURI}
+            />
+          </DialogContent>
+        </Dialog>
+      )}
+      {openTOTP && (
+        <div className='flex gap-5'>
+          <VerifyTOTP totpURI={totpURI ?? ''} /> <TwoFactorForm />
+        </div>
+      )}
+    </div>
   );
 };
 
