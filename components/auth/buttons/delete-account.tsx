@@ -1,5 +1,7 @@
 'use client';
 
+import { toast } from 'sonner';
+
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +14,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { authClient } from '@/lib/auth-client';
-import { toast } from 'sonner';
 
 export const DeleteAccount = () => (
   <Dialog>
@@ -33,7 +34,6 @@ export const DeleteAccount = () => (
         </DialogClose>
         <DialogClose asChild>
           <Button
-            variant='destructive'
             disabled
             onClick={() => {
               const toastId = toast.loading(
@@ -44,6 +44,7 @@ export const DeleteAccount = () => (
                   callbackURL: '/auth/sign-up',
                 },
                 {
+                  onError: (context) => handleError(context, toastId),
                   onSuccess: async () => {
                     toast.success('Email Sent', {
                       description:
@@ -51,10 +52,10 @@ export const DeleteAccount = () => (
                       id: toastId,
                     });
                   },
-                  onError: (context) => handleError(context, toastId),
                 },
               );
             }}
+            variant='destructive'
           >
             Delete Account
           </Button>

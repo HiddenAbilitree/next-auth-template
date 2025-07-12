@@ -1,4 +1,3 @@
-import { Header } from '@/components/email/ui/header';
 import {
   Container,
   Head,
@@ -8,6 +7,8 @@ import {
   Tailwind,
 } from '@react-email/components';
 import { ReactNode } from 'react';
+
+import { Header } from '@/components/email/ui/header';
 
 export const EmailLayout = ({
   children,

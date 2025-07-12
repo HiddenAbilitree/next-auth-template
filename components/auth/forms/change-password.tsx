@@ -1,5 +1,11 @@
 'use client';
 
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
 import { NewPassword } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
@@ -13,16 +19,11 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { type } from 'arktype';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 export const ChangePasswordFormSchema = type({
+  confirmPassword: 'string',
   currentPassword: 'string',
   newPassword: NewPassword,
-  confirmPassword: 'string',
 }).narrow(
   (data, ctx) =>
     data.newPassword === data.confirmPassword ||
@@ -42,15 +43,15 @@ export const ChangePasswordForm = () => {
     const toastId = toast.loading('Resetting password...');
     await authClient.changePassword(
       {
-        newPassword,
         currentPassword,
+        newPassword,
       },
       {
         onError: (context) => handleError(context, toastId),
         onSuccess: () => {
           toast.success('Password Reset Successful', {
-            id: toastId,
             description: 'You can now sign in with your new password!',
+            id: toastId,
           });
           router.push('/auth/sign-in');
         },
@@ -59,20 +60,20 @@ export const ChangePasswordForm = () => {
   };
 
   const form = useForm<typeof ChangePasswordFormSchema.infer>({
-    resolver: arktypeResolver(ChangePasswordFormSchema),
-
     defaultValues: {
+      confirmPassword: '',
       currentPassword: '',
       newPassword: '',
-      confirmPassword: '',
     },
+
+    resolver: arktypeResolver(ChangePasswordFormSchema),
   });
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className='w-100 flex flex-col gap-5 rounded-md p-4'
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}

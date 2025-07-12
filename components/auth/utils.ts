@@ -3,11 +3,11 @@ import { toast } from 'sonner';
 
 export const handleError = (
   context: ErrorContext,
-  toastId: string | number,
+  toastId: number | string,
   error?: string,
 ) => {
   toast.error(error ?? 'Error', {
-    id: toastId,
     description: context.error.message,
+    id: toastId,
   });
 };

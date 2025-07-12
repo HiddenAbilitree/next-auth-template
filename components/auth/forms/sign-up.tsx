@@ -1,5 +1,12 @@
 'use client';
 
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
 import { Email, NewPassword } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,19 +20,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { type } from 'arktype';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 // ripped straight from https://arktype.io/docs/expressions#narrow
 // configure errors https://arktype.io/docs/configuration#errors
 const SignUpFormSchema = type({
+  confirmPassword: 'string',
   email: Email,
   password: NewPassword,
-  confirmPassword: 'string',
 }).narrow(
   (data, ctx) =>
     data.password === data.confirmPassword ||
@@ -38,12 +39,12 @@ const SignUpFormSchema = type({
 export const SignUpForm = () => {
   const router = useRouter();
   const form = useForm<typeof SignUpFormSchema.infer>({
-    resolver: arktypeResolver(SignUpFormSchema),
     defaultValues: {
+      confirmPassword: '',
       email: '',
       password: '',
-      confirmPassword: '',
     },
+    resolver: arktypeResolver(SignUpFormSchema),
   });
 
   const onSubmit = async (values: typeof SignUpFormSchema.infer) => {
@@ -52,22 +53,22 @@ export const SignUpForm = () => {
     await authClient.signUp.email(
       {
         email: values.email,
-        password: values.password,
         name: '',
+        password: values.password,
       },
       {
-        onSuccess: () => {
-          toast.dismiss(toastId);
-          router.push('/auth/sign-up/complete');
-        },
         onError: (context) =>
           void toast.error('Sign Up Failed', {
-            id: toastId,
             description:
               context.error.message === 'User already exists' ?
                 'Email is already in use.'
               : context.error.message,
+            id: toastId,
           }),
+        onSuccess: () => {
+          toast.dismiss(toastId);
+          router.push('/auth/sign-up/complete');
+        },
       },
     );
   };
@@ -75,8 +76,8 @@ export const SignUpForm = () => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className='w-100 bg-card flex flex-col gap-5 rounded-md border p-4 shadow-sm'
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Get Started</h1>
@@ -130,7 +131,7 @@ export const SignUpForm = () => {
         <Button type='submit'>Sign Up</Button>
         <span>
           Already have an account? Sign in{' '}
-          <Link href='/auth/sign-in' className='underline hover:font-medium'>
+          <Link className='underline hover:font-medium' href='/auth/sign-in'>
             here
           </Link>
           .

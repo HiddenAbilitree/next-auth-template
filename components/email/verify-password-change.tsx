@@ -1,10 +1,11 @@
-import { EmailLayout } from '@/components/email/email-layout';
 import { Button, Text } from '@react-email/components';
+
+import { EmailLayout } from '@/components/email/email-layout';
 
 export const VerifyPasswordChange = ({ url }: { url: string }) => (
   <EmailLayout
-    title='Password Change Request'
     preview='If you did not request this, please change your password immediately.'
+    title='Password Change Request'
   >
     <Button
       className='box-border rounded-md bg-red-500 px-4 py-3 text-center font-semibold text-white'

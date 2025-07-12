@@ -1,16 +1,17 @@
-import { EmailLayout } from '@/components/email/email-layout';
 import { Button, Text } from '@react-email/components';
 
+import { EmailLayout } from '@/components/email/email-layout';
+
 export const VerifyEmailChange = ({
-  url,
   newEmail,
+  url,
 }: {
-  url: string;
   newEmail: string;
+  url: string;
 }) => (
   <EmailLayout
-    title='Verify Email Change'
     preview='If you did not request this, please change your password immediately.'
+    title='Verify Email Change'
   >
     <Text className='text-black'>
       Only click the following button if you have authorized the email change to{' '}

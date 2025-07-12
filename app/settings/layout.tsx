@@ -1,13 +1,14 @@
-import { Separator } from '@/components/ui/separator';
 import { ShieldUser } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+import { Separator } from '@/components/ui/separator';
+
 const generalLinks = [
   {
-    name: 'Account and Security',
     href: '/settings/account',
     icon: ShieldUser,
+    name: 'Account and Security',
   },
 ];
 
@@ -22,8 +23,8 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
           {generalLinks.map((link, i) => (
             <Link
               className='inline-flex items-center gap-1'
-              key={i}
               href={link.href}
+              key={i}
             >
               <link.icon size={20} />
               {link.name}

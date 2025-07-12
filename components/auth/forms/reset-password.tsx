@@ -1,5 +1,11 @@
 'use client';
 
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { type } from 'arktype';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
 import { NewPassword } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
@@ -14,15 +20,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { type } from 'arktype';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 export const ResetPasswordFormSchema = type({
-  password: NewPassword,
   confirmPassword: 'string',
+  password: NewPassword,
 }).narrow(
   (data, ctx) =>
     data.password === data.confirmPassword ||
@@ -44,33 +45,33 @@ export const ResetPasswordForm = () => {
         token,
       },
       {
-        onSuccess: () => {
-          toast.success('Password Reset Successful', {
-            id: toastId,
-            description: 'You can now sign in with your new password!',
-          });
-          router.push('/auth/sign-in');
-        },
         onError: (context) => {
           handleError(context, toastId);
+        },
+        onSuccess: () => {
+          toast.success('Password Reset Successful', {
+            description: 'You can now sign in with your new password!',
+            id: toastId,
+          });
+          router.push('/auth/sign-in');
         },
       },
     );
   };
 
   const form = useForm<typeof ResetPasswordFormSchema.infer>({
-    resolver: arktypeResolver(ResetPasswordFormSchema),
     defaultValues: {
-      password: '',
       confirmPassword: '',
+      password: '',
     },
+    resolver: arktypeResolver(ResetPasswordFormSchema),
   });
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className='w-100 bg-card flex flex-col gap-5 rounded-md border p-4 shadow-sm'
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Reset Password</h1>

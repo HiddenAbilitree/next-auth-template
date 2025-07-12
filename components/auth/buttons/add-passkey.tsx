@@ -5,10 +5,10 @@ import { authClient } from '@/lib/auth-client';
 
 export const AddPasskey = () => (
   <Button
-    size='sm'
     onClick={async () => {
       await authClient.passkey.addPasskey();
     }}
+    size='sm'
   >
     Add Passkey
   </Button>

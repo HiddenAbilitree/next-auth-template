@@ -1,5 +1,13 @@
 'use client';
 
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { REGEXP_ONLY_DIGITS } from 'input-otp';
+import { useRouter } from 'next/navigation';
+import { ComponentProps } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
 import { TwoFactorFormSchema } from '@/components/auth/types';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -18,23 +26,16 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/utils';
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { type VariantProps, cva } from 'class-variance-authority';
-import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { useRouter } from 'next/navigation';
-import { ComponentProps } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 const formVariants = cva('w-100 flex flex-col gap-4', {
-  variants: {
-    variant: {
-      default: '',
-      card: 'bg-card rounded-md border p-4 shadow-sm',
-    },
-  },
   defaultVariants: {
     variant: 'default',
+  },
+  variants: {
+    variant: {
+      card: 'bg-card rounded-md border p-4 shadow-sm',
+      default: '',
+    },
   },
 });
 
@@ -44,22 +45,22 @@ export const TwoFactorForm = ({
 }: ComponentProps<'form'> & VariantProps<typeof formVariants>) => {
   const router = useRouter();
   const form = useForm<typeof TwoFactorFormSchema.infer>({
-    resolver: arktypeResolver(TwoFactorFormSchema),
     defaultValues: {
       otp: '',
       trust: false,
     },
+    resolver: arktypeResolver(TwoFactorFormSchema),
   });
 
   const onSubmit = async (data: typeof TwoFactorFormSchema.infer) => {
     void (await authClient.twoFactor.verifyTotp(
       { code: data.otp },
       {
-        onSuccess: () => {
-          router.push('/');
-        },
         onError: (context) => {
           toast.error(context.error.message);
+        },
+        onSuccess: () => {
+          router.push('/');
         },
       },
     ));
@@ -68,8 +69,8 @@ export const TwoFactorForm = ({
   return (
     <Form {...form}>
       <form
+        className={cn(formVariants({ className, variant }))}
         onSubmit={form.handleSubmit(onSubmit)}
-        className={cn(formVariants({ variant, className }))}
       >
         <div className='flex w-full flex-col gap-1'>
           <h1 className='w-full text-xl font-semibold'>
@@ -90,9 +91,9 @@ export const TwoFactorForm = ({
                 <InputOTP
                   maxLength={6}
                   {...field}
-                  pattern={REGEXP_ONLY_DIGITS}
                   autoComplete='totp'
                   onComplete={form.handleSubmit(onSubmit)}
+                  pattern={REGEXP_ONLY_DIGITS}
                 >
                   <InputOTPGroup>
                     <InputOTPSlot index={0} />
@@ -115,14 +116,14 @@ export const TwoFactorForm = ({
             <FormItem className='flex items-center'>
               <FormControl>
                 <Checkbox
-                  id='trust'
                   checked={field.value}
+                  id='trust'
                   onCheckedChange={field.onChange}
                 />
               </FormControl>
               <label
-                htmlFor='trust'
                 className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                htmlFor='trust'
               >
                 Trust this device for 30 days.
               </label>

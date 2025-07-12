@@ -18,8 +18,8 @@ export default async function AuthSettings() {
   const passkeys = await getPasskeys();
   return (
     <div className='container flex flex-col items-center justify-center gap-4'>
-      <Accordion type='multiple' className='w-full'>
-        <AccordionItem value='password' asChild>
+      <Accordion className='w-full' type='multiple'>
+        <AccordionItem asChild value='password'>
           <div className='flex flex-col gap-1'>
             <span className='inline-flex w-full items-center justify-between border-b p-1'>
               <h1 className='text-2xl font-medium'>Password</h1>
@@ -66,9 +66,9 @@ const PasskeyItem = ({
   passkey,
 }: {
   passkey: {
-    name: string | null;
     createdAt: Date | null;
     id: string;
+    name: null | string;
   };
 }) => (
   <div className='w-full p-1'>

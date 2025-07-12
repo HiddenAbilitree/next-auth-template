@@ -1,5 +1,12 @@
 'use client';
 
+import { arktypeResolver } from '@hookform/resolvers/arktype';
+import { Smartphone } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+
 import { TwoFactorForm } from '@/components/auth/forms/two-factor';
 import { PasswordFormSchema } from '@/components/auth/types';
 import { Badge } from '@/components/ui/badge';
@@ -21,12 +28,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
-import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { Smartphone } from 'lucide-react';
-import { QRCodeSVG } from 'qrcode.react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 export const TwoFactor = ({
   twoFactorEnabled,
@@ -64,8 +65,8 @@ export const EnableTwoFactor = () => {
         </button>
       )}
       {!openTOTP && (
-        <Dialog open={openPasswordForm} onOpenChange={setOpenPasswordForm}>
-          <Button variant='outline' onClick={() => setOpenPasswordForm(true)}>
+        <Dialog onOpenChange={setOpenPasswordForm} open={openPasswordForm}>
+          <Button onClick={() => setOpenPasswordForm(true)} variant='outline'>
             Enable 2FA
           </Button>
           <DialogContent className='sm:max-w-[425px]'>
@@ -107,28 +108,28 @@ export const PasswordForm = ({
         password: values.password,
       },
       {
+        onError: () => void toast.error('Incorrect Password'),
         onSuccess: (context) => {
           setTOTPURI(context.data.totpURI);
           setOpenPasswordForm(false);
           setOpenTOTP(true);
         },
-        onError: () => void toast.error('Incorrect Password'),
       },
     );
   };
 
   const form = useForm<typeof PasswordFormSchema.infer>({
-    resolver: arktypeResolver(PasswordFormSchema),
     defaultValues: {
       password: '',
     },
+    resolver: arktypeResolver(PasswordFormSchema),
   });
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
         className='flex flex-col gap-5 rounded-md'
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
@@ -151,6 +152,6 @@ export const PasswordForm = ({
 
 export const VerifyTOTP = ({ totpURI }: { totpURI: string }) => (
   <div className='bg-white p-2'>
-    <QRCodeSVG value={totpURI} size={256} />
+    <QRCodeSVG size={256} value={totpURI} />
   </div>
 );

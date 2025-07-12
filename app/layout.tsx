@@ -1,24 +1,26 @@
 import '@/app/globals.css';
-import { Toaster } from '@/components/ui/sonner';
-import { ThemeProvider } from '@/components/ui/theme-provider';
-import { ModeToggle } from '@/components/ui/theme-toggle';
 import type { Metadata } from 'next';
+
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ReactNode } from 'react';
 
+import { Toaster } from '@/components/ui/sonner';
+import { ThemeProvider } from '@/components/ui/theme-provider';
+import { ModeToggle } from '@/components/ui/theme-toggle';
+
 const geistSans = Geist({
-  variable: '--font-geist-sans',
   subsets: ['latin'],
+  variable: '--font-geist-sans',
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
   subsets: ['latin'],
+  variable: '--font-geist-mono',
 });
 
 export const metadata: Metadata = {
-  title: 'holy',
   description: 'holy',
+  title: 'holy',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -30,8 +32,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
-          enableSystem
           disableTransitionOnChange
+          enableSystem
         >
           {children}
           <ModeToggle />

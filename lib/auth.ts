@@ -1,3 +1,9 @@
+import { betterAuth } from 'better-auth';
+import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
+import { passkey } from 'better-auth/plugins/passkey';
+import { eq } from 'drizzle-orm';
+
 import {
   MagicLink,
   VerifyDeletion,
@@ -8,14 +14,39 @@ import {
 import { db, schema } from '@/db';
 // import { client as redis } from '@/db';
 import { sendEmail } from '@/lib/email';
-import { betterAuth } from 'better-auth';
-import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
-import { passkey } from 'better-auth/plugins/passkey';
-import { eq } from 'drizzle-orm';
 
 // refer to https://www.better-auth.com/docs/basic-usage           //
 export const auth = betterAuth({
+  appName: 'Nextjs Auth Template',
+
+  database: drizzleAdapter(db, { provider: 'pg', schema }),
+
+  emailAndPassword: {
+    enabled: true,
+    maxPasswordLength: 1024,
+    requireEmailVerification: true,
+    sendResetPassword: async ({ url, user }) =>
+      sendEmail({
+        from: process.env.EMAIL_SENDER as string,
+        mailHtml: VerifyPasswordChange({ url }),
+        subject: 'Change Your Password',
+        to: user.email,
+      }),
+  },
+
+  emailVerification: {
+    autoSignInAfterVerification: true,
+    expiresIn: 3600,
+    sendOnSignUp: true,
+    sendVerificationEmail: async ({ url, user }) =>
+      sendEmail({
+        from: process.env.EMAIL_SENDER as string,
+        mailHtml: VerifyEmail({ url }),
+        subject: 'Verify Your Email',
+        to: user.email,
+      }),
+  },
+
   plugins: [
     passkey(),
     twoFactor(),
@@ -30,88 +61,15 @@ export const auth = betterAuth({
     magicLink({
       sendMagicLink: async ({ email, url }) =>
         sendEmail({
-          mailHtml: MagicLink({ url }),
           from: process.env.EMAIL_SENDER as string,
-          to: email,
+          mailHtml: MagicLink({ url }),
           subject: 'Sign In',
+          to: email,
         }),
     }),
   ],
 
-  emailAndPassword: {
-    enabled: true,
-    requireEmailVerification: true,
-    maxPasswordLength: 1024,
-    sendResetPassword: async ({ user, url }) =>
-      sendEmail({
-        mailHtml: VerifyPasswordChange({ url }),
-        from: process.env.EMAIL_SENDER as string,
-        to: user.email,
-        subject: 'Change Your Password',
-      }),
-  },
-
-  emailVerification: {
-    sendVerificationEmail: async ({ user, url }) =>
-      sendEmail({
-        mailHtml: VerifyEmail({ url }),
-        from: process.env.EMAIL_SENDER as string,
-        to: user.email,
-        subject: 'Verify Your Email',
-      }),
-    sendOnSignUp: true,
-    autoSignInAfterVerification: true,
-    expiresIn: 3600,
-  },
-
-  user: {
-    deleteUser: {
-      enabled: true,
-      beforeDelete: async (user) => {
-        await db.transaction(async (transaction) => {
-          await transaction
-            .delete(schema.passkey)
-            .where(eq(schema.passkey.userId, user.id));
-          await transaction
-            .delete(schema.twoFactor)
-            .where(eq(schema.twoFactor.userId, user.id));
-        });
-      },
-      sendDeleteAccountVerification: async ({ user, url }) =>
-        sendEmail({
-          mailHtml: VerifyDeletion({ url }),
-          from: process.env.EMAIL_SENDER as string,
-          to: user.email,
-          subject: 'Verify Account Deletion',
-        }),
-    },
-
-    changeEmail: {
-      enabled: true,
-      sendChangeEmailVerification: async ({ user, newEmail, url }) =>
-        sendEmail({
-          mailHtml: VerifyEmailChange({ url, newEmail }),
-          from: process.env.EMAIL_SENDER as string,
-          to: user.email,
-          subject: 'Verify Email Change',
-        }),
-    },
-  },
-
-  socialProviders: {
-    // https://www.better-auth.com/docs/authentication/google
-    google: {
-      prompt: 'select_account',
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    },
-    discord: {
-      clientId: process.env.DISCORD_CLIENT_ID as string,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
-    },
-  },
-
-  database: drizzleAdapter(db, { provider: 'pg', schema }),
+  rateLimit: { enabled: true, max: 15, window: 100 },
 
   // secondaryStorage: {
   //   get: async (key) => {
@@ -126,7 +84,50 @@ export const auth = betterAuth({
   //   },
   // },
 
-  appName: 'Nextjs Auth Template',
+  socialProviders: {
+    discord: {
+      clientId: process.env.DISCORD_CLIENT_ID as string,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+    },
+    // https://www.better-auth.com/docs/authentication/google
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      prompt: 'select_account',
+    },
+  },
 
-  rateLimit: { enabled: true, max: 15, window: 100 },
+  user: {
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailVerification: async ({ newEmail, url, user }) =>
+        sendEmail({
+          from: process.env.EMAIL_SENDER as string,
+          mailHtml: VerifyEmailChange({ newEmail, url }),
+          subject: 'Verify Email Change',
+          to: user.email,
+        }),
+    },
+
+    deleteUser: {
+      beforeDelete: async (user) => {
+        await db.transaction(async (transaction) => {
+          await transaction
+            .delete(schema.passkey)
+            .where(eq(schema.passkey.userId, user.id));
+          await transaction
+            .delete(schema.twoFactor)
+            .where(eq(schema.twoFactor.userId, user.id));
+        });
+      },
+      enabled: true,
+      sendDeleteAccountVerification: async ({ url, user }) =>
+        sendEmail({
+          from: process.env.EMAIL_SENDER as string,
+          mailHtml: VerifyDeletion({ url }),
+          subject: 'Verify Account Deletion',
+          to: user.email,
+        }),
+    },
+  },
 });
