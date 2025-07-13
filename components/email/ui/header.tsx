@@ -12,7 +12,7 @@ export const Header = () => (
     <Row>
       <Column className='flex items-center gap-3 p-4'>
         {/* CHANGEME */}
-        <Link href={process.env.BETTER_AUTH_URL as string}>
+        <Link href=''>
           <Img alt='Logo' className='size-12' src='/favicon.ico' />
         </Link>
         <Heading as='h1' className='text-2xl font-semibold'>
