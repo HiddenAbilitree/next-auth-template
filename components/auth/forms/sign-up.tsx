@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { Email, NewPassword } from '@/components/auth/types';
+import { PasswordInput } from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -76,11 +77,11 @@ export const SignUpForm = () => {
   return (
     <Form {...form}>
       <form
-        className='w-100 bg-card flex flex-col gap-5 rounded-md border p-4 shadow-sm'
+        className='w-100 bg-card flex flex-col gap-4 rounded-md border p-8 shadow-sm'
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className='flex w-full flex-col gap-3.5'>
-          <h1 className='w-full text-xl font-semibold'>Get Started</h1>
+        <div className='flex w-full flex-col gap-4'>
+          <h1 className={`w-full text-2xl font-semibold`}>Sign Up</h1>
           <Separator />
         </div>
         <FormField
@@ -90,7 +91,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder='example@acme.com' {...field} />
+                <Input placeholder='username@domain.tld' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -103,7 +104,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
+                <PasswordInput {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -116,13 +117,7 @@ export const SignUpForm = () => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input
-                  placeholder={
-                    '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'
-                  }
-                  type='password'
-                  {...field}
-                />
+                <PasswordInput {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

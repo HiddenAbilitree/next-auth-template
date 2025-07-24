@@ -2,6 +2,7 @@
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { type } from 'arktype';
+import { Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -11,6 +12,7 @@ import { toast } from 'sonner';
 import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
 import { Email } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
+import { PasswordInput } from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -90,12 +92,11 @@ export const SignInForm = () => {
   return (
     <Form {...form}>
       <form
-        className='w-100 bg-card flex flex-col gap-3.5 rounded-md border p-4 shadow-sm'
+        className='w-100 backdrop-grayscale-25 bg-card relative z-40 flex flex-col gap-4 rounded-sm border p-8 backdrop-blur-3xl'
         onSubmit={form.handleSubmit(onSubmit)}
-        tabIndex={0}
       >
-        <div className='flex w-full flex-col gap-3.5'>
-          <h1 className='w-full text-xl font-semibold'>Welcome Back</h1>
+        <div className='flex w-full flex-col gap-4'>
+          <h1 className='w-full text-2xl font-semibold'>Sign In</h1>
           <Separator />
         </div>
         <FormField
@@ -107,8 +108,7 @@ export const SignInForm = () => {
               <FormControl>
                 <Input
                   autoComplete='username webauthn'
-                  placeholder='example@acme.com'
-                  tabIndex={10}
+                  placeholder='username@domain.tld'
                   {...field}
                 />
               </FormControl>
@@ -124,52 +124,37 @@ export const SignInForm = () => {
               <FormLabel className='flex w-full justify-between'>
                 <p>Password</p>
                 <Link
-                  className='underline hover:font-semibold'
+                  className='hover:text-secondary-foreground underline transition-colors'
                   href='/auth/forgot-password'
                 >
                   Forgot password?
                 </Link>
               </FormLabel>
               <FormControl>
-                <Input
-                  autoComplete='current-password webauthn'
-                  placeholder={`\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022`}
-                  tabIndex={10}
-                  type='password'
-                  {...field}
-                />
+                <PasswordInput {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button tabIndex={10} type='submit'>
-          Sign In
-        </Button>
+        <Button type='submit'>Sign In</Button>
+        <div className='flex w-full items-center gap-3.5'>
+          <Separator className='flex flex-1' />
+          <span className='text-foreground/50 text-xs'>OR</span>
+          <Separator className='flex flex-1' />
+        </div>
         <GoogleOAuth />
         <DiscordOAuth />
-        <Link
-          className="shadow-xs hover:bg-secondary/80 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:hover:bg-primary/90 dark:aria-invalid:ring-destructive/40 inline-flex h-9 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md border bg-white px-4 py-2 text-sm font-medium text-black outline-none transition-all hover:cursor-pointer focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 has-[>svg]:px-3 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
-          href='/auth/magic-link'
-        >
-          Sign in with Magic Link
-          <svg
-            className='size-5'
-            height='32'
-            viewBox='0 0 24 24'
-            width='32'
-            xmlns='http://www.w3.org/2000/svg'
-          >
-            <path
-              d='M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z'
-              fill='currentColor'
-            />
-          </svg>
-        </Link>
+        <Button asChild variant='outline'>
+          <Link href='/auth/magic-link'>
+            <Mail />
+            Sign in with Magic Link
+          </Link>
+        </Button>
         <span>
           Don{"'"}t have an account? Make one{' '}
           <Link
-            className='underline hover:font-medium hover:-tracking-[0.0565em]'
+            className='hover:text-secondary-foreground underline transition-colors'
             href='/auth/sign-up'
           >
             here
