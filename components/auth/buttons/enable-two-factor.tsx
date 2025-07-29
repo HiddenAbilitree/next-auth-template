@@ -52,11 +52,35 @@ export const EnableTwoFactor = () => {
   const [openPasswordForm, setOpenPasswordForm] = useState(false);
   const [openTOTP, setOpenTOTP] = useState(false);
   const [totpURI, setTOTPURI] = useState<string | undefined>();
+
+  const onSubmit = async (values: typeof PasswordFormSchema.infer) => {
+    await authClient.twoFactor.enable(
+      {
+        password: values.password,
+      },
+      {
+        onError: () => void toast.error(`Incorrect Password`),
+        onSuccess: (context: { data: { totpURI: string } }) => {
+          setTOTPURI(context.data.totpURI);
+          setOpenPasswordForm(false);
+          setOpenTOTP(true);
+        },
+      },
+    );
+  };
+
+  const form = useForm<typeof PasswordFormSchema.infer>({
+    defaultValues: {
+      password: ``,
+    },
+    resolver: arktypeResolver(PasswordFormSchema),
+  });
+
   return (
     <div className='relative'>
       {openTOTP && (
         <button
-          className='absolute right-2 top-2 size-11 rounded-full border hover:cursor-pointer'
+          className='absolute top-2 right-2 size-11 rounded-full border hover:cursor-pointer'
           onClick={() => {
             setOpenTOTP(false);
           }}
@@ -76,77 +100,41 @@ export const EnableTwoFactor = () => {
                 Enter your password to enable 2FA
               </DialogDescription>
             </DialogHeader>
-            <PasswordForm
-              setOpenPasswordForm={setOpenPasswordForm}
-              setOpenTOTP={setOpenTOTP}
-              setTOTPURI={setTOTPURI}
-            />
+
+            <Form {...form}>
+              <form
+                className='flex flex-col gap-5 rounded-md'
+                onSubmit={void form.handleSubmit(onSubmit)}
+              >
+                <FormField
+                  control={form.control}
+                  name='password'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder='••••••••'
+                          type='password'
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type='submit'>Enable TOTP 2fa</Button>
+              </form>
+            </Form>
           </DialogContent>
         </Dialog>
       )}
       {openTOTP && (
         <div className='flex gap-5'>
-          <VerifyTOTP totpURI={totpURI ?? ''} /> <TwoFactorForm />
+          <VerifyTOTP totpURI={totpURI ?? ``} /> <TwoFactorForm />
         </div>
       )}
     </div>
-  );
-};
-
-export const PasswordForm = ({
-  setOpenPasswordForm,
-  setOpenTOTP,
-  setTOTPURI,
-}: {
-  setOpenPasswordForm(val: boolean): void; //react is so trash holy
-  setOpenTOTP(val: boolean): void;
-  setTOTPURI(val: string): void;
-}) => {
-  const onSubmit = async (values: typeof PasswordFormSchema.infer) => {
-    await authClient.twoFactor.enable(
-      {
-        password: values.password,
-      },
-      {
-        onError: () => void toast.error('Incorrect Password'),
-        onSuccess: (context) => {
-          setTOTPURI(context.data.totpURI);
-          setOpenPasswordForm(false);
-          setOpenTOTP(true);
-        },
-      },
-    );
-  };
-
-  const form = useForm<typeof PasswordFormSchema.infer>({
-    defaultValues: {
-      password: '',
-    },
-    resolver: arktypeResolver(PasswordFormSchema),
-  });
-
-  return (
-    <Form {...form}>
-      <form
-        className='flex flex-col gap-5 rounded-md'
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <FormField
-          control={form.control}
-          name='password'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type='submit'>Enable TOTP 2fa</Button>
-      </form>
-    </Form>
   );
 };
 

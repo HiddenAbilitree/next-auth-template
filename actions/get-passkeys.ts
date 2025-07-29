@@ -11,7 +11,7 @@ export const getPasskeys = async () => {
     headers: await headers(),
   });
 
-  if (!session) redirect('/auth/sign-in');
+  if (!session) redirect(`/auth/sign-in`);
 
   const passkey = schema.passkey;
 

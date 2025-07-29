@@ -21,7 +21,7 @@ import { authClient } from '@/lib/auth-client';
 
 export const MagicLinkForm = () => {
   const onSubmit = async (values: typeof EmailFormSchema.infer) => {
-    const toastId = toast.loading('Sending email...');
+    const toastId = toast.loading(`Sending email...`);
 
     await authClient.signIn.magicLink(
       {
@@ -30,8 +30,8 @@ export const MagicLinkForm = () => {
       {
         onError: (context) => handleError(context, toastId),
         onSuccess: () => {
-          toast.success('Email sent!', {
-            description: 'Please check your email to sign in.',
+          toast.success(`Email sent!`, {
+            description: `Please check your email to sign in.`,
             id: toastId,
           });
         },
@@ -46,8 +46,8 @@ export const MagicLinkForm = () => {
   return (
     <Form {...form}>
       <form
-        className='w-100 bg-card flex flex-col gap-5 rounded-md border p-4 shadow-sm'
-        onSubmit={form.handleSubmit(onSubmit)}
+        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
+        onSubmit={void form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>

@@ -3,6 +3,6 @@ import { createClient } from 'redis';
 // change as needed
 const client = createClient({});
 
-client.connect();
+await client.connect();
 
 export { client };

@@ -48,7 +48,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
-    throw new Error('useFormField should be used within <FormField>');
+    throw new Error(`useFormField should be used within <FormField>`);
   }
 
   const { id } = itemContext;
@@ -71,13 +71,13 @@ const FormItemContext = createContext<FormItemContextValue>(
   {} as FormItemContextValue,
 );
 
-const FormItem = ({ className, ...props }: ComponentProps<'div'>) => {
+const FormItem = ({ className, ...props }: ComponentProps<`div`>) => {
   const id = useId();
 
   return (
     <FormItemContext.Provider value={{ id }}>
       <div
-        className={cn('grid gap-2', className)}
+        className={cn(`grid gap-2`, className)}
         data-slot='form-item'
         {...props}
       />
@@ -93,7 +93,7 @@ const FormLabel = ({
 
   return (
     <Label
-      className={cn('data-[error=true]:text-destructive', className)}
+      className={cn(`data-[error=true]:text-destructive`, className)}
       data-error={!!error}
       data-slot='form-label'
       htmlFor={formItemId}
@@ -119,12 +119,12 @@ const FormControl = ({ ...props }: ComponentProps<typeof Slot>) => {
   );
 };
 
-const FormDescription = ({ className, ...props }: ComponentProps<'p'>) => {
+const FormDescription = ({ className, ...props }: ComponentProps<`p`>) => {
   const { formDescriptionId } = useFormField();
 
   return (
     <p
-      className={cn('text-muted-foreground text-sm', className)}
+      className={cn(`text-sm text-muted-foreground`, className)}
       data-slot='form-description'
       id={formDescriptionId}
       {...props}
@@ -132,9 +132,9 @@ const FormDescription = ({ className, ...props }: ComponentProps<'p'>) => {
   );
 };
 
-const FormMessage = ({ className, ...props }: ComponentProps<'p'>) => {
+const FormMessage = ({ className, ...props }: ComponentProps<`p`>) => {
   const { error, formMessageId } = useFormField();
-  const body = error ? String(error?.message ?? '') : props.children;
+  const body = error ? String(error?.message ?? ``) : props.children;
 
   if (!body) {
     return;
@@ -142,7 +142,7 @@ const FormMessage = ({ className, ...props }: ComponentProps<'p'>) => {
 
   return (
     <p
-      className={cn('text-destructive text-sm', className)}
+      className={cn(`text-sm text-destructive`, className)}
       data-slot='form-message'
       id={formMessageId}
       {...props}

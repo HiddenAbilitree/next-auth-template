@@ -1,8 +1,8 @@
 import { cn } from '@/utils';
 
-const Skeleton = ({ className, ...props }: React.ComponentProps<'div'>) => (
+const Skeleton = ({ className, ...props }: React.ComponentProps<`div`>) => (
   <div
-    className={cn('bg-accent animate-pulse rounded-md', className)}
+    className={cn(`animate-pulse rounded-md bg-accent`, className)}
     data-slot='skeleton'
     {...props}
   />

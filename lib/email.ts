@@ -20,7 +20,7 @@ import { JSX } from 'react';
 
 // SES
 const sesClient = new SESv2Client({
-  apiVersion: '2010-12-01',
+  apiVersion: `2010-12-01`,
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID as string,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,

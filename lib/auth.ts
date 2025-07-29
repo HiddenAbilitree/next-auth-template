@@ -17,9 +17,9 @@ import { sendEmail } from '@/lib/email';
 
 // refer to https://www.better-auth.com/docs/basic-usage           //
 export const auth = betterAuth({
-  appName: 'Nextjs Auth Template',
+  appName: `Nextjs Auth Template`,
 
-  database: drizzleAdapter(db, { provider: 'pg', schema }),
+  database: drizzleAdapter(db, { provider: `pg`, schema }),
 
   emailAndPassword: {
     enabled: true,
@@ -29,7 +29,7 @@ export const auth = betterAuth({
       sendEmail({
         from: process.env.EMAIL_SENDER as string,
         mailHtml: VerifyPasswordChange({ url }),
-        subject: 'Change Your Password',
+        subject: `Change Your Password`,
         to: user.email,
       }),
   },
@@ -42,7 +42,7 @@ export const auth = betterAuth({
       sendEmail({
         from: process.env.EMAIL_SENDER as string,
         mailHtml: VerifyEmail({ url }),
-        subject: 'Verify Your Email',
+        subject: `Verify Your Email`,
         to: user.email,
       }),
   },
@@ -63,7 +63,7 @@ export const auth = betterAuth({
         sendEmail({
           from: process.env.EMAIL_SENDER as string,
           mailHtml: MagicLink({ url }),
-          subject: 'Sign In',
+          subject: `Sign In`,
           to: email,
         }),
     }),
@@ -93,7 +93,7 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      prompt: 'select_account',
+      prompt: `select_account`,
     },
   },
 
@@ -104,7 +104,7 @@ export const auth = betterAuth({
         sendEmail({
           from: process.env.EMAIL_SENDER as string,
           mailHtml: VerifyEmailChange({ newEmail, url }),
-          subject: 'Verify Email Change',
+          subject: `Verify Email Change`,
           to: user.email,
         }),
     },
@@ -125,7 +125,7 @@ export const auth = betterAuth({
         sendEmail({
           from: process.env.EMAIL_SENDER as string,
           mailHtml: VerifyDeletion({ url }),
-          subject: 'Verify Account Deletion',
+          subject: `Verify Account Deletion`,
           to: user.email,
         }),
     },

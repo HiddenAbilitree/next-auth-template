@@ -3,16 +3,15 @@ import { authClient } from '@/lib/auth-client';
 
 export const GoogleOAuth = () => (
   <Button
-    onClick={async () => {
-      await authClient.signIn.social({
-        provider: 'google',
+    onClick={() => {
+      void authClient.signIn.social({
+        provider: `google`,
       });
     }}
-    tabIndex={10}
     type='button'
     variant='white'
   >
-    Sign In with Google{' '}
+    Sign In with Google{` `}
     <svg
       className='size-4'
       height='32'

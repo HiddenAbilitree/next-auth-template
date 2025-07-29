@@ -9,7 +9,7 @@ export default async function ResetPassword() {
     headers: await headers(),
   });
 
-  if (!session) redirect('/auth/sign-in');
+  if (!session) redirect(`/auth/sign-in`);
 
   return (
     <div className='flex h-screen w-screen items-center justify-center'>

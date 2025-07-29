@@ -14,7 +14,8 @@ export const VerifyEmailChange = ({
     title='Verify Email Change'
   >
     <Text className='text-black'>
-      Only click the following button if you have authorized the email change to{' '}
+      Only click the following button if you have authorized the email change to
+      {` `}
       <strong>{newEmail}</strong>. If you do not recognize this email,
       <strong>do not</strong> click the button and change your password
       immediately to prevent further unauthorized access.

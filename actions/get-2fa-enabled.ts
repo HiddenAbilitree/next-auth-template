@@ -9,7 +9,7 @@ export const get2faEnabled = async () => {
     headers: await headers(),
   });
 
-  if (!session) redirect('/auth/sign-in');
+  if (!session) redirect(`/auth/sign-in`);
 
   return session.user.twoFactorEnabled;
 };

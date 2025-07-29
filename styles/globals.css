@@ -1,0 +1,64 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@import "./light.css";
+@import "./dark.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@utility optimize-legibility {
+  text-rendering: optimizeLegibility;
+}
+
+@theme {
+  --breakpoint-xl: 70rem;
+  --breakpoint-2xl: 80rem;
+}
+
+@theme {
+  --color-twitch: #9146FF;
+  --color-blurple: oklch(0.5774 0.2091 273.85);
+  --color-blurple-hover: oklch(0.54 0.2091 273.85);
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-primary: var(--gray-12);
+  --color-primary-foreground: var(--gray-2);
+  --color-secondary: var(--gray-5);
+  --color-secondary-foreground: var(--gray-12);
+  --color-background: var(--gray-1);
+  --color-foreground: var(--gray-12);
+  --color-card: var(--gray-a2);
+  --color-card-foreground: var(--gray-12);
+  --color-muted: var(--gray-6);
+  --color-muted-foreground: var(--gray-9);
+  --color-accent: var(--accent-4);
+  --color-constructive: var(--constructive);
+  --color-destructive: var(--destructive);
+  --color-border: var(--gray-a6);
+  --color-outline: var(--gray-6);
+  --color-input: var(--gray-a1);
+  --color-ring: var(--gray-8);
+  --color-white-hover: var(--white-hover);
+}
+
+:root {
+  --radius: 0.625rem;
+  --constructive: oklch(0.577 0.1752 146.11);
+  --destructive: oklch(0.577 0.245 27.325);
+}
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50 optimize-legibility tracking-tight antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

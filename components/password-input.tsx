@@ -15,19 +15,19 @@ export const PasswordInput = <T extends FieldValues>(
   return (
     <span
       className={clsx(
-        'focus-visible:border-ring focus-visible:ring-ring/50 flex focus-visible:ring-[3px]',
-        'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+        `flex focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50`,
+        `aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40`,
       )}
       data-slot='input'
     >
       <Input
         className='rounded-r-none'
         placeholder={
-          visible ? 'password' : (
-            '\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022'
+          visible ? `password` : (
+            `\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022`
           )
         }
-        type={visible ? 'text' : 'password'}
+        type={visible ? `text` : `password`}
         {...props}
       />
       <Button

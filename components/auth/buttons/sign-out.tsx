@@ -9,11 +9,11 @@ export const SignOut = () => {
   const router = useRouter();
   return (
     <Button
-      onClick={async () => {
-        await authClient.signOut({
+      onClick={() => {
+        void authClient.signOut({
           fetchOptions: {
             onSuccess: () => {
-              router.push('/auth/sign-in');
+              router.push(`/auth/sign-in`);
             },
           },
         });

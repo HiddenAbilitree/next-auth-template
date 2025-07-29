@@ -3,17 +3,16 @@ import { authClient } from '@/lib/auth-client';
 
 export const DiscordOAuth = () => (
   <Button
-    onClick={async () => {
-      await authClient.signIn.social({
-        callbackURL: '/',
-        provider: 'discord',
+    onClick={() => {
+      void authClient.signIn.social({
+        callbackURL: `/`,
+        provider: `discord`,
       });
     }}
-    tabIndex={10}
     type='button'
     variant='blurple'
   >
-    Sign In with Discord{' '}
+    Sign In with Discord{` `}
     <svg
       className='size-4'
       height='32'

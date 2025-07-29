@@ -21,15 +21,15 @@ import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 
 export const ChangePasswordFormSchema = type({
-  confirmPassword: 'string',
-  currentPassword: 'string',
+  confirmPassword: `string`,
+  currentPassword: `string`,
   newPassword: NewPassword,
 }).narrow(
   (data, ctx) =>
     data.newPassword === data.confirmPassword ||
     ctx.reject({
-      message: 'Must be identical to the new password.',
-      path: ['confirmPassword'],
+      message: `Must be identical to the new password.`,
+      path: [`confirmPassword`],
     }),
 );
 
@@ -40,7 +40,7 @@ export const ChangePasswordForm = () => {
     currentPassword,
     newPassword,
   }: typeof ChangePasswordFormSchema.infer) => {
-    const toastId = toast.loading('Resetting password...');
+    const toastId = toast.loading(`Resetting password...`);
     await authClient.changePassword(
       {
         currentPassword,
@@ -49,11 +49,11 @@ export const ChangePasswordForm = () => {
       {
         onError: (context) => handleError(context, toastId),
         onSuccess: () => {
-          toast.success('Password Reset Successful', {
-            description: 'You can now sign in with your new password!',
+          toast.success(`Password Reset Successful`, {
+            description: `You can now sign in with your new password!`,
             id: toastId,
           });
-          router.push('/auth/sign-in');
+          router.push(`/auth/sign-in`);
         },
       },
     );
@@ -61,9 +61,9 @@ export const ChangePasswordForm = () => {
 
   const form = useForm<typeof ChangePasswordFormSchema.infer>({
     defaultValues: {
-      confirmPassword: '',
-      currentPassword: '',
-      newPassword: '',
+      confirmPassword: ``,
+      currentPassword: ``,
+      newPassword: ``,
     },
 
     resolver: arktypeResolver(ChangePasswordFormSchema),
@@ -72,8 +72,8 @@ export const ChangePasswordForm = () => {
   return (
     <Form {...form}>
       <form
-        className='w-100 flex flex-col gap-5 rounded-md p-4'
-        onSubmit={form.handleSubmit(onSubmit)}
+        className='flex w-100 flex-col gap-5 rounded-md p-4'
+        onSubmit={void form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}

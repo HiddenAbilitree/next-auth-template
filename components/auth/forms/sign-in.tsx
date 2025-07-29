@@ -28,7 +28,7 @@ import { authClient } from '@/lib/auth-client';
 
 const SignInFormSchema = type({
   email: Email,
-  password: 'string',
+  password: `string`,
 });
 
 export const SignInForm = () => {
@@ -36,14 +36,14 @@ export const SignInForm = () => {
 
   const form = useForm<typeof SignInFormSchema.infer>({
     defaultValues: {
-      email: '',
-      password: '',
+      email: ``,
+      password: ``,
     },
     resolver: arktypeResolver(SignInFormSchema),
   });
 
   const onSubmit = async (values: typeof SignInFormSchema.infer) => {
-    const toastId = toast.loading('Signing in...');
+    const toastId = toast.loading(`Signing in...`);
 
     // cant use toast.promise because authClient returns
     // something different to what is expected by sonner
@@ -53,16 +53,18 @@ export const SignInForm = () => {
         password: values.password,
       },
       {
-        onError: (context) => handleError(context, toastId, 'Sign In Failed'),
-        onSuccess: async (context) => {
+        onError: (context) => handleError(context, toastId, `Sign In Failed`),
+        onSuccess: (context: {
+          data: { twoFactorRedirect: string /* cooked */ };
+        }) => {
           if (context.data.twoFactorRedirect) {
             toast.dismiss(toastId);
-            router.push('/auth/2fa');
+            router.push(`/auth/2fa`);
           } else {
-            toast.success('Sign In Successful', {
+            toast.success(`Sign In Successful`, {
               id: toastId,
             });
-            router.push('/');
+            router.push(`/`);
           }
         },
       },
@@ -71,29 +73,28 @@ export const SignInForm = () => {
 
   // https://www.better-auth.com/docs/plugins/passkey#preload-the-passkeys
   useEffect(() => {
-    if (
-      !PublicKeyCredential.isConditionalMediationAvailable ||
-      !PublicKeyCredential.isConditionalMediationAvailable()
-    ) {
-      return;
-    }
+    const isPasskeyAvailable = async () =>
+      PublicKeyCredential.isConditionalMediationAvailable();
 
-    void authClient.signIn.passkey(
-      { autoFill: true },
-      {
-        onSuccess: () => {
-          toast.success('Welcome back!');
-          router.push('/');
+    void isPasskeyAvailable().then((available) => {
+      if (!available) return;
+      void authClient.signIn.passkey(
+        { autoFill: true },
+        {
+          onSuccess: () => {
+            toast.success(`Welcome back!`);
+            router.push(`/`);
+          },
         },
-      },
-    );
+      );
+    });
   }, [router]);
 
   return (
     <Form {...form}>
       <form
-        className='w-100 backdrop-grayscale-25 bg-card relative z-40 flex flex-col gap-4 rounded-sm border p-8 backdrop-blur-3xl'
-        onSubmit={form.handleSubmit(onSubmit)}
+        className='relative z-40 flex w-100 flex-col gap-4 rounded-sm border bg-card p-8 backdrop-blur-3xl backdrop-grayscale-25'
+        onSubmit={void form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-4'>
           <h1 className='w-full text-2xl font-semibold'>Sign In</h1>
@@ -124,7 +125,7 @@ export const SignInForm = () => {
               <FormLabel className='flex w-full justify-between'>
                 <p>Password</p>
                 <Link
-                  className='hover:text-secondary-foreground underline transition-colors'
+                  className='underline transition-colors hover:text-foreground/80'
                   href='/auth/forgot-password'
                 >
                   Forgot password?
@@ -140,7 +141,7 @@ export const SignInForm = () => {
         <Button type='submit'>Sign In</Button>
         <div className='flex w-full items-center gap-3.5'>
           <Separator className='flex flex-1' />
-          <span className='text-foreground/50 text-xs'>OR</span>
+          <span className='text-xs text-foreground/50'>OR</span>
           <Separator className='flex flex-1' />
         </div>
         <GoogleOAuth />
@@ -152,9 +153,9 @@ export const SignInForm = () => {
           </Link>
         </Button>
         <span>
-          Don{"'"}t have an account? Make one{' '}
+          Don{`'`}t have an account? Make one{` `}
           <Link
-            className='hover:text-secondary-foreground underline transition-colors'
+            className='text-foreground underline transition-colors hover:text-foreground/80'
             href='/auth/sign-up'
           >
             here

@@ -4,7 +4,7 @@ export default function CompleteSignUp() {
       <h1 className='text-xl font-bold'>Sign Up Successful</h1>
       <p>Please check your inbox and click the link to verify your email.</p>
       <p>You are free to close this page!</p>
-      <p className='text-primary/40 text-xs'>
+      <p className='text-xs text-primary/40'>
         Note: This email will expire in 24 hours. Failure to verify within this
         time will require you to sign up again.
       </p>

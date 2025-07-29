@@ -37,18 +37,17 @@ export const DeleteAccount = () => (
             disabled
             onClick={() => {
               const toastId = toast.loading(
-                'Sending Account Deletion Email...',
+                `Sending Account Deletion Email...`,
               );
               void authClient.deleteUser(
                 {
-                  callbackURL: '/auth/sign-up',
+                  callbackURL: `/auth/sign-up`,
                 },
                 {
                   onError: (context) => handleError(context, toastId),
-                  onSuccess: async () => {
-                    toast.success('Email Sent', {
-                      description:
-                        'Please check your email to verify account deletion.',
+                  onSuccess: () => {
+                    toast.success(`Email Sent`, {
+                      description: `Please check your email to verify account deletion.`,
                       id: toastId,
                     });
                   },

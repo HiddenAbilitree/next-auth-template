@@ -27,14 +27,14 @@ import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/utils';
 
-const formVariants = cva('w-100 flex flex-col gap-4', {
+const formVariants = cva(`flex w-100 flex-col gap-4`, {
   defaultVariants: {
-    variant: 'default',
+    variant: `default`,
   },
   variants: {
     variant: {
-      card: 'bg-card rounded-md border p-4 shadow-sm',
-      default: '',
+      card: `rounded-md border bg-card p-4 shadow-sm`,
+      default: ``,
     },
   },
 });
@@ -42,11 +42,11 @@ const formVariants = cva('w-100 flex flex-col gap-4', {
 export const TwoFactorForm = ({
   className,
   variant,
-}: ComponentProps<'form'> & VariantProps<typeof formVariants>) => {
+}: ComponentProps<`form`> & VariantProps<typeof formVariants>) => {
   const router = useRouter();
   const form = useForm<typeof TwoFactorFormSchema.infer>({
     defaultValues: {
-      otp: '',
+      otp: ``,
       trust: false,
     },
     resolver: arktypeResolver(TwoFactorFormSchema),
@@ -60,7 +60,7 @@ export const TwoFactorForm = ({
           toast.error(context.error.message);
         },
         onSuccess: () => {
-          router.push('/');
+          router.push(`/`);
         },
       },
     ));
@@ -70,13 +70,13 @@ export const TwoFactorForm = ({
     <Form {...form}>
       <form
         className={cn(formVariants({ className, variant }))}
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={void form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-1'>
           <h1 className='w-full text-xl font-semibold'>
             Two Factor Authentication
           </h1>
-          <p className='text-foreground/70 text-sm'>
+          <p className='text-sm text-foreground/70'>
             Please enter the one-time password found in your authenticator
             service.
           </p>
@@ -122,7 +122,7 @@ export const TwoFactorForm = ({
                 />
               </FormControl>
               <label
-                className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+                className='text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
                 htmlFor='trust'
               >
                 Trust this device for 30 days.

@@ -21,12 +21,12 @@ export const middleware = async (request: NextRequest) => {
 
   return session ?
       NextResponse.next()
-    : NextResponse.redirect(new URL('/auth/sign-in', request.url));
+    : NextResponse.redirect(new URL(`/auth/sign-in`, request.url));
 };
 
 export const config = {
-  runtime: 'nodejs',
+  runtime: `nodejs`,
   matcher: [
-    '/((?!api/auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|auth).*)',
+    `/((?!api/auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|auth).*)`,
   ],
 };

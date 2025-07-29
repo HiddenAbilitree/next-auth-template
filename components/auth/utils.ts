@@ -6,7 +6,7 @@ export const handleError = (
   toastId: number | string,
   error?: string,
 ) => {
-  toast.error(error ?? 'Error', {
+  toast.error(error ?? `Error`, {
     description: context.error.message,
     id: toastId,
   });
