@@ -24,7 +24,7 @@ export default async function AuthSettings() {
             <span className='inline-flex w-full items-center justify-between border-b p-1'>
               <h1 className='text-2xl font-medium'>Password</h1>
               <AccordionTrigger asChild>
-                <Button variant='secondary' size='sm'>
+                <Button size='sm' variant='secondary'>
                   Change Password
                 </Button>
               </AccordionTrigger>

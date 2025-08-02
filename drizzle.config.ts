@@ -1,8 +1,9 @@
 import { defineConfig } from 'drizzle-kit';
+import process from 'node:process';
 
 export default defineConfig({
-  out: `./db`,
   dialect: `postgresql`,
+  out: `./db`,
   schema: `./db/schema.ts`,
 
   dbCredentials: {

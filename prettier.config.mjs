@@ -4,8 +4,6 @@ import {
   prettierConfigTailwind,
 } from '@hiddenability/opinionated-defaults/prettier';
 
-const config = prettierConfig(prettierConfigTailwind, prettierConfigBase, {
+export default prettierConfig(prettierConfigBase, prettierConfigTailwind, {
   tailwindStylesheet: `./styles/globals.css`,
 });
-
-export default config;

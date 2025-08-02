@@ -1,10 +1,11 @@
 'use server';
 
-import { db, schema } from '@/db';
-import { auth } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+import { db, schema } from '@/db';
+import { auth } from '@/lib/auth';
 
 export const getPasskeys = async () => {
   const session = await auth.api.getSession({
@@ -18,8 +19,8 @@ export const getPasskeys = async () => {
   return await db
     .select({
       createdAt: passkey.createdAt,
-      name: passkey.name,
       id: passkey.id,
+      name: passkey.name,
     })
     .from(passkey)
     .where(eq(passkey.userId, session.user.id));

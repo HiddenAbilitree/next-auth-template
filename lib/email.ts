@@ -4,6 +4,7 @@
 // For SES
 import { SendEmailCommand, SESv2Client } from '@aws-sdk/client-sesv2';
 import { render } from '@react-email/components';
+import process from 'node:process';
 import { createTransport } from 'nodemailer';
 import { JSX } from 'react';
 
@@ -13,7 +14,7 @@ import { JSX } from 'react';
 //   port: Number(process.env.SMTP_PORT),
 //   secure: true,
 //   auth: {
-//     user: process.env.SMTP_USERNAME as string,
+//     user: process.env.SMTP_USERNAME as string,email
 //     pass: process.env.SMTP_PASSWORD as string,
 //   },
 // });
