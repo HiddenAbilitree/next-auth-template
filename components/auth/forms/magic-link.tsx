@@ -47,7 +47,7 @@ export const MagicLinkForm = () => {
     <Form {...form}>
       <form
         className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
-        onSubmit={void form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>

@@ -3,7 +3,6 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
 import { passkey } from 'better-auth/plugins/passkey';
 import { eq } from 'drizzle-orm';
-import process from 'node:process';
 
 import {
   MagicLink,
@@ -21,6 +20,12 @@ export const auth = betterAuth({
   appName: `Nextjs Auth Template`,
 
   database: drizzleAdapter(db, { provider: `pg`, schema }),
+
+  account: {
+    accountLinking: {
+      enabled: true,
+    },
+  },
 
   emailAndPassword: {
     enabled: true,

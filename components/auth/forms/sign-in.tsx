@@ -10,9 +10,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
+import { PasswordInput } from '@/components/auth/password-input';
 import { Email } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
-import { PasswordInput } from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -94,7 +94,7 @@ export const SignInForm = () => {
     <Form {...form}>
       <form
         className='relative z-40 flex w-100 flex-col gap-4 rounded-sm border bg-card p-8 backdrop-blur-3xl backdrop-grayscale-25'
-        onSubmit={void form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-4'>
           <h1 className='w-full text-2xl font-semibold'>Sign In</h1>

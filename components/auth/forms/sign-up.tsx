@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { PasswordInput } from '@/components/auth/password-input';
 import { Email, NewPassword } from '@/components/auth/types';
-import { PasswordInput } from '@/components/password-input';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -78,7 +78,7 @@ export const SignUpForm = () => {
     <Form {...form}>
       <form
         className='flex w-100 flex-col gap-4 rounded-md border bg-card p-8 shadow-sm'
-        onSubmit={void form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-4'>
           <h1 className={`w-full text-2xl font-semibold`}>Sign Up</h1>

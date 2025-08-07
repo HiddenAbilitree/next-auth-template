@@ -27,6 +27,12 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { useHasPassword } from '@/hooks/has-password';
 import { authClient } from '@/lib/auth-client';
 
 export const TwoFactor = ({
@@ -76,6 +82,7 @@ export const EnableTwoFactor = () => {
     resolver: arktypeResolver(PasswordFormSchema),
   });
 
+  const hasPassword = useHasPassword();
   return (
     <div className='relative'>
       {openTOTP && (
@@ -90,9 +97,22 @@ export const EnableTwoFactor = () => {
       )}
       {!openTOTP && (
         <Dialog onOpenChange={setOpenPasswordForm} open={openPasswordForm}>
-          <Button onClick={() => setOpenPasswordForm(true)} variant='outline'>
-            Enable 2FA
-          </Button>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                disabled={!hasPassword}
+                onClick={() => setOpenPasswordForm(true)}
+                variant='outline'
+              >
+                Enable 2FA
+              </Button>
+            </TooltipTrigger>
+            {!hasPassword && (
+              <TooltipContent>
+                <p>Set a password first</p>
+              </TooltipContent>
+            )}
+          </Tooltip>
           <DialogContent className='sm:max-w-[425px]'>
             <DialogHeader>
               <DialogTitle>Enable 2FA</DialogTitle>
@@ -104,7 +124,7 @@ export const EnableTwoFactor = () => {
             <Form {...form}>
               <form
                 className='flex flex-col gap-5 rounded-md'
-                onSubmit={void form.handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(onSubmit)}
               >
                 <FormField
                   control={form.control}

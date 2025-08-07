@@ -22,6 +22,7 @@
       scripts = [
         (mkScript "lint" ''oxlint && eslint_d --config eslint.config.ts .'')
         (mkScript "lint:fix" ''oxlint --fix --fix-suggestions && eslint_d --config eslint.config.ts . --fix'')
+        (mkScript "haod" ''bunx @hiddenability/opinionated-defaults@latest'')
       ];
     in {
       default = pkgs.mkShell {

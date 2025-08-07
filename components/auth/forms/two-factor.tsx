@@ -70,7 +70,7 @@ export const TwoFactorForm = ({
     <Form {...form}>
       <form
         className={cn(formVariants({ className, variant }))}
-        onSubmit={void form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <div className='flex w-full flex-col gap-1'>
           <h1 className='w-full text-xl font-semibold'>

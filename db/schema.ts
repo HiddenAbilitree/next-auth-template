@@ -1,5 +1,6 @@
 import {
   boolean,
+  index,
   integer,
   pgTable,
   text,
@@ -10,7 +11,7 @@ import {
 export const user = pgTable(
   `user`,
   {
-    createdAt: timestamp(`created_at`)
+    createdAt: timestamp(`created_at`, { withTimezone: true })
       .$defaultFn(() => /* @__PURE__ */ new Date())
       .notNull(),
     email: text(`email`).notNull().unique(),
@@ -21,7 +22,7 @@ export const user = pgTable(
     image: text(`image`),
     name: text(`name`).notNull(),
     twoFactorEnabled: boolean(`two_factor_enabled`),
-    updatedAt: timestamp(`updated_at`)
+    updatedAt: timestamp(`updated_at`, { withTimezone: true })
       .$defaultFn(() => /* @__PURE__ */ new Date())
       .notNull(),
   },
@@ -32,40 +33,44 @@ export const account = pgTable(
   `account`,
   {
     accessToken: text(`access_token`),
-    accessTokenExpiresAt: timestamp(`access_token_expires_at`),
+    accessTokenExpiresAt: timestamp(`access_token_expires_at`, {
+      withTimezone: true,
+    }),
     accountId: text(`account_id`).notNull(),
-    createdAt: timestamp(`created_at`).notNull(),
+    createdAt: timestamp(`created_at`, { withTimezone: true }).notNull(),
     id: text(`id`).primaryKey(),
     idToken: text(`id_token`),
     password: text(`password`),
     providerId: text(`provider_id`).notNull(),
     refreshToken: text(`refresh_token`),
-    refreshTokenExpiresAt: timestamp(`refresh_token_expires_at`),
+    refreshTokenExpiresAt: timestamp(`refresh_token_expires_at`, {
+      withTimezone: true,
+    }),
     scope: text(`scope`),
-    updatedAt: timestamp(`updated_at`).notNull(),
+    updatedAt: timestamp(`updated_at`, { withTimezone: true }).notNull(),
     userId: text(`user_id`)
       .notNull()
       .references(() => user.id, { onDelete: `cascade` }),
   },
-  (table) => [uniqueIndex(`accountUserId`).on(table.userId)],
+  (table) => [index(`accountUserId`).on(table.userId)],
 );
 
 export const session = pgTable(
   `session`,
   {
-    createdAt: timestamp(`created_at`).notNull(),
-    expiresAt: timestamp(`expires_at`).notNull(),
+    createdAt: timestamp(`created_at`, { withTimezone: true }).notNull(),
+    expiresAt: timestamp(`expires_at`, { withTimezone: true }).notNull(),
     id: text(`id`).primaryKey(),
     ipAddress: text(`ip_address`),
     token: text(`token`).notNull().unique(),
-    updatedAt: timestamp(`updated_at`).notNull(),
+    updatedAt: timestamp(`updated_at`, { withTimezone: true }).notNull(),
     userAgent: text(`user_agent`),
     userId: text(`user_id`)
       .notNull()
       .references(() => user.id, { onDelete: `cascade` }),
   },
   (table) => [
-    uniqueIndex(`sessionUserId`).on(table.userId),
+    index(`sessionUserId`).on(table.userId),
     uniqueIndex(`sessionToken`).on(table.token),
   ],
 );
@@ -73,13 +78,13 @@ export const session = pgTable(
 export const verification = pgTable(
   `verification`,
   {
-    createdAt: timestamp(`created_at`).$defaultFn(
+    createdAt: timestamp(`created_at`, { withTimezone: true }).$defaultFn(
       () => /* @__PURE__ */ new Date(),
     ),
-    expiresAt: timestamp(`expires_at`).notNull(),
+    expiresAt: timestamp(`expires_at`, { withTimezone: true }).notNull(),
     id: text(`id`).primaryKey(),
     identifier: text(`identifier`).notNull(),
-    updatedAt: timestamp(`updated_at`).$defaultFn(
+    updatedAt: timestamp(`updated_at`, { withTimezone: true }).$defaultFn(
       () => /* @__PURE__ */ new Date(),
     ),
     value: text(`value`).notNull(),
@@ -93,7 +98,7 @@ export const passkey = pgTable(
     aaguid: text(`aaguid`),
     backedUp: boolean(`backed_up`).notNull(),
     counter: integer(`counter`).notNull(),
-    createdAt: timestamp(`created_at`),
+    createdAt: timestamp(`created_at`, { withTimezone: true }),
     credentialID: text(`credential_id`).notNull(),
     deviceType: text(`device_type`).notNull(),
     id: text(`id`).primaryKey(),
@@ -104,7 +109,7 @@ export const passkey = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: `cascade` }),
   },
-  (table) => [uniqueIndex(`passkeyUserId`).on(table.userId)],
+  (table) => [index(`passkeyUserId`).on(table.userId)],
 );
 
 export const twoFactor = pgTable(

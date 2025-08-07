@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
+import { PasswordInput } from '@/components/auth/password-input';
 import { NewPassword } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
 
@@ -70,10 +70,10 @@ export const ResetPasswordForm = () => {
   return (
     <Form {...form}>
       <form
-        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
-        onSubmit={void form.handleSubmit(onSubmit)}
+        className='flex w-100 flex-col gap-4 rounded-md border bg-card p-8 shadow-sm'
+        onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className='flex w-full flex-col gap-3.5'>
+        <div className='flex w-full flex-col gap-4'>
           <h1 className='w-full text-xl font-semibold'>Reset Password</h1>
           <Separator />
         </div>
@@ -84,7 +84,7 @@ export const ResetPasswordForm = () => {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
+                <PasswordInput {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,7 +97,7 @@ export const ResetPasswordForm = () => {
             <FormItem>
               <FormLabel>Confirm Password</FormLabel>
               <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
+                <PasswordInput {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

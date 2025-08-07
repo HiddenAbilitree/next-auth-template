@@ -5,7 +5,7 @@ import {
   EnableTwoFactor,
   TwoFactor,
 } from '@/components/auth/buttons/enable-two-factor';
-import { ChangePasswordForm } from '@/components/auth/forms/change-password';
+import { PasswordSettings } from '@/components/auth/forms/change-password';
 import {
   Accordion,
   AccordionContent,
@@ -30,7 +30,7 @@ export default async function AuthSettings() {
               </AccordionTrigger>
             </span>
             <AccordionContent className='border-none p-1'>
-              <ChangePasswordForm />
+              <PasswordSettings />
             </AccordionContent>
             <span className='p-1'>Always Showing</span>
           </div>

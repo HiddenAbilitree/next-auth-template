@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useHasPassword } from '@/hooks/has-password';
 import { authClient } from '@/lib/auth-client';
 
 export const ChangePasswordFormSchema = type({
@@ -65,7 +66,6 @@ export const ChangePasswordForm = () => {
       currentPassword: ``,
       newPassword: ``,
     },
-
     resolver: arktypeResolver(ChangePasswordFormSchema),
   });
 
@@ -73,7 +73,7 @@ export const ChangePasswordForm = () => {
     <Form {...form}>
       <form
         className='flex w-100 flex-col gap-5 rounded-md p-4'
-        onSubmit={void form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField
           control={form.control}
@@ -118,4 +118,50 @@ export const ChangePasswordForm = () => {
       </form>
     </Form>
   );
+};
+
+const AddPasswordButton = () => {
+  const { data: session } = authClient.useSession();
+
+  const handleAddPassword = async () => {
+    if (!session?.user.email) {
+      toast.error(`Could not find an email associated with your account.`);
+      return;
+    }
+    const toastId = toast.loading(`Sending password setup email...`);
+    await authClient.requestPasswordReset(
+      {
+        email: session.user.email,
+        redirectTo: `/auth/reset-password`,
+      },
+      {
+        onError: (context) => handleError(context, toastId),
+        onSuccess: () => {
+          toast.success(`Email Sent`, {
+            description: `Check your email to finish adding a password to this account.`,
+            id: toastId,
+          });
+        },
+      },
+    );
+  };
+
+  return (
+    <div className='flex items-center justify-between'>
+      <p>You currently do not have a password set for your account.</p>
+      <Button onClick={handleAddPassword} size='sm'>
+        Add Password
+      </Button>
+    </div>
+  );
+};
+
+export const PasswordSettings = () => {
+  const hasPassword = useHasPassword();
+
+  if (hasPassword === undefined) {
+    return <div className='h-12 w-5xl animate-pulse rounded-sm bg-secondary' />;
+  }
+
+  return hasPassword ? <ChangePasswordForm /> : <AddPasswordButton />;
 };
