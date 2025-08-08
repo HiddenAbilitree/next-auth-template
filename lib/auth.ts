@@ -15,7 +15,7 @@ import { db, schema } from '@/db';
 // import { client as redis } from '@/db';
 import { sendEmail } from '@/lib/email';
 
-// refer to https://www.better-auth.com/docs/basic-usage           //
+// refer to https://www.better-auth.com/docs/basic-usage //
 export const auth = betterAuth({
   account: {
     accountLinking: {

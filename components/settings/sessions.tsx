@@ -1,5 +1,6 @@
 'use client';
-import { Session } from 'better-auth';
+import type { Session } from 'better-auth';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 

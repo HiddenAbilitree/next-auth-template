@@ -5,7 +5,7 @@ import { Passkey } from 'better-auth/plugins/passkey';
 import { useState } from 'react';
 
 import { Pencil } from '@/components/icons/pencil';
-import { X } from '@/components/icons/x';
+import { Trash } from '@/components/icons/trash';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -122,7 +122,7 @@ const PasskeyItem = ({ passkey }: { passkey: Passkey }) => {
         <Dialog onOpenChange={setDeleteOpen} open={deleteOpen}>
           <Button asChild size='icon' variant='ghost'>
             <DialogTrigger>
-              <X />
+              <Trash />
             </DialogTrigger>
           </Button>
           <DialogContent>
