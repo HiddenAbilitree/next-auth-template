@@ -172,16 +172,17 @@ export const EnableTwoFactor = () => {
       }}
     >
       <Tooltip>
-        <Button
-          asChild
-          disabled={!hasPassword}
-          onClick={() => setPasswordOpen(true)}
-          variant='outline'
-        >
-          <TooltipTrigger>Enable 2FA</TooltipTrigger>
-        </Button>
+        <TooltipTrigger>
+          <Button
+            disabled={!hasPassword}
+            onClick={() => setPasswordOpen(true)}
+            variant='outline'
+          >
+            Enable 2FA
+          </Button>
+        </TooltipTrigger>
         {!hasPassword && (
-          <TooltipContent>
+          <TooltipContent className='border'>
             <p>Set a password first</p>
           </TooltipContent>
         )}
@@ -266,7 +267,7 @@ const TwoFactorDialog = () => {
           </div>
           <DialogFooter>
             <Button form='two-factor-form' type='submit'>
-              Enable 2fa
+              Enable 2FA
             </Button>
           </DialogFooter>
         </DialogContent>

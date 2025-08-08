@@ -2,7 +2,7 @@
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { type } from 'arktype';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -36,6 +36,7 @@ export const ResetPasswordFormSchema = type({
 export const ResetPasswordForm = () => {
   const token = useSearchParams().get(`token`) ?? undefined;
 
+  const router = useRouter();
   const onSubmit = async (values: typeof ResetPasswordFormSchema.infer) => {
     const toastId = toast.loading(`Resetting password...`);
     await authClient.resetPassword(
@@ -53,6 +54,7 @@ export const ResetPasswordForm = () => {
             id: toastId,
           });
           await authClient.signOut();
+          router.push(`/`);
         },
       },
     );
