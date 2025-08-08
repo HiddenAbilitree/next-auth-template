@@ -15,4 +15,6 @@ export default withSentryConfig(nextConfig, {
   tunnelRoute: `/error-monitoring`,
 
   disableLogger: false,
+
+  telemetry: false,
 });
