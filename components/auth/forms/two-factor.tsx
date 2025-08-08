@@ -47,7 +47,7 @@ export const TwoFactorForm = ({
   id,
   onSuccess,
   ...props
-}: ComponentProps<`form`> & { onSuccess: () => void }) => {
+}: ComponentProps<`form`> & { onSuccess?: () => void }) => {
   const form = useForm<typeof TwoFactorFormSchema.infer>({
     defaultValues: {
       otp: ``,
