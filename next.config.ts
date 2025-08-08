@@ -16,4 +16,3 @@ export default withSentryConfig(nextConfig, {
 
   disableLogger: false,
 });
-

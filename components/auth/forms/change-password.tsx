@@ -160,7 +160,9 @@ export const PasswordSettings = () => {
   const hasPassword = useHasPassword();
 
   if (hasPassword === undefined) {
-    return <div className='h-12 w-5xl animate-pulse rounded-sm bg-secondary' />;
+    return (
+      <div className='h-12 w-full animate-pulse rounded-sm bg-secondary' />
+    );
   }
 
   return hasPassword ? <ChangePasswordForm /> : <AddPasswordButton />;

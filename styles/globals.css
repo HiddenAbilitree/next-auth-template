@@ -33,6 +33,7 @@
   --color-background: var(--gray-1);
   --color-foreground: var(--gray-12);
   --color-card: var(--gray-a2);
+  --color-popover: var(--gray-2);
   --color-card-foreground: var(--gray-12);
   --color-muted: var(--gray-6);
   --color-muted-foreground: var(--gray-9);

@@ -1,4 +1,4 @@
-import { get2faEnabled, getPasskeys } from '@/actions';
+import { get2faEnabled } from '@/actions';
 import { AddPasskey } from '@/components/auth/buttons/add-passkey';
 import { DeleteAccount } from '@/components/auth/buttons/delete-account';
 import {
@@ -6,6 +6,7 @@ import {
   TwoFactor,
 } from '@/components/auth/buttons/enable-two-factor';
 import { PasswordSettings } from '@/components/auth/forms/change-password';
+import { PasskeySettings } from '@/components/settings/passkey';
 import {
   Accordion,
   AccordionContent,
@@ -15,7 +16,6 @@ import {
 import { Button } from '@/components/ui/button';
 
 export default async function AuthSettings() {
-  const passkeys = await getPasskeys();
   return (
     <div className='container flex flex-col items-center justify-center gap-4'>
       <Accordion className='w-full' type='multiple'>
@@ -41,9 +41,7 @@ export default async function AuthSettings() {
           Passkeys
           <AddPasskey />
         </h1>
-        {passkeys.map((passkey) => (
-          <PasskeyItem key={passkey.id} passkey={passkey} />
-        ))}
+        <PasskeySettings />
       </div>
       <div className='flex w-full flex-col gap-1'>
         <h1 className='inline-flex w-full items-center justify-between border-b p-1 text-2xl font-medium'>
@@ -63,20 +61,3 @@ export default async function AuthSettings() {
     </div>
   );
 }
-
-const PasskeyItem = ({
-  passkey,
-}: {
-  passkey: {
-    createdAt: Date | null;
-    id: string;
-    name: null | string;
-  };
-}) => (
-  <div className='w-full p-1'>
-    {passkey.name}
-    {passkey.createdAt ?
-      `Created at: ${passkey.createdAt.toLocaleString()}`
-    : `Error`}
-  </div>
-);
