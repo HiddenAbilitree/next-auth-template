@@ -21,11 +21,12 @@ const buttonVariants = cva(
       },
       variant: {
         blurple: `border bg-blurple text-white hover:bg-blurple-hover`,
-        default: `bg-primary text-primary-foreground shadow-xs hover:bg-primary/80`,
+        default: `border bg-white text-black shadow-xs hover:bg-white-hover`,
         destructive: `bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20`,
         ghost: `hover:text-accent-foreground hover:bg-accent`,
         link: `text-primary underline-offset-4 hover:underline`,
         outline: `hover:text-accent-foreground border shadow-xs hover:bg-foreground/5`,
+        primary: `bg-primary text-primary-foreground shadow-xs hover:bg-primary/80`,
         secondary: `bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80`,
         white: `border bg-white text-black shadow-xs hover:bg-white-hover`,
       },

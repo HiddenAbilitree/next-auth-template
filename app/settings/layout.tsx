@@ -16,7 +16,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
   return (
     <div className='mx-auto flex min-h-screen flex-col items-center'>
       <header className='flex w-full items-center justify-start p-4'>
-        hii this is ur settings page
+        <Link href='/'>Go Home</Link>
       </header>
       <div className='relative flex w-full max-w-5xl justify-center'>
         <aside className='absolute left-0 h-full w-3xs -translate-x-full px-4 text-sm'>

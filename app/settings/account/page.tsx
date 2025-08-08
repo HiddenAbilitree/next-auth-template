@@ -1,4 +1,3 @@
-import { get2faEnabled } from '@/actions';
 import { AddPasskey } from '@/components/auth/buttons/add-passkey';
 import { DeleteAccount } from '@/components/auth/buttons/delete-account';
 import {
@@ -15,7 +14,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 
-export default async function AuthSettings() {
+export default function AuthSettings() {
   return (
     <div className='container flex flex-col items-center justify-center gap-4'>
       <Accordion className='w-full' type='multiple'>
@@ -48,7 +47,7 @@ export default async function AuthSettings() {
           Two Factor Methods
         </h1>
         <div className='flex justify-between p-1'>
-          <TwoFactor twoFactorEnabled={await get2faEnabled()} />
+          <TwoFactor />
           <EnableTwoFactor />
         </div>
       </div>

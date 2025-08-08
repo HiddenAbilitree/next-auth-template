@@ -19,6 +19,8 @@
   --color-twitch: #9146FF;
   --color-blurple: oklch(0.5774 0.2091 273.85);
   --color-blurple-hover: oklch(0.54 0.2091 273.85);
+  --text-2xs: 0.625rem;
+
 }
 
 @theme inline {
@@ -26,10 +28,10 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-primary: var(--gray-12);
-  --color-primary-foreground: var(--gray-2);
-  --color-secondary: var(--gray-5);
-  --color-secondary-foreground: var(--gray-12);
+  --color-primary: var(--gray-1);
+  --color-primary-foreground: var(--gray-12);
+  --color-secondary: var(--gray-3);
+  --color-secondary-foreground: var(--gray-11);
   --color-background: var(--gray-1);
   --color-foreground: var(--gray-12);
   --color-card: var(--gray-a2);

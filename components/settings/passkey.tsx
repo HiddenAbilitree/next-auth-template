@@ -1,54 +1,96 @@
 'use client';
 
+import { DialogTrigger } from '@radix-ui/react-dialog';
 import { Passkey } from 'better-auth/plugins/passkey';
+import { Pen } from 'lucide-react';
 import { useState } from 'react';
 
-import { Ellipsis } from '@/components/icons/ellipsis';
-import { Save } from '@/components/icons/save';
+import { X } from '@/components/icons/x';
 import { Button } from '@/components/ui/button';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
 
 export const PasskeySettings = () => {
   const { data } = authClient.useListPasskeys();
 
-  if (!data) return <p className='p-1'>No Passkeys</p>;
-
   return (
-    <div className='flex flex-col gap-2 rounded-sm border bg-secondary/20 p-1'>
-      {data.map((passkey, i) => (
-        <>
-          <PasskeyItem key={passkey.id} passkey={passkey} />
-          {i < data.length - 1 && <hr />}
-        </>
-      ))}
-    </div>
+    <table className='table-auto overflow-clip rounded-sm bg-secondary/50 p-1 text-left'>
+      <thead className='border-b bg-secondary text-xs font-semibold text-foreground/70 uppercase'>
+        <tr>
+          <th className='px-6 py-3' scope='col'>
+            Name
+          </th>
+          <th className='px-6 py-3' scope='col'>
+            ID
+          </th>
+          <th className='px-6 py-3' scope='col'>
+            Created At
+          </th>
+          <th className='px-6 py-3' scope='col'>
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody className='text-sm'>
+        {data && data.length > 0 ?
+          data.map((passkey) => (
+            <PasskeyItem
+              key={`${passkey.id}-${passkey.name}`}
+              passkey={passkey}
+            />
+          ))
+        : <tr className='not-last-of-type:border-b'>
+            <td className='px-6 py-3'>No Passkeys</td>
+          </tr>
+        }
+      </tbody>
+    </table>
   );
 };
 
 const PasskeyItem = ({ passkey }: { passkey: Passkey }) => {
-  const [editing, setEditing] = useState(false);
   const [name, setName] = useState(passkey.name);
   const [input, setInput] = useState(``);
-  const reset = () => {
-    setInput(``);
-    setEditing(false);
-  };
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [renameOpen, setRenameOpen] = useState(false);
   return (
-    <div className='flex items-center justify-between p-1' key={passkey.id}>
-      <span className='flex items-center gap-1'>
-        {editing ?
-          <>
-            <span className='flex'>
+    <tr className='not-last-of-type:border-b' key={passkey.id}>
+      <td className='px-6 py-3'>{name ?? `Passkey`}</td>
+      <td className='px-6 py-3'>{passkey.id}</td>
+      <td className='px-6 py-3'>
+        {passkey.createdAt
+          .toLocaleString(`en-US`, {
+            day: `2-digit`,
+            hour: `numeric`,
+            hour12: true,
+            minute: `2-digit`,
+            month: `2-digit`,
+            year: `2-digit`,
+          })
+          .replace(`,`, ``)}
+      </td>
+      <td className='px-4 py-3'>
+        <Dialog onOpenChange={setRenameOpen} open={renameOpen}>
+          <Button asChild size='icon' variant='ghost'>
+            <DialogTrigger>
+              <Pen />
+            </DialogTrigger>
+          </Button>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Rename Passkey</DialogTitle>
+              <DialogDescription>
+                Old name: {name ?? `Passkey`}
+              </DialogDescription>
               <Input
-                autoFocus
-                className='rounded-r-none'
                 onChange={(e) => {
                   setInput(e.currentTarget.value);
                 }}
@@ -60,68 +102,63 @@ const PasskeyItem = ({ passkey }: { passkey: Passkey }) => {
                     name: e.currentTarget.value,
                   });
                   setName(input);
-                  reset();
+                  setInput(``);
+                  setRenameOpen(false);
                 }}
+                placeholder='Passkey Name'
                 value={input}
               />
+            </DialogHeader>
+            <DialogFooter>
+              <Button onClick={() => setRenameOpen(false)} variant='outline'>
+                Cancel
+              </Button>
               <Button
-                className='rounded-l-none border-l-0'
                 onClick={() => {
                   void authClient.passkey.updatePasskey({
                     id: passkey.id,
                     name: input,
                   });
                   setName(input);
-                  reset();
+                  setInput(``);
+                  setRenameOpen(false);
                 }}
-                variant='outline'
               >
-                <Save />
+                Rename
               </Button>
-            </span>
-            <Button onClick={reset} size='sm' variant='ghost'>
-              Cancel
-            </Button>
-          </>
-        : (name ?? `Passkey`)}
-      </span>
-      <span className='flex items-center gap-2'>
-        {`Created at ${passkey.createdAt
-          .toLocaleString(`en-US`, {
-            day: `2-digit`,
-            hour: `numeric`,
-            hour12: true,
-            minute: `2-digit`,
-            month: `2-digit`,
-            year: `2-digit`,
-          })
-          .replace(`,`, ``)}`}
-        <DropdownMenu modal={false}>
-          <DropdownMenuTrigger asChild>
-            <Button className='group' size='icon' variant='ghost'>
-              <Ellipsis className='text-muted-foreground group-hover:text-primary' />
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align='end' side='bottom'>
-            <DropdownMenuItem
-              onClick={() => {
-                setEditing(true);
-              }}
-            >
-              Rename
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={async () => {
-                await authClient.passkey.deletePasskey({ id: passkey.id });
-              }}
-              variant='destructive'
-            >
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </span>
-    </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        <Dialog onOpenChange={setDeleteOpen} open={deleteOpen}>
+          <Button asChild size='icon' variant='ghost'>
+            <DialogTrigger>
+              <X />
+            </DialogTrigger>
+          </Button>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete Passkey</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete passkey {name ?? `Passkey`}?
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button onClick={() => setDeleteOpen(false)} variant='outline'>
+                Cancel
+              </Button>
+              <Button
+                onClick={async () => {
+                  await authClient.passkey.deletePasskey({ id: passkey.id });
+                  setDeleteOpen(false);
+                }}
+                variant='destructive'
+              >
+                Confirm Deletion
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </td>
+    </tr>
   );
 };
