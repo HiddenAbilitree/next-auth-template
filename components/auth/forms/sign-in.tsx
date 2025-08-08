@@ -2,7 +2,6 @@
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { type } from 'arktype';
-import { Mail } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -13,6 +12,7 @@ import { DiscordOAuth, GoogleOAuth } from '@/components/auth/oauth';
 import { PasswordInput } from '@/components/auth/password-input';
 import { Email } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
+import { Mail } from '@/components/icons/mail';
 import { Button } from '@/components/ui/button';
 import {
   Form,

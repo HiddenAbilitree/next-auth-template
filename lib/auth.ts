@@ -17,15 +17,15 @@ import { sendEmail } from '@/lib/email';
 
 // refer to https://www.better-auth.com/docs/basic-usage           //
 export const auth = betterAuth({
-  appName: `Nextjs Auth Template`,
-
-  database: drizzleAdapter(db, { provider: `pg`, schema }),
-
   account: {
     accountLinking: {
       enabled: true,
     },
   },
+
+  appName: `Nextjs Auth Template`,
+
+  database: drizzleAdapter(db, { provider: `pg`, schema }),
 
   emailAndPassword: {
     enabled: true,
@@ -76,6 +76,13 @@ export const auth = betterAuth({
   ],
 
   rateLimit: { enabled: true, max: 15, window: 100 },
+
+  // session: {
+  //   cookieCache: {
+  //     enabled: true,
+  //     maxAge: 5 * 60,
+  //   },
+  // },
 
   // secondaryStorage: {
   //   get: async (key) => {

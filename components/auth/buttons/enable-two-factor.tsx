@@ -1,7 +1,6 @@
 'use client';
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
-import { Copy, Smartphone } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 import {
   createContext,
@@ -16,6 +15,8 @@ import { toast } from 'sonner';
 import { TwoFactorForm } from '@/components/auth/forms/two-factor';
 import { PasswordInput } from '@/components/auth/password-input';
 import { PasswordFormSchema } from '@/components/auth/types';
+import { Copy } from '@/components/icons/copy';
+import { Smartphone } from '@/components/icons/smartphone';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {

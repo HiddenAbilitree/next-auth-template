@@ -43,6 +43,7 @@ export const ChangePasswordForm = () => {
       {
         currentPassword,
         newPassword,
+        revokeOtherSessions: true,
       },
       {
         onError: (context) => handleError(context, toastId),

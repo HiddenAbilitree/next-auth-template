@@ -2,9 +2,9 @@
 
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { Passkey } from 'better-auth/plugins/passkey';
-import { Pen } from 'lucide-react';
 import { useState } from 'react';
 
+import { Pencil } from '@/components/icons/pencil';
 import { X } from '@/components/icons/x';
 import { Button } from '@/components/ui/button';
 import {
@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { authClient } from '@/lib/auth-client';
+import { formatTime } from '@/utils/time';
 
 export const PasskeySettings = () => {
   const { data } = authClient.useListPasskeys();
@@ -65,23 +66,12 @@ const PasskeyItem = ({ passkey }: { passkey: Passkey }) => {
     <tr className='not-last-of-type:border-b' key={passkey.id}>
       <td className='px-6 py-3'>{name ?? `Passkey`}</td>
       <td className='px-6 py-3'>{passkey.id}</td>
-      <td className='px-6 py-3'>
-        {passkey.createdAt
-          .toLocaleString(`en-US`, {
-            day: `2-digit`,
-            hour: `numeric`,
-            hour12: true,
-            minute: `2-digit`,
-            month: `2-digit`,
-            year: `2-digit`,
-          })
-          .replace(`,`, ``)}
-      </td>
+      <td className='px-6 py-3'>{formatTime(passkey.createdAt)}</td>
       <td className='px-4 py-3'>
         <Dialog onOpenChange={setRenameOpen} open={renameOpen}>
           <Button asChild size='icon' variant='ghost'>
             <DialogTrigger>
-              <Pen />
+              <Pencil />
             </DialogTrigger>
           </Button>
           <DialogContent>

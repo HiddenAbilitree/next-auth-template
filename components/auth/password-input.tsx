@@ -1,10 +1,11 @@
 'use client';
 
 import { clsx } from 'clsx';
-import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 
+import { Eye } from '@/components/icons/eye';
+import { EyeOff } from '@/components/icons/eye-off';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 

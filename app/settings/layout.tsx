@@ -1,7 +1,7 @@
-import { ShieldUser } from 'lucide-react';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
+import { ShieldUser } from '@/components/icons/shield-user';
 import { Separator } from '@/components/ui/separator';
 
 const generalLinks = [
@@ -27,7 +27,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
                 href={link.href}
                 key={i}
               >
-                <link.icon size={20} />
+                <link.icon className='size-6' />
                 {link.name}
               </Link>
             ))}

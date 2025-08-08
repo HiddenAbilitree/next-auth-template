@@ -6,6 +6,7 @@ import {
 } from '@/components/auth/buttons/enable-two-factor';
 import { PasswordSettings } from '@/components/auth/forms/change-password';
 import { PasskeySettings } from '@/components/settings/passkey';
+import { Sessions } from '@/components/settings/sessions';
 import {
   Accordion,
   AccordionContent,
@@ -50,6 +51,12 @@ export default function AuthSettings() {
           <TwoFactor />
           <EnableTwoFactor />
         </div>
+      </div>
+      <div className='flex w-full flex-col gap-2'>
+        <h1 className='inline-flex w-full items-center justify-between border-b p-1 text-2xl font-medium'>
+          Sessions
+        </h1>
+        <Sessions />
       </div>
       <div className='flex w-full flex-col gap-2'>
         <h1 className='inline-flex w-full items-center justify-between border-b p-1 text-2xl font-medium'>

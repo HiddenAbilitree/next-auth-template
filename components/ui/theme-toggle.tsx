@@ -1,8 +1,9 @@
 'use client';
 
-import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
+import { Moon } from '@/components/icons/moon';
+import { Sun } from '@/components/icons/sun';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
