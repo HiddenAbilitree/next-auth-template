@@ -1,7 +1,8 @@
 import { SignInForm } from '@/components/auth/forms/sign-in';
+import { sectionStyles } from '@/styles';
 
 const SignIn = () => (
-  <div className='flex h-screen w-screen items-center justify-center'>
+  <div className={sectionStyles}>
     <SignInForm />
   </div>
 );

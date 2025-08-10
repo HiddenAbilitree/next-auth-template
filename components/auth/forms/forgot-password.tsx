@@ -18,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
+import { cardStyles } from '@/styles';
 
 export const ForgotPasswordForm = () => {
   const onSubmit = async (values: typeof EmailFormSchema.infer) => {
@@ -46,10 +47,7 @@ export const ForgotPasswordForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        className='flex w-100 flex-col gap-5 rounded-md border bg-card p-4 shadow-sm'
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <form className={cardStyles} onSubmit={form.handleSubmit(onSubmit)}>
         <div className='flex w-full flex-col gap-3.5'>
           <h1 className='w-full text-xl font-semibold'>Reset Password</h1>
           <Separator />

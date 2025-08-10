@@ -1,41 +1,19 @@
 import { AddPasskey } from '@/components/auth/buttons/add-passkey';
 import { DeleteAccount } from '@/components/auth/buttons/delete-account';
-import {
-  EnableTwoFactor,
-  TwoFactor,
-} from '@/components/auth/buttons/enable-two-factor';
 import { PasswordSettings } from '@/components/auth/forms/change-password';
 import { PasskeySettings } from '@/components/settings/passkey';
 import { Sessions } from '@/components/settings/sessions';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Button } from '@/components/ui/button';
+import { TwoFactorSettings } from '@/components/settings/two-factor';
 
 export default function AuthSettings() {
   return (
-    <div className='container flex flex-col items-center justify-center gap-4'>
-      <Accordion className='w-full' type='multiple'>
-        <AccordionItem asChild value='password'>
-          <div className='flex flex-col gap-1'>
-            <span className='inline-flex w-full items-center justify-between border-b p-1'>
-              <h1 className='text-2xl font-medium'>Password</h1>
-              <AccordionTrigger asChild>
-                <Button size='sm' variant='secondary'>
-                  Change Password
-                </Button>
-              </AccordionTrigger>
-            </span>
-            <AccordionContent className='border-none p-1'>
-              <PasswordSettings />
-            </AccordionContent>
-            <span className='p-1'>Always Showing</span>
-          </div>
-        </AccordionItem>
-      </Accordion>
+    <div className='container flex max-w-full flex-col items-center justify-center gap-4'>
+      <div className='flex w-full flex-col gap-1'>
+        <span className='inline-flex w-full items-center justify-between border-b p-1'>
+          <h1 className='text-2xl font-medium'>Password</h1>
+          <PasswordSettings />
+        </span>
+      </div>
       <div className='flex w-full flex-col gap-1'>
         <h1 className='inline-flex w-full items-center justify-between border-b p-1 text-2xl font-medium'>
           Passkeys
@@ -48,8 +26,7 @@ export default function AuthSettings() {
           Two Factor Methods
         </h1>
         <div className='flex justify-between p-1'>
-          <TwoFactor />
-          <EnableTwoFactor />
+          <TwoFactorSettings />
         </div>
       </div>
       <div className='flex w-full flex-col gap-2'>

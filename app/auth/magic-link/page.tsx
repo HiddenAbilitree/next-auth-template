@@ -1,8 +1,9 @@
 import { MagicLinkForm } from '@/components/auth/forms/magic-link';
+import { sectionStyles } from '@/styles';
 
 export default function MagicLink() {
   return (
-    <div className='flex h-screen w-screen items-center justify-center'>
+    <div className={sectionStyles}>
       <MagicLinkForm />
     </div>
   );

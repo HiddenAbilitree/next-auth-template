@@ -1,8 +1,9 @@
 import { SignUpForm } from '@/components/auth/forms/sign-up';
+import { sectionStyles } from '@/styles';
 
 export default function SignUp() {
   return (
-    <div className='flex h-screen w-screen items-center justify-center'>
+    <div className={sectionStyles}>
       <SignUpForm />
     </div>
   );
