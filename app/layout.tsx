@@ -9,8 +9,8 @@ import { ModeToggle } from '@/components/ui/theme-toggle';
 import { geistMono, geistSans } from '@/styles/fonts';
 
 export const metadata: Metadata = {
-  description: `holy`,
-  title: `holy`,
+  description: `Best Next.js auth template WW`,
+  title: `Next.js Auth Template`,
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
