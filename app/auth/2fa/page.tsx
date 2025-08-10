@@ -1,8 +1,9 @@
 import { TwoFactorSignIn } from '@/components/auth/forms/two-factor-sign-in';
+import { sectionStyles } from '@/styles';
 
 export default function VerifyTwoFactor() {
   return (
-    <div className='flex h-screen w-screen items-center justify-center'>
+    <div className={sectionStyles}>
       <TwoFactorSignIn />
     </div>
   );

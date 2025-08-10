@@ -63,7 +63,7 @@ export const TwoFactorForm = ({
         onError: (context) => {
           toast.error(context.error.message);
         },
-        onSuccess: onSuccess,
+        onSuccess,
       },
     ));
   };

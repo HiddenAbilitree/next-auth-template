@@ -25,6 +25,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
+import { cardStyles } from '@/styles';
 
 const SignInFormSchema = type({
   email: Email,
@@ -92,12 +93,9 @@ export const SignInForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        className='relative z-40 flex w-100 flex-col gap-4 rounded-sm border bg-card p-8 backdrop-blur-3xl backdrop-grayscale-25'
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <form className={cardStyles} onSubmit={form.handleSubmit(onSubmit)}>
         <div className='flex w-full flex-col gap-4'>
-          <h1 className='w-full text-2xl font-semibold'>Sign In</h1>
+          <h1 className='w-full text-xl font-semibold'>Sign In</h1>
           <Separator />
         </div>
         <FormField

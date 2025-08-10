@@ -1,8 +1,9 @@
 import { ForgotPasswordForm } from '@/components/auth/forms/forgot-password';
+import { sectionStyles } from '@/styles';
 
 export default function ForgotPassword() {
   return (
-    <div className='flex h-screen w-screen items-center justify-center'>
+    <div className={sectionStyles}>
       <ForgotPasswordForm />
     </div>
   );

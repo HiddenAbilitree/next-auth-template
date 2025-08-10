@@ -21,6 +21,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { authClient } from '@/lib/auth-client';
+import { cardStyles } from '@/styles';
 
 // ripped straight from https://arktype.io/docs/expressions#narrow
 // configure errors https://arktype.io/docs/configuration#errors
@@ -76,10 +77,7 @@ export const SignUpForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        className='flex w-100 flex-col gap-4 rounded-md border bg-card p-8 shadow-sm'
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+      <form className={cardStyles} onSubmit={form.handleSubmit(onSubmit)}>
         <div className='flex w-full flex-col gap-4'>
           <h1 className={`w-full text-2xl font-semibold`}>Sign Up</h1>
           <Separator />

@@ -6,13 +6,22 @@ import { useEffect, useState } from 'react';
 
 import { Trash } from '@/components/icons/trash';
 import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { authClient } from '@/lib/auth-client';
 import { formatTime } from '@/utils/time';
 
 export const Sessions = () => {
   const [sessions, setSessions] = useState<null | Session[]>();
-  const router = useRouter();
+
   const { data: currentSession, error } = authClient.useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const setData = async () => {
@@ -28,52 +37,60 @@ export const Sessions = () => {
   }
 
   return (
-    <table className='table-auto overflow-clip rounded-sm bg-secondary/50 p-1 text-left'>
-      <thead className='border-b bg-secondary text-xs font-semibold text-foreground/70 uppercase'>
-        <tr>
-          <th className='px-6 py-3' scope='col'>
-            IP
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            Created At
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            Expires At
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            User Agent
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            Actions
-          </th>
-        </tr>
-      </thead>
+    <Table className='bg-secondary/60'>
+      <TableHeader>
+        <TableRow className='bg-secondary'>
+          <TableHead scope='col'>IP</TableHead>
+          <TableHead scope='col'>Created At</TableHead>
+          <TableHead scope='col'>Expires At</TableHead>
+          <TableHead scope='col'>User Agent</TableHead>
+          <TableHead scope='col'>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sessions?.map((session) => (
+          <SessionRow
+            currentSession={currentSession?.session}
+            key={session.id}
+            session={session}
+          />
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
 
-      {sessions?.map((session) => (
-        <tr className='not-last-of-type:border-b' key={session.id}>
-          <td className='px-6 py-3'>
-            {session.ipAddress && session.ipAddress.length > 0 ?
-              session.ipAddress
-            : `None`}
-          </td>
-          <td className='px-6 py-3'>{formatTime(session.createdAt)}</td>
-          <td className='px-6 py-3'>{formatTime(session.expiresAt)}</td>
-          <td className='px-6 py-3'>{session.userAgent}</td>
-          <td className='px-6 py-3'>
-            <Button
-              onClick={() => {
-                void authClient.revokeSession({ token: session.token });
-                if (currentSession?.session.token === session.token)
-                  router.push(`/auth/sign-in`);
-              }}
-              size='icon'
-              variant='ghost'
-            >
-              <Trash />
-            </Button>
-          </td>
-        </tr>
-      ))}
-    </table>
+const SessionRow = ({
+  currentSession,
+  session,
+}: {
+  currentSession?: Session;
+  session: Session;
+}) => {
+  const router = useRouter();
+  return (
+    <TableRow className='not-last-of-type:border-b' key={session.id}>
+      <TableCell>
+        {session.ipAddress && session.ipAddress.length > 0 ?
+          session.ipAddress
+        : `None Associated`}
+      </TableCell>
+      <TableCell>{formatTime(session.createdAt)}</TableCell>
+      <TableCell>{formatTime(session.expiresAt)}</TableCell>
+      <TableCell>{session.userAgent}</TableCell>
+      <TableCell>
+        <Button
+          onClick={() => {
+            void authClient.revokeSession({ token: session.token });
+            if (currentSession?.token === session.token)
+              router.push(`/auth/sign-in`);
+          }}
+          size='icon'
+          variant='ghost'
+        >
+          <Trash />
+        </Button>
+      </TableCell>
+    </TableRow>
   );
 };

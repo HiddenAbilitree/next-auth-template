@@ -8,7 +8,7 @@ import {
   eslintConfigReact,
   eslintConfigRelative,
 } from '@hiddenability/opinionated-defaults/eslint';
-import { fileURLToPath, URL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
 const gitignorePath = fileURLToPath(new URL(`.gitignore`, import.meta.url));
 

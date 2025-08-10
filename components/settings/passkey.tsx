@@ -16,6 +16,14 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { authClient } from '@/lib/auth-client';
 import { formatTime } from '@/utils/time';
 
@@ -23,51 +31,43 @@ export const PasskeySettings = () => {
   const { data } = authClient.useListPasskeys();
 
   return (
-    <table className='table-auto overflow-clip rounded-sm bg-secondary/50 p-1 text-left'>
-      <thead className='border-b bg-secondary text-xs font-semibold text-foreground/70 uppercase'>
-        <tr>
-          <th className='px-6 py-3' scope='col'>
-            Name
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            ID
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            Created At
-          </th>
-          <th className='px-6 py-3' scope='col'>
-            Actions
-          </th>
-        </tr>
-      </thead>
-      <tbody className='text-sm'>
+    <Table className='bg-secondary/60'>
+      <TableHeader>
+        <TableRow className='bg-secondary'>
+          <TableHead scope='col'>Name</TableHead>
+          <TableHead scope='col'>ID</TableHead>
+          <TableHead scope='col'>Created At</TableHead>
+          <TableHead scope='col'>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {data && data.length > 0 ?
           data.map((passkey) => (
-            <PasskeyItem
+            <PasskeyRow
               key={`${passkey.id}-${passkey.name}`}
               passkey={passkey}
             />
           ))
-        : <tr className='not-last-of-type:border-b'>
-            <td className='px-6 py-3'>No Passkeys</td>
-          </tr>
+        : <TableRow>
+            <TableCell>No Passkeys</TableCell>
+          </TableRow>
         }
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 };
 
-const PasskeyItem = ({ passkey }: { passkey: Passkey }) => {
+const PasskeyRow = ({ passkey }: { passkey: Passkey }) => {
   const [name, setName] = useState(passkey.name);
   const [input, setInput] = useState(``);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   return (
-    <tr className='not-last-of-type:border-b' key={passkey.id}>
-      <td className='px-6 py-3'>{name ?? `Passkey`}</td>
-      <td className='px-6 py-3'>{passkey.id}</td>
-      <td className='px-6 py-3'>{formatTime(passkey.createdAt)}</td>
-      <td className='px-4 py-3'>
+    <TableRow key={passkey.id}>
+      <TableCell>{name ?? `Passkey`}</TableCell>
+      <TableCell>{passkey.id}</TableCell>
+      <TableCell>{formatTime(passkey.createdAt)}</TableCell>
+      <TableCell>
         <Dialog onOpenChange={setRenameOpen} open={renameOpen}>
           <Button asChild size='icon' variant='ghost'>
             <DialogTrigger>
@@ -148,7 +148,7 @@ const PasskeyItem = ({ passkey }: { passkey: Passkey }) => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 };

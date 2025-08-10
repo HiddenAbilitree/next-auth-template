@@ -2,12 +2,21 @@
 
 import { arktypeResolver } from '@hookform/resolvers/arktype';
 import { type } from 'arktype';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { NewPassword } from '@/components/auth/types';
 import { handleError } from '@/components/auth/utils';
 import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -34,11 +43,12 @@ export const ChangePasswordFormSchema = type({
 );
 
 export const ChangePasswordForm = () => {
+  const router = useRouter();
   const onSubmit = async ({
     currentPassword,
     newPassword,
   }: typeof ChangePasswordFormSchema.infer) => {
-    const toastId = toast.loading(`Resetting password...`);
+    const toastId = toast.loading(`Changing password...`);
     await authClient.changePassword(
       {
         currentPassword,
@@ -47,12 +57,13 @@ export const ChangePasswordForm = () => {
       },
       {
         onError: (context) => handleError(context, toastId),
-        onSuccess: async () => {
-          toast.success(`Password Reset Successful`, {
+        onSuccess: () => {
+          toast.success(`Password Change Successful`, {
             description: `You can now sign in with your new password!`,
             id: toastId,
           });
-          await authClient.signOut();
+          void authClient.signOut();
+          router.push(`/auth/sign-in`);
         },
       },
     );
@@ -68,53 +79,68 @@ export const ChangePasswordForm = () => {
   });
 
   return (
-    <Form {...form}>
-      <form
-        className='flex w-100 flex-col gap-5 rounded-md p-4'
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
-        <FormField
-          control={form.control}
-          name='currentPassword'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Current Password</FormLabel>
-              <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='newPassword'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>New Password</FormLabel>
-              <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='confirmPassword'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirm New Password</FormLabel>
-              <FormControl>
-                <Input placeholder='••••••••' type='password' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type='submit'>Change Password</Button>
-      </form>
-    </Form>
+    <Dialog>
+      <DialogTrigger>
+        <Button size='sm'>Change Password</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Change Password</DialogTitle>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            className='flex flex-col gap-4'
+            id='change-password-form'
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name='currentPassword'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Current Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder='••••••••' type='password' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='newPassword'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>New Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder='••••••••' type='password' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='confirmPassword'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm New Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder='••••••••' type='password' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+        <DialogFooter>
+          <Button form='change-password-form' type='submit'>
+            Change Password
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -145,23 +171,14 @@ const AddPasswordButton = () => {
   };
 
   return (
-    <div className='flex items-center justify-between'>
-      <p>You currently do not have a password set for your account.</p>
-      <Button onClick={handleAddPassword} size='sm'>
-        Add Password
-      </Button>
-    </div>
+    <Button onClick={handleAddPassword} size='sm'>
+      Add Password
+    </Button>
   );
 };
 
 export const PasswordSettings = () => {
   const hasPassword = useHasPassword();
-
-  if (hasPassword === undefined) {
-    return (
-      <div className='h-12 w-full animate-pulse rounded-sm bg-secondary' />
-    );
-  }
 
   return hasPassword ? <ChangePasswordForm /> : <AddPasswordButton />;
 };
