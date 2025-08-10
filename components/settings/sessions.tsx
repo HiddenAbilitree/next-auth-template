@@ -78,7 +78,7 @@ const SessionRow = ({
       <TableCell>{formatTime(session.createdAt)}</TableCell>
       <TableCell>{formatTime(session.expiresAt)}</TableCell>
       <TableCell>{session.userAgent}</TableCell>
-      <TableCell>
+      <TableCell className='px-4'>
         <Button
           onClick={() => {
             void authClient.revokeSession({ token: session.token });

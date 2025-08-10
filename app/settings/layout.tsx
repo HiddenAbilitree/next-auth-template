@@ -14,13 +14,13 @@ const generalLinks = [
 
 export default function SettingsLayout({ children }: { children: ReactNode }) {
   return (
-    <div className='mx-auto flex min-h-screen max-w-full flex-col items-center'>
+    <div className='mx-auto flex min-h-screen max-w-screen flex-col items-center'>
       <header className='flex w-full items-center justify-start p-4'>
         <Link href='/'>Go Home</Link>
       </header>
-      <div className='relative container flex w-full flex-col justify-center'>
-        <aside className='left-0 h-full w-3xs px-4 text-sm md:absolute md:-translate-x-full'>
-          <nav className='sticky top-8 flex grow flex-col gap-2'>
+      <div className='container flex flex-col justify-center md:container md:flex-row'>
+        <aside className='flex flex-col text-sm text-nowrap'>
+          <nav className='sticky top-8 flex flex-col gap-2 px-4 md:w-3xs'>
             {generalLinks.map((link, i) => (
               <Link
                 className='inline-flex items-center gap-1'

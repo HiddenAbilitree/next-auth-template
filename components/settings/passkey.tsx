@@ -67,7 +67,7 @@ const PasskeyRow = ({ passkey }: { passkey: Passkey }) => {
       <TableCell>{name ?? `Passkey`}</TableCell>
       <TableCell>{passkey.id}</TableCell>
       <TableCell>{formatTime(passkey.createdAt)}</TableCell>
-      <TableCell>
+      <TableCell className='px-4 text-nowrap'>
         <Dialog onOpenChange={setRenameOpen} open={renameOpen}>
           <Button asChild size='icon' variant='ghost'>
             <DialogTrigger>
@@ -77,7 +77,7 @@ const PasskeyRow = ({ passkey }: { passkey: Passkey }) => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Rename Passkey</DialogTitle>
-              <DialogDescription>
+              <DialogDescription className='wrap-anywhere'>
                 Old name: {name ?? `Passkey`}
               </DialogDescription>
               <Input

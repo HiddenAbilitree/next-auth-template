@@ -80,7 +80,7 @@ export const ChangePasswordForm = () => {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button size='sm'>Change Password</Button>
       </DialogTrigger>
       <DialogContent>
