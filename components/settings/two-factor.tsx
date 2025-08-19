@@ -51,7 +51,10 @@ export const TwoFactorSettings = () => {
           Authenticator
         </span>
         {twoFactorEnabled && (
-          <Badge className='border-green-500 text-green-500' variant='outline'>
+          <Badge
+            className='border-green-500 bg-[--var(gray-1)] text-green-500'
+            variant='outline'
+          >
             Enabled
           </Badge>
         )}

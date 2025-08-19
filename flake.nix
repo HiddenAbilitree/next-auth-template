@@ -20,8 +20,10 @@
         script;
 
       scripts = [
-        (mkScript "lint" ''oxlint && eslint_d --config eslint.config.ts .'')
-        (mkScript "lint:fix" ''oxlint --fix --fix-suggestions && eslint_d --config eslint.config.ts . --fix'')
+        (mkScript "dev" ''bun dev'')
+        (mkScript "build" ''bun run build'')
+        (mkScript "lint" ''oxlint && bun next lint'')
+        (mkScript "lint:fix" ''oxlint --fix --fix-suggestions && bun next lint --fix'')
         (mkScript "haod" ''bunx @hiddenability/opinionated-defaults@latest'')
       ];
     in {
@@ -31,8 +33,7 @@
             bun
             openssl
             oxlint
-            eslint_d
-            prettierd
+            eslint
           ]
           ++ scripts;
       };
