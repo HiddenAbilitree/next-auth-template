@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 import { ReactNode } from 'react';
 
+import { GithubLink } from '@/components/github-link';
 import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/ui/theme-provider';
 import { ModeToggle } from '@/components/ui/theme-toggle';
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <ModeToggle />
           <Toaster />
         </ThemeProvider>
+        <GithubLink />
       </body>
     </html>
   );
