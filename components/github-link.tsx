@@ -9,7 +9,7 @@ export const GithubLink = () => (
       className='fixed bottom-3 left-3 rounded-full!'
       href='https://github.com/HiddenAbilitree/next-auth-template'
     >
-      <Github />
+      <Github className='fill-card-foreground' />
       View on GitHub
     </Link>
   </Button>

@@ -1,11 +1,12 @@
 import { init } from '@sentry/nextjs';
 
-init({
-  dsn: process.env.SENTRY_DSN,
+if (process.env.ENABLE_SENTRY)
+  init({
+    dsn: process.env.SENTRY_DSN,
 
-  tracesSampleRate: 1,
+    tracesSampleRate: 1,
 
-  enableLogs: true,
+    enableLogs: true,
 
-  debug: process.env.ENVIRONMENT === `dev`,
-});
+    debug: process.env.ENVIRONMENT === `dev`,
+  });
