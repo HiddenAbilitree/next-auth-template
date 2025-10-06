@@ -22,8 +22,8 @@
       scripts = [
         (mkScript "dev" ''bun dev'')
         (mkScript "build" ''bun run build'')
-        (mkScript "lint" ''oxlint && bun next lint'')
-        (mkScript "lint:fix" ''oxlint --fix --fix-suggestions && bun next lint --fix'')
+        (mkScript "lint" ''oxlint && bunx eslint .'')
+        (mkScript "lint:fix" ''oxlint --fix --fix-suggestions && bunx eslint . --fix'')
         (mkScript "haod" ''bunx @hiddenability/opinionated-defaults@latest'')
       ];
     in {

@@ -1,3 +1,4 @@
+import { Route } from 'next';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
@@ -24,7 +25,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
             {generalLinks.map((link, i) => (
               <Link
                 className='inline-flex items-center gap-1'
-                href={link.href}
+                href={link.href as Route}
                 key={i}
               >
                 <link.icon className='size-6' />

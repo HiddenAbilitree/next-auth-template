@@ -10,10 +10,8 @@ import {
 } from '@hiddenability/opinionated-defaults/eslint';
 import { fileURLToPath } from 'node:url';
 
-const gitignorePath = fileURLToPath(new URL(`.gitignore`, import.meta.url));
-
 export default eslintConfig([
-  includeIgnoreFile(gitignorePath, `Imported .gitignore patterns`),
+  includeIgnoreFile(fileURLToPath(new URL(`.gitignore`, import.meta.url)), ``),
   ...eslintConfigBase,
   ...eslintConfigNext,
   ...eslintConfigPerfectionist,

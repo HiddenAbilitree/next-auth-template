@@ -2,7 +2,12 @@ import type { NextConfig } from 'next';
 
 import { withSentryConfig } from '@sentry/nextjs';
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  experimental: {
+    typedEnv: true,
+  },
+  typedRoutes: true,
+};
 
 export default withSentryConfig(nextConfig, {
   org: `next-auth-template`,
