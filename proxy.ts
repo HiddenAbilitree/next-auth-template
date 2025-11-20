@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { auth } from '@/lib/auth';
 
-export const middleware = async (request: NextRequest) => {
+export const proxy = async (request: NextRequest) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -29,5 +29,4 @@ export const config = {
   matcher: [
     `/((?!api/auth|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|auth|error-monitoring).*)`,
   ],
-  runtime: `nodejs`,
 };

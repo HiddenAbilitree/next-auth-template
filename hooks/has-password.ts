@@ -1,8 +1,9 @@
 'use client';
 
+import { Account } from 'better-auth';
+import { SuccessContext } from 'better-auth/react';
 import { useEffect, useState } from 'react';
 
-import { Data } from '@/components/auth/types/list-accounts';
 import { authClient } from '@/lib/auth-client';
 
 export const useHasPassword = () => {
@@ -13,9 +14,11 @@ export const useHasPassword = () => {
       await authClient.listAccounts(
         {},
         {
-          onSuccess: (context: Data) => {
+          onSuccess: (context: SuccessContext<Account[]>) => {
             setHasPassword(
-              context.data.some((account) => account.provider === `credential`),
+              context.data.some(
+                (account) => account.providerId === `credential`,
+              ),
             );
           },
         },

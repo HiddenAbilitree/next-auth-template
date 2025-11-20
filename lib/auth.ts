@@ -75,7 +75,7 @@ export const auth = betterAuth({
     }),
   ],
 
-  rateLimit: { enabled: true, max: 15, window: 100 },
+  rateLimit: { enabled: false, max: 15, window: 100 },
 
   // session: {
   //   cookieCache: {
