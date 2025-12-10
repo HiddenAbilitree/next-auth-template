@@ -1,7 +1,7 @@
+import { passkey } from '@better-auth/passkey';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { magicLink, openAPI, twoFactor } from 'better-auth/plugins';
-import { passkey } from 'better-auth/plugins/passkey';
 import { eq } from 'drizzle-orm';
 
 import {

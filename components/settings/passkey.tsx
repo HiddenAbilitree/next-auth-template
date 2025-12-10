@@ -1,7 +1,7 @@
 'use client';
 
+import { Passkey } from '@better-auth/passkey';
 import { DialogTrigger } from '@radix-ui/react-dialog';
-import { Passkey } from 'better-auth/plugins/passkey';
 import { useState } from 'react';
 
 import { Pencil } from '@/components/icons/pencil';

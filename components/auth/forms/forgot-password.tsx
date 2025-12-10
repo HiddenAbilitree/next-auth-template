@@ -24,7 +24,7 @@ export const ForgotPasswordForm = () => {
   const onSubmit = async (values: typeof EmailFormSchema.infer) => {
     const toastId = toast.loading(`Sending email...`);
 
-    await authClient.forgetPassword(
+    await authClient.requestPasswordReset(
       {
         email: values.email,
         redirectTo: `/auth/reset-password`,
