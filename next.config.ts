@@ -19,7 +19,7 @@ export default withSentryConfig(nextConfig, {
 
   tunnelRoute: `/error-monitoring`,
 
-  disableLogger: false,
+  webpack: { treeshake: { removeDebugLogging: true } },
 
   telemetry: false,
 });
