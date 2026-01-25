@@ -1,5 +1,8 @@
+<div align="center">
+  
 # ![Banner](/assets/banner.svg)
 
+</div>
 A Next.js template with authentication.
 
 ### Supported Authentication Methods:
